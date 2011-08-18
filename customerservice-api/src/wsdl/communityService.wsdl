@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="communityService"
+  targetNamespace="http://services.koku.fi/entity/community/v1"
+  xmlns:tns="http://services.koku.fi/entity/community/v1"
+  xmlns:commu="http://services.koku.fi/entity/community/v1"
+  xmlns:common="http://services.koku.fi/common/v1"
+  xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  >
+
+  <wsdl:documentation>
+    KoKu community service contract definition.
+    
+    version: 0.92
+    Ixonos / aspluma
+  </wsdl:documentation>
+
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
+      <xsd:import namespace="http://services.koku.fi/common/v1" schemaLocation="common.xsd"/>
+      <xsd:import namespace="http://services.koku.fi/entity/community/v1" schemaLocation="community.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!-- common messages -->
+  <wsdl:message name="AuditHeader">
+    <wsdl:part name="AuditHeader" element="common:auditInfo"/>
+  </wsdl:message>
+
+  <!-- community messages -->
+  <wsdl:message name="msgAddCommunityRequest">
+    <wsdl:part name="Community" element="commu:communityNew"/>
+  </wsdl:message>
+
+  <wsdl:message name="msgAddCommunityResponse">
+    <wsdl:part name="CommunityId" element="commu:communityId"/>
+  </wsdl:message>
+
+  <wsdl:message name="msgGetCommunityRequest">
+    <wsdl:part name="CommunityId" element="commu:communityId"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetCommunityResponse">
+    <wsdl:part name="Community" element="commu:community"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgUpdateCommunityRequest">
+    <wsdl:part name="Community" element="commu:community"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgDeleteCommunityRequest">
+    <wsdl:part name="CommunityId" element="commu:communityIdRemove"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgQueryCommunitiesRequest">
+    <wsdl:part name="CommunityQueryCriteria" element="tns:communityQueryCriteria"/>
+  </wsdl:message>
+
+  <wsdl:message name="msgQueryCommunitiesResponse">
+    <wsdl:part name="Communities" element="commu:communities"/>
+  </wsdl:message>
+
+  <!-- port type -->
+  <wsdl:portType name="communityServicePortType">
+    <wsdl:operation name="opAddCommunity">
+      <wsdl:input message="tns:msgAddCommunityRequest"/>
+      <wsdl:output message="tns:msgAddCommunityResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="opGetCommunity">
+      <wsdl:input message="tns:msgGetCommunityRequest"/>
+      <wsdl:output message="tns:msgGetCommunityResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="opUpdateCommunity">
+      <wsdl:input message="tns:msgUpdateCommunityRequest"/>
+    </wsdl:operation>
+    <wsdl:operation name="opDeleteCommunity">
+      <wsdl:input message="tns:msgDeleteCommunityRequest"/>
+    </wsdl:operation>
+    <wsdl:operation name="opQueryCommunities">
+      <wsdl:input message="tns:msgQueryCommunitiesRequest"/>
+      <wsdl:output message="tns:msgQueryCommunitiesResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <!-- bindings -->
+  <wsdl:binding name="communityService-soap11-binding" type="tns:communityServicePortType">
+    <soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+    <wsdl:operation name="opAddCommunity">
+      <soap11:operation soapAction="http://koku.fi/action/community/add"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="opGetCommunity">
+      <soap11:operation soapAction="http://koku.fi/action/community/get"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="opUpdateCommunity">
+      <soap11:operation soapAction="http://koku.fi/action/community/update"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+    <wsdl:operation name="opDeleteCommunity">
+      <soap11:operation soapAction="http://koku.fi/action/community/delete"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+    <wsdl:operation name="opQueryCommunities">
+      <soap11:operation soapAction="http://koku.fi/action/community/query"/>
+      <wsdl:input>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+        <soap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+ 
+  </wsdl:binding>
+  
+  <!-- service -->
+  <wsdl:service name="communityService">
+    <wsdl:port name="communityService-soap11-port" binding="tns:communityService-soap11-binding" >
+      <soap11:address location="http://localhost:8088/community/"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://services.koku.fi/entity/customer/v1"
+  xmlns="http://services.koku.fi/entity/customer/v1"
+  xmlns:common="http://services.koku.fi/common/v1"
+  xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
+  elementFormDefault="qualified"
+  version="0.92"
+  >
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      KoKu customer service message type definitions.
+      Ixonos / aspluma
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
+  <xsd:import namespace="http://services.koku.fi/common/v1" schemaLocation="common.xsd"/>
+
+
+  <xsd:element name="customer" type="CustomerType"/>
+  
+  <xsd:element name="customerNew" type="CustomerType"/>
+  
+  <xsd:element name="customerPic" type="xsd:string"/>
+  
+  <xsd:element name="customerPicRemove" type="xsd:string"/>
+
+  <xsd:element name="customerQueryCriteria" type="CustomerQueryCriteriaType"/>
+  
+  <xsd:element name="customers" type="CustomersType"/>
+
+  <xsd:complexType name="CustomerType">
+    <xsd:sequence>
+      <xsd:annotation>
+        <xsd:documentation xml:lang="fi">
+          elossa, kuollut, kadonnut, julistettu kuolleeksi
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="statusDate" type="xsd:date"/>
+      <xsd:element ref="jhs:HenkiloTunnus"/>
+      <xsd:element ref="jhs:SyntymaPvm"/>
+      <xsd:element ref="jhs:SukuNimi"/>
+      <xsd:element ref="jhs:EtuNimi"/>
+      <xsd:element ref="jhs:EtunimetNimi"/>
+      <xsd:element ref="jhs:KansalaisuusKoodi"/>
+      <xsd:element ref="jhs:KuntaKoodi"/>
+      <xsd:element ref="jhs:KieliKoodi"/>
+      <xsd:element ref="jhs:TurvakieltoKytkin"/>
+
+      <xsd:element name="addresses" type="AddressesType"/>
+      <xsd:element name="phoneNumbers" type="PhoneNumbersType"/>
+      <xsd:element name="electronicContactInfos" type="ElectronicContactInfosType"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="common:numericId"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="ElectronicContactInfosType">
+    <xsd:sequence>
+      <xsd:element name="eContactInfo" type="ElectronicContactInfoType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ElectronicContactInfoType">
+    <xsd:sequence>
+      <xsd:annotation>
+        <xsd:documentation xml:lang="fi">
+          sahkoposti, skype, www
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="contactInfoType" type="xsd:string"/>
+      <xsd:element name="contactInfo" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PhoneNumbersType">
+    <xsd:sequence>
+      <xsd:element name="phone" type="PhoneNumberType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PhoneNumberType">
+    <xsd:sequence>
+      <xsd:annotation>
+        <xsd:documentation xml:lang="fi">
+          numberClass: gsm, lankapuhelin
+          NumberType: fax, kotipuhelin, tyopuhelin, vaihde
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="numberClass" type="xsd:string"/>
+      <xsd:element name="numberType" type="xsd:string"/>
+      <xsd:element ref="jhs:PuhelinnumeroTeksti"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AddressesType">
+    <xsd:sequence>
+      <xsd:element name="address" type="AddressType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:annotation>
+        <xsd:documentation xml:lang="fi">
+          kotiosoite, kayntiosoite, opiskelupaikan osoite, postiosoite, vapaa-ajan asunnon osoite, virallinen osoite
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="addressType" type="xsd:string"/>
+      <xsd:element ref="jhs:KatuNimi"/>
+      <xsd:element ref="jhs:PostitoimipaikkaNimi"/>
+      <xsd:element ref="jhs:PostinumeroKoodi"/>
+      <xsd:element ref="jhs:PostilokeroTeksti"/>
+      <xsd:element ref="jhs:MaatunnusKoodi"/>
+      <xsd:element ref="jhs:AlkuPvm" minOccurs="0"/>
+      <xsd:element ref="jhs:LoppuPvm" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CustomersType">
+    <xsd:sequence>
+      <xsd:element name="customer" type="CustomerType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CustomerQueryCriteriaType">
+    <xsd:sequence>
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          selection: basic, all
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="id" type="common:numericId" minOccurs="0"/>
+      <xsd:element name="pic" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="selection" type="xsd:string" default="basic"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
