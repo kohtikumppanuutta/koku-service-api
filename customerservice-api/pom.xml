@@ -6,9 +6,7 @@
     <version>0.0.1</version>
   </parent>
 
-  <groupId>kohti-kumppanuutta</groupId>
   <artifactId>customerservice-api</artifactId>
-  <version>0.0.1</version>
   <packaging>jar</packaging>
   <name>customerservice-api</name>
 
