@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://services.koku.fi/utility/log/v1"
+  xmlns="http://services.koku.fi/utility/log/v1"
+  elementFormDefault="qualified"
+  version="0.1"
+  >
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      KoKu log service message type definitions.
+      Ixonos / aspluma
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <xsd:complexType name="LogEntry">
+  </xsd:complexType>
+  
+  <xsd:complexType name="LogArchivalParameters">
+  </xsd:complexType>
+  
+  <xsd:complexType name="LogQueryCriteriaType">
+  </xsd:complexType>
+  
+</xsd:schema>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="customerService"
+  targetNamespace="http://services.koku.fi/utility/log/v1"
+  xmlns:tns="http://services.koku.fi/entity/utility/v1"
+  xmlns:cust="http://services.koku.fi/entity/utility/v1"
+  xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  >
+
+  <wsdl:documentation>
+    KoKu log service contract definition.
+
+    version: 0.1
+    Ixonos / aspluma
+  </wsdl:documentation>
+
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://services.koku.fi/utility/log/v1" schemaLocation="log.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!--  message definitions -->
+  
+  <!-- interface / port type -->
+  
+  <!-- bindings -->
+  
+  <!-- service definitions -->
+
+  <wsdl:service name="logService">
+  </wsdl:service>
+
+</wsdl:definitions>
