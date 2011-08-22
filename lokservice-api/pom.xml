@@ -3,8 +3,11 @@
   <parent>
     <artifactId>service-api</artifactId>
     <groupId>kohti-kumppanuutta</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
   <artifactId>lokservice-api</artifactId>
+  
+  <dependencies>
+  </dependencies>
 </project>
