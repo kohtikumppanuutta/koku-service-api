@@ -12,13 +12,54 @@
     </xsd:documentation>
   </xsd:annotation>
   
-  <xsd:complexType name="LogEntry">
+  <xsd:element name="logEntry" type="LogEntryType"/>
+  
+  <xsd:element name="logArchivalParameters" type="LogArchivalParametersType"/>
+  
+  <xsd:element name="logQueryCriteria" type="LogQueryCriteriaType"/>
+
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      clientSystemId: kks, pyh, kunpo, pegasos, ...
+      operation: create, read, update, delete, query, ...
+      data item type: kks.vasu, kks.4v, family/community info, consent, ...
+      dataItemId: data item instance ID
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="LogEntryType">
+    <xsd:sequence>
+      <xsd:element name="timestamp" type="xsd:dateTime"/>
+      <xsd:element name="clientSystemId" type="xsd:string"/>
+      <xsd:element name="userPic" type="xsd:string"/>
+      <xsd:element name="customerPic" type="xsd:string"/>
+      <xsd:element name="operation" type="xsd:string"/>
+      <xsd:element name="dataItemType" type="xsd:string"/>
+      <xsd:element name="dataItemId" type="xsd:string"/>
+      <xsd:element name="message" type="xsd:string"/>
+    </xsd:sequence>
   </xsd:complexType>
   
-  <xsd:complexType name="LogArchivalParameters">
+  <xsd:complexType name="LogArchivalParametersType">
+    <xsd:sequence>
+      <xsd:element name="endDate" type="xsd:date"/>
+    </xsd:sequence>
   </xsd:complexType>
   
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      log type: loki, lokin seurantaloki
+      data item type: see LogEntryType
+    </xsd:documentation>
+  </xsd:annotation>
   <xsd:complexType name="LogQueryCriteriaType">
+    <xsd:sequence>
+      <xsd:element name="logType" type="xsd:string"/>
+      <xsd:element name="customerPic" type="xsd:string"/>
+      <xsd:element name="dataItemType" type="xsd:string"/>
+      <xsd:element name="startTime" type="xsd:date"/>
+      <xsd:element name="endDdate" type="xsd:date"/>
+    </xsd:sequence>
   </xsd:complexType>
   
 </xsd:schema>
