@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions name="customerService"
   targetNamespace="http://services.koku.fi/utility/log/v1"
-  xmlns:tns="http://services.koku.fi/entity/utility/v1"
-  xmlns:cust="http://services.koku.fi/entity/utility/v1"
+  xmlns:tns="http://services.koku.fi/utility/log/v1"
+  xmlns:log="http://services.koku.fi/utility/log/v1"
   xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu log service contract definition.
 
-    version: 0.1
+    version: 0.5
     Ixonos / aspluma
   </wsdl:documentation>
 
@@ -23,14 +23,78 @@
   </wsdl:types>
 
   <!--  message definitions -->
+  <wsdl:message name="msgLogRequest">
+    <wsdl:part name="LogEntry" element="log:logEntry"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgArchiveLogRequest">
+    <wsdl:part name="LogArchivalParameters" element="log:logArchivalParameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgQueryLogRequest">
+    <wsdl:part name="LogQueryCriteria" element="log:logQueryCriteria"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgQueryLogResponse">
+    <wsdl:part name="LogEntries" element="log:logEntries"/>
+  </wsdl:message>
+  
   
   <!-- interface / port type -->
+  <wsdl:portType name="logServicePortType">
+
+    <wsdl:operation name="opLog">
+      <wsdl:input message="tns:msgLogRequest"/>
+    </wsdl:operation>
+    
+    <wsdl:operation name="opArchiveLog">
+      <wsdl:input message="tns:msgArchiveLogRequest"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="opQueryLog">
+      <wsdl:input message="tns:msgQueryLogRequest"/>
+      <wsdl:output message="tns:msgQueryLogResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+  
   
   <!-- bindings -->
+  <wsdl:binding name="logService-soap11-binding" type="tns:logServicePortType">
+    <soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    
+    <wsdl:operation name="opLog">
+      <soap11:operation soapAction="http://koku.fi/action/log/log"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+    <wsdl:operation name="opArchiveLog">
+      <soap11:operation soapAction="http://koku.fi/action/log/archive"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+    <wsdl:operation name="opQueryLog">
+      <soap11:operation soapAction="http://koku.fi/action/log/query"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
   
   <!-- service definitions -->
-
   <wsdl:service name="logService">
+    <wsdl:port name="logService-soap11-port" binding="tns:logService-soap11-binding">
+      <soap11:address location="http://localhost:8088/log/"/>
+    </wsdl:port>
   </wsdl:service>
 
 </wsdl:definitions>
