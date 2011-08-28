@@ -3,7 +3,6 @@
   targetNamespace="http://services.koku.fi/entity/customer/v1"
   xmlns:tns="http://services.koku.fi/entity/customer/v1"
   xmlns:cust="http://services.koku.fi/entity/customer/v1"
-  xmlns:common="http://services.koku.fi/common/v1"
   xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
@@ -13,14 +12,13 @@
   <wsdl:documentation>
     KoKu customer service contract definition.
 
-    version: 0.92
+    version: 0.93
     Ixonos / aspluma
   </wsdl:documentation>
 
   <wsdl:types>
     <xsd:schema>
       <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
-      <xsd:import namespace="http://services.koku.fi/common/v1" schemaLocation="common.xsd"/>
       <xsd:import namespace="http://services.koku.fi/entity/customer/v1" schemaLocation="customer.xsd"/>
     </xsd:schema>
   </wsdl:types>
@@ -29,7 +27,7 @@
 
 
   <wsdl:message name="AuditHeader">
-    <wsdl:part name="AuditHeader" element="common:auditInfo"/>
+    <wsdl:part name="AuditHeader" element="cust:auditInfo"/>
   </wsdl:message>
 
   <wsdl:message name="msgAddCustomerRequest">

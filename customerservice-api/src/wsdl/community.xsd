@@ -2,10 +2,9 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   targetNamespace="http://services.koku.fi/entity/community/v1"
   xmlns="http://services.koku.fi/entity/community/v1"
-  xmlns:common="http://services.koku.fi/common/v1"
   xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
   elementFormDefault="qualified"
-  version="0.92"
+  version="0.93"
   >
 
   <xsd:annotation>
@@ -16,16 +15,15 @@
   </xsd:annotation>
 
   <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
-  <xsd:import namespace="http://services.koku.fi/common/v1" schemaLocation="common.xsd"/>
 
 
   <xsd:element name="community" type="CommunityType"/>
   
   <xsd:element name="communityNew" type="CommunityType"/>
   
-  <xsd:element name="communityId" type="common:numericId"/>
+  <xsd:element name="communityId" type="numericId"/>
   
-  <xsd:element name="communityIdRemove" type="common:numericId"/>
+  <xsd:element name="communityIdRemove" type="numericId"/>
 
   <xsd:element name="communityQueryCriteria" type="CommunityQueryCriteriaType"/>
   
@@ -46,7 +44,7 @@
       <xsd:element name="name" type="xsd:string" minOccurs="0"/>
       <xsd:element name="members" type="MembersType"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="common:numericId"/>
+    <xsd:attribute name="id" type="numericId"/>
   </xsd:complexType>
 
   <xsd:complexType name="MembersType">
@@ -71,6 +69,26 @@
       <xsd:element name="communityType" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
+
+
+  <!-- common type and element definitions -->
+
+  <xsd:element name="auditInfo" type="auditInfoType"/>
+
+  <xsd:complexType name="auditInfoType">
+    <xsd:sequence>
+      <xsd:element name="component" type="xsd:string"/>
+      <xsd:element name="userId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="numericId">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\d+" />
+      <xsd:maxLength value="19"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
 
 </xsd:schema>
   
