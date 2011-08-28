@@ -43,7 +43,7 @@
         <configuration>
           <target>${jaxws-api.version}</target>
           <extension>true</extension>
-          <xadditionalHeaders>false</xadditionalHeaders>
+          <xadditionalHeaders>true</xadditionalHeaders>
           <sourceDestDir>${project.build.directory}/generated-sources</sourceDestDir>
         </configuration>
       </plugin>
