@@ -69,5 +69,24 @@
       <xsd:element name="endDdate" type="xsd:date"/>
     </xsd:sequence>
   </xsd:complexType>
-  
+
+
+  <!-- common type and element definitions -->
+
+  <xsd:element name="auditInfo" type="auditInfoType"/>
+
+  <xsd:complexType name="auditInfoType">
+    <xsd:sequence>
+      <xsd:element name="component" type="xsd:string"/>
+      <xsd:element name="userId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="numericId">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\d+" />
+      <xsd:maxLength value="19"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
 </xsd:schema>
