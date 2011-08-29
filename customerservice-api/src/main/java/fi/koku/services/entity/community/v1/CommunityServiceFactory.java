@@ -15,7 +15,7 @@ public class CommunityServiceFactory {
   private String pwd;
   private String endpointBaseUrl;
   private String implVersion = "0.0.1-SNAPSHOT";
-  private final URL LOG_WSDL_LOCATION = getClass().getClassLoader().getResource("/wsdl/communityService.wsdl");
+  private final URL wsdlLocation = getClass().getClassLoader().getResource("/wsdl/communityService.wsdl");
 
   public CommunityServiceFactory(String uid, String pwd, String endpointBaseUrl) {
     this.uid = uid;
@@ -24,7 +24,7 @@ public class CommunityServiceFactory {
   }
 
   public CommunityServicePortType getCommunityService() {
-    CommunityService service = new CommunityService(LOG_WSDL_LOCATION, new QName(
+    CommunityService service = new CommunityService(wsdlLocation, new QName(
         "http://services.koku.fi/entity/community/v1", "communityService"));
     CommunityServicePortType port = service.getCommunityServiceSoap11Port();
     String epAddr = endpointBaseUrl + "/customer-service-" + implVersion + "/CommunityServiceBean";
