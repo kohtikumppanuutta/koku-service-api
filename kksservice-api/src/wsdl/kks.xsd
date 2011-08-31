@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://services.koku.fi/entity/kks/v1"
+  xmlns="http://services.koku.fi/entity/kks/v1"
+  xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
+  elementFormDefault="qualified"
+  version="0.0.1"
+  >
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      KoKu KKS service message type definitions.
+      Ixonos /
+    </xsd:documentation>
+  </xsd:annotation>
+
+
+
+  <!-- common type and element definitions -->
+
+  <xsd:element name="auditInfo" type="auditInfoType"/>
+
+  <xsd:complexType name="auditInfoType">
+    <xsd:sequence>
+      <xsd:element name="component" type="xsd:string"/>
+      <xsd:element name="userId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="numericId">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\d+" />
+      <xsd:maxLength value="19"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xsd:schema>

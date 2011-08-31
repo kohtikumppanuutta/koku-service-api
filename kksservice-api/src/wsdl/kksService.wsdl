@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="kksService"
+  targetNamespace="http://services.koku.fi/entity/kks/v1"
+  xmlns:tns="http://services.koku.fi/entity/kks/v1"
+  xmlns:kks="http://services.koku.fi/entity/kks/v1"
+  xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  >
+
+  <wsdl:documentation>
+    KoKu KKS service contract definition.
+    
+    version: 0.0.1
+    Ixonos /
+  </wsdl:documentation>
+
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
+      <xsd:import namespace="http://services.koku.fi/entity/kks/v1" schemaLocation="kks.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!-- common messages -->
+  <wsdl:message name="AuditHeader">
+    <wsdl:part name="AuditHeader" element="kks:auditInfo"/>
+  </wsdl:message>
+
+
+  <!-- KKS messages -->
+
+
+  <!-- port type -->
+  <wsdl:portType name="kksServicePortType">
+  </wsdl:portType>
+
+  <!-- bindings -->
+  <wsdl:binding name="kksService-soap11-binding" type="tns:kksServicePortType">
+    <soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+  </wsdl:binding>
+
+
+  <!-- service -->
+  <wsdl:service name="kksService">
+    <wsdl:port name="kksService-soap11-port" binding="tns:kksService-soap11-binding" >
+      <soap11:address location="http://localhost:8088/kks/"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>
