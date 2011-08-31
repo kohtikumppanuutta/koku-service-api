@@ -1,21 +1,295 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://services.koku.fi/entity/kks/v1"
-  xmlns="http://services.koku.fi/entity/kks/v1"
-  xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
+  targetNamespace="http://services.koku.fi/utility/kks/v1"
+  xmlns="http://services.koku.fi/utility/kks/v1"
   elementFormDefault="qualified"
-  version="0.0.1"
+  version="0.1"
   >
-
+  
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       KoKu KKS service message type definitions.
-      Ixonos /
+      Ixonos / tuomape
     </xsd:documentation>
   </xsd:annotation>
+  
+  <!-- element for collection type (collection metadata) -->
+  <xsd:element name="kksCollectionType" type="KksCollectionType"/>
+  
+  <!-- element for entry type (entry metadata) -->
+  <xsd:element name="kksEntryType" type="KksEntryType"/>
+  
+  <!-- element for collection -->
+  <xsd:element name="kksCollection" type="KksCollection"/>
+  
+  <!-- element for single entry -->
+  <xsd:element name="kksEntry" type="KksEntry"/>
+  
+  <!-- element for classification -->
+  <xsd:element name="kksClassification" type="KksClassification"/>
+  
+  <!-- element for entry groups -->
+  <xsd:element name="kksGroup" type="KksGroup"/>
+  
+  <!-- element for search criteria -->
+  <xsd:element name="kksSearchCriteria" type="KksSearchQueryCriteria"/>  
+  
+  <!-- element for search results -->
+  <xsd:element name="kksSearchResult" type="KksSearchResult"/>
+  
+  <!-- element for persons kks collection -->
+  <xsd:element name="kks" type="KKS"/> 
+  
+  <!-- element for collections short description  -->
+  <xsd:element name="kksCollectionDescription" type="KksCollectionDescription"/> 
+  
+  <!-- element for collection types that can be created  -->
+  <xsd:element name="creatableCollections" type="KksCreatableCollections"/>  
+  
+  <!-- element for object that can be created  -->
+  <xsd:element name="creatable" type="KksCreatable"/>  
+  
+  <!-- element for childs pic -->
+  <xsd:element name="childPic" type="xsd:string"/>
+  
+  <!-- element for collection id -->
+  <xsd:element name="kksCollectionId" type="xsd:string"/>
+  
+    <!-- element for general operation succeed (TEMP solution) -->
+  <xsd:element name="kksOperationSuccess" type="xsd:boolean"/>
+  
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      collections: persons collections
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KKS">
+    <xsd:sequence>
+      <xsd:element name="collections" type="KksCollectionDescription" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Collection identifier
+      name: Collection type name
+      state: Collection state
+      modified: Date when collection was last modified
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCollectionDescription">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="state" type="xsd:string"/>
+      <xsd:element name="modified" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      pic: search target person pic
+      classifications: search classifications
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksSearchQueryCriteria">
+    <xsd:sequence>
+      <xsd:element name="pic" type="xsd:string"/>
+      <xsd:element name="classifications" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      collections: persons collections
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCreatableCollections">
+    <xsd:sequence>
+      <xsd:element name="creatables" type="KksCreatable" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+   <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Creatable identifier
+      name: Creatable name
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCreatable">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Collection identifier
+      name: Collection type name
+      description: Collection type description
+      entryTypeGroups: Collections entry type groups
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCollectionType">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="entryTypeGroups" type="KksGroup" minOccurs="0" maxOccurs="unbounded"  />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Group identifier
+      order: Group order
+      name: Group name
+      description: Group description
+      register: Register where group entry types are managed
+      entryTypes: Group entry types
+      childGroups: Group child groups
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksGroup">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="order" type="xsd:integer"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="register" type="xsd:string"/>
+      <xsd:element name="entryTypes" type="KksEntryType" minOccurs="0" maxOccurs="unbounded"  />
+      <xsd:element name="childGroups" type="KksGroup" minOccurs="0" maxOccurs="unbounded"  />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Entry type identifier
+      order: entry type order
+      name: Entry type name
+      description: Entry type description
+      multiValue: Is entry type multivalue field or not
+      dataType: Entry type data type (text, free_text, select, multi_select)
+      values: What kind of selection choices entry type can have (example checkbox choices etc)
+      group: entry type group
+      childGroup: entry type child group      
+      register: Register where entry type is managed
+      accountable: who is accountable from entry field
+      classifications: entry types classifications
+      developmentTypes: entry types developmentTypes
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksEntryType">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="order" type="xsd:integer"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="multiValue" type="xsd:boolean"/>
+      <xsd:element name="dataType" type="xsd:string"/>
+      <xsd:element name="values" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="group" type="xsd:string"/>
+      <xsd:element name="childGroup" type="xsd:string"/>
+      <xsd:element name="register" type="xsd:string"/>
+      <xsd:element name="accountable" type="xsd:string"/>
+      <xsd:element name="classifications" type="KksClassification" minOccurs="0" maxOccurs="unbounded"  />
+      <xsd:element name="developmentTypes" type="KksClassification" minOccurs="0" maxOccurs="unbounded"  />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: classification identifier
+      name: classification name
+      description: classification description
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksClassification">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+   
+  
+   <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Entry identifier
+      change time: when entry was last modified
+      recorder: who made the entry
+      version: entry version
+      entryType: entry type
+      classifications: entry specific classifications
+      values: Entry value(s)
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksEntry">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="changeTime" type="xsd:dateTime"/>
+      <xsd:element name="recorder" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:integer"/>
+      <xsd:element name="entryType" type="KksEntryType" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="classifications" type="KksClassification" minOccurs="0" maxOccurs="unbounded"  />
+      <xsd:element name="values" type="xsd:string" minOccurs="0" maxOccurs="unbounded"  />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: collection identifier
+      name: collection name
+      description: collection description
+      state: collection state (active, locked)
+      creationTime: when the collection was created
+      version: collection version
+      type: collection type
+      entries: collection entries
+      nextVersion: link to next collection version (if exist)
+      prevVersion: link to previous collection (if exist)
+      versioned: is collection versioned
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCollection">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="state" type="xsd:string"/>
+      <xsd:element name="creationTime" type="xsd:dateTime"/>
+      <xsd:element name="version" type="xsd:integer"/>
+      <xsd:element name="type" type="KksCollectionType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="entries" type="KksEntry" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="nextVersion" type="xsd:string"/>
+      <xsd:element name="prevVersion" type="xsd:string"/>
+      <xsd:element name="versioned" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
 
 
-
+   <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      collectionId: id of the collection where entries are found
+      collectionState:  state of the collection where entries are found
+      collectionName:  name of the collection where entries are found
+      entries: searcj result entries
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksSearchResult">
+    <xsd:sequence>
+      <xsd:element name="collectionId" type="xsd:string"/>
+      <xsd:element name="collectionState" type="xsd:string"/>
+      <xsd:element name="collectionName" type="xsd:string"/>
+      <xsd:element name="entries" type="KksEntry" minOccurs="1" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+ 
+  
   <!-- common type and element definitions -->
 
   <xsd:element name="auditInfo" type="auditInfoType"/>
@@ -33,5 +307,5 @@
       <xsd:maxLength value="19"/>
     </xsd:restriction>
   </xsd:simpleType>
-  
+
 </xsd:schema>

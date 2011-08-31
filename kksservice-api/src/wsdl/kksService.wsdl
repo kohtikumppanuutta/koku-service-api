@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions name="kksService"
-  targetNamespace="http://services.koku.fi/entity/kks/v1"
-  xmlns:tns="http://services.koku.fi/entity/kks/v1"
-  xmlns:kks="http://services.koku.fi/entity/kks/v1"
+  targetNamespace="http://services.koku.fi/utility/kks/v1"
+  xmlns:tns="http://services.koku.fi/utility/kks/v1"
+  xmlns:log="http://services.koku.fi/utility/kks/v1"
   xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
@@ -10,16 +10,16 @@
   >
 
   <wsdl:documentation>
-    KoKu KKS service contract definition.
+    KoKu kks service contract definition.
+
+    version: 0.1
+    Ixonos / tuomape
     
-    version: 0.0.1
-    Ixonos /
   </wsdl:documentation>
 
   <wsdl:types>
     <xsd:schema>
-      <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
-      <xsd:import namespace="http://services.koku.fi/entity/kks/v1" schemaLocation="kks.xsd"/>
+      <xsd:import namespace="http://services.koku.fi/utility/kks/v1" schemaLocation="kks.xsd"/>
     </xsd:schema>
   </wsdl:types>
 
@@ -28,23 +28,214 @@
     <wsdl:part name="AuditHeader" element="kks:auditInfo"/>
   </wsdl:message>
 
+  <!--  message definitions -->
+  <wsdl:message name="msgGetKksRequest">
+    <wsdl:part name="ChildPic" element="kks:childPic"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetKksResponse">
+    <wsdl:part name="KKS" element="kks:kks"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetCreatableCollectionsRequest">
+    <wsdl:part name="ChildPic" element="kks:childPic"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetCreatableCollectionsResponse">
+    <wsdl:part name="CreatableCollections" element="kks:creatableCollections"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetCollectionRequest">
+    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetCollectionResponse">
+    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgAddCollectionVersionRequest">
+    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgAddCollectionVersionResponse">
+    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgUpdateCollectionRequest">
+    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgUpdateCollectionResponse">
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgQueryEntriesRequest">
+    <wsdl:part name="KksSearchCriteria" element="kks:kksSearchCriteria"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgQueryEntriesResponse">
+    <wsdl:part name="KksSearchResult" element="kks:kksSearchResult"/>
+  </wsdl:message>
+  
+  
+  <!-- CRUD notation not suitable for this? -->
+  <wsdl:message name="msgActivateCollectionRequest">
+    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgActivateCollectionResponse">
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
+  </wsdl:message>
+  
+   <!-- CRUD notation not suitable for this? -->
+  <wsdl:message name="msgLockCollectionRequest">
+    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgLockCollectionResponse">
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
+  </wsdl:message>
+  
+  
+  
+  <!-- interface / port type -->
+  <wsdl:portType name="KksServicePortType">
+  
+    <wsdl:operation name="opGetKKS">
+      <wsdl:input message="tns:msgGetKksRequest"/>
+      <wsdl:output message="tns:msgGetKksResponse"/>
+    </wsdl:operation>
+  
+    <wsdl:operation name="opGetCreatableCollections">
+      <wsdl:input message="tns:msgGetCreatableCollectionsRequest"/>
+      <wsdl:output message="tns:msgGetCreatableCollectionsResponse"/>
+    </wsdl:operation>
+    
+    <wsdl:operation name="opGetCollection">
+      <wsdl:input message="tns:msgGetCollectionRequest"/>
+      <wsdl:output message="tns:msgGetCollectionResponse"/>
+    </wsdl:operation>
+    
+    <wsdl:operation name="opAddCollectionVersion">
+      <wsdl:input message="tns:msgAddCollectionVersionRequest"/>
+      <wsdl:output message="tns:msgAddCollectionVersionResponse"/>
+    </wsdl:operation>
+ 
+    <wsdl:operation name="opUpdateCollection">
+      <wsdl:input message="tns:msgUpdateCollectionRequest"/>
+      <wsdl:output message="tns:msgUpdateCollectionResponse"/>
+    </wsdl:operation>
+     
+    <wsdl:operation name="opQueryEntries">
+      <wsdl:input message="tns:msgQueryEntriesRequest"/>
+      <wsdl:output message="tns:msgQueryEntriesResponse"/>
+    </wsdl:operation>
 
-  <!-- KKS messages -->
+    <wsdl:operation name="opActivateCollection">
+      <wsdl:input message="tns:msgActivateCollectionRequest"/>
+      <wsdl:output message="tns:msgActivateCollectionResponse"/>
+    </wsdl:operation>
 
+    <wsdl:operation name="opLockCollection">
+      <wsdl:input message="tns:msgLockCollectionRequest"/>
+      <wsdl:output message="tns:msgLockCollectionResponse"/>
+    </wsdl:operation>
 
-  <!-- port type -->
-  <wsdl:portType name="kksServicePortType">
   </wsdl:portType>
-
+  
+  
   <!-- bindings -->
-  <wsdl:binding name="kksService-soap11-binding" type="tns:kksServicePortType">
-    <soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+  <wsdl:binding name="kksService-soap11-binding" type="tns:KksServicePortType">
+    <soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    
+    <wsdl:operation name="opGetKKS">
+      <soap11:operation soapAction="http://koku.fi/action/kks/get"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+    <wsdl:operation name="opGetCreatableCollections">
+      <soap11:operation soapAction="http://koku.fi/action/kks/creatable/collections/get"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+    <wsdl:operation name="opGetCollection">
+      <soap11:operation soapAction="http://koku.fi/action/kks/collection/get"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="opAddCollectionVersion">
+      <soap11:operation soapAction="http://koku.fi/action/kks/collection/add"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="opUpdateCollection">
+      <soap11:operation soapAction="http://koku.fi/action/kks/collection/update"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="opQueryEntries">
+      <soap11:operation soapAction="http://koku.fi/action/kks/entries/query"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+        
+    <wsdl:operation name="opActivateCollection">
+      <soap11:operation soapAction="http://koku.fi/action/kks/collection/activate"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+     <wsdl:operation name="opLockCollection">
+      <soap11:operation soapAction="http://koku.fi/action/kks/collection/lock"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
   </wsdl:binding>
 
-
-  <!-- service -->
+  
+  <!-- service definitions -->
   <wsdl:service name="kksService">
-    <wsdl:port name="kksService-soap11-port" binding="tns:kksService-soap11-binding" >
+    <wsdl:port name="kksService-soap11-port" binding="tns:kksService-soap11-binding">
       <soap11:address location="http://localhost:8088/kks/"/>
     </wsdl:port>
   </wsdl:service>
