@@ -1,0 +1,510 @@
+<definitions name='ldapService' targetNamespace='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:ns1='http://www.arcusys.fi/tampere/hrsoa/ldap/' xmlns:ns2='http://www.arcusys.fi/tampere/hrsoa/entity/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <xs:schema elementFormDefault='qualified' targetNamespace='http://www.arcusys.fi/tampere/hrsoa/entity/' version='1.0' xmlns:tns='http://www.arcusys.fi/tampere/hrsoa/entity/' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:complexType name='User'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='employeeId' type='xs:string'/>
+     <xs:element minOccurs='0' name='firstName' type='xs:string'/>
+     <xs:element minOccurs='0' name='lastName' type='xs:string'/>
+     <xs:element minOccurs='0' name='email' type='xs:string'/>
+     <xs:element minOccurs='0' name='superiorId' type='xs:string'/>
+     <xs:element minOccurs='0' name='address' type='tns:Address'/>
+     <xs:element minOccurs='0' name='userId' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='employment' nillable='true' type='tns:Employment'/>
+     <xs:element minOccurs='0' name='ssn' type='xs:string'/>
+     <xs:element minOccurs='0' name='bankAccount' type='tns:BankAccount'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='contract' nillable='true' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='vacationData' nillable='true' type='tns:VacationData'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='Address'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='streetName' type='xs:string'/>
+     <xs:element minOccurs='0' name='zipCode' type='xs:string'/>
+     <xs:element minOccurs='0' name='city' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='Employment'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='id' type='xs:string'/>
+     <xs:element minOccurs='0' name='departmentOfSalaryCalculation' type='xs:string'/>
+     <xs:element minOccurs='0' name='employmentLetter' type='xs:string'/>
+     <xs:element minOccurs='0' name='earningPeriodType' type='xs:string'/>
+     <xs:element minOccurs='0' name='organization' type='tns:Organization'/>
+     <xs:element minOccurs='0' name='title' type='xs:string'/>
+     <xs:element minOccurs='0' name='startDate' type='xs:dateTime'/>
+     <xs:element minOccurs='0' name='endDate' type='xs:dateTime'/>
+     <xs:element minOccurs='0' name='department' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='Organization'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='id' type='xs:string'/>
+     <xs:element name='name' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='costCentre' nillable='true' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='BankAccount'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='id' type='xs:long'/>
+     <xs:element minOccurs='0' name='iban' type='xs:string'/>
+     <xs:element minOccurs='0' name='bic' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='VacationData'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='ssn' type='xs:string'/>
+     <xs:element minOccurs='0' name='vacationLeft' type='xs:int'/>
+     <xs:element minOccurs='0' name='vacationKept' type='xs:int'/>
+     <xs:element minOccurs='0' name='vacationDays' type='xs:int'/>
+     <xs:element minOccurs='0' name='vacationYear' type='xs:int'/>
+     <xs:element minOccurs='0' name='vacationGain' type='xs:int'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='contract' nillable='true' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+  <xs:schema elementFormDefault='qualified' targetNamespace='http://www.arcusys.fi/tampere/hrsoa/ldap/' version='1.0' xmlns:ns1='http://www.arcusys.fi/tampere/hrsoa/entity/' xmlns:tns='http://www.arcusys.fi/tampere/hrsoa/ldap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:import namespace='http://www.arcusys.fi/tampere/hrsoa/entity/'/>
+   <xs:element name='GetEmployees' nillable='true' type='tns:GetEmployees'/>
+   <xs:element name='GetEmployeesById' nillable='true' type='tns:GetEmployeesById'/>
+   <xs:element name='GetEmployeesByIdResponse' nillable='true' type='tns:GetEmployeesByIdResponse'/>
+   <xs:element name='GetEmployeesByOrganization' nillable='true' type='tns:GetEmployeesByOrganization'/>
+   <xs:element name='GetEmployeesByOrganizationResponse' nillable='true' type='tns:GetEmployeesByOrganizationResponse'/>
+   <xs:element name='GetEmployeesResponse' nillable='true' type='tns:GetEmployeesResponse'/>
+   <xs:element name='GetOrganizationById' nillable='true' type='tns:GetOrganizationById'/>
+   <xs:element name='GetOrganizationByIdResponse' nillable='true' type='tns:GetOrganizationByIdResponse'/>
+   <xs:element name='GetOrganizationEmployees' nillable='true' type='tns:GetOrganizationEmployees'/>
+   <xs:element name='GetOrganizationEmployeesResponse' nillable='true' type='tns:GetOrganizationEmployeesResponse'/>
+   <xs:element name='GetOrganizations' nillable='true' type='tns:GetOrganizations'/>
+   <xs:element name='GetOrganizationsResponse' nillable='true' type='tns:GetOrganizationsResponse'/>
+   <xs:element name='GetSuperiorsByEmployeeId' nillable='true' type='tns:GetSuperiorsByEmployeeId'/>
+   <xs:element name='GetSuperiorsByEmployeeIdResponse' nillable='true' type='tns:GetSuperiorsByEmployeeIdResponse'/>
+   <xs:element name='GetSuperiorsById' nillable='true' type='tns:GetSuperiorsById'/>
+   <xs:element name='GetSuperiorsByIdResponse' nillable='true' type='tns:GetSuperiorsByIdResponse'/>
+   <xs:element name='GetSuperiorsByOrganization' nillable='true' type='tns:GetSuperiorsByOrganization'/>
+   <xs:element name='GetSuperiorsByOrganizationResponse' nillable='true' type='tns:GetSuperiorsByOrganizationResponse'/>
+   <xs:element name='GetSuperiorsBySSN' nillable='true' type='tns:GetSuperiorsBySSN'/>
+   <xs:element name='GetSuperiorsBySSNResponse' nillable='true' type='tns:GetSuperiorsBySSNResponse'/>
+   <xs:element name='GetUserByEmployeeId' nillable='true' type='tns:GetUserByEmployeeId'/>
+   <xs:element name='GetUserByEmployeeIdResponse' nillable='true' type='tns:GetUserByEmployeeIdResponse'/>
+   <xs:element name='GetUserById' nillable='true' type='tns:GetUserById'/>
+   <xs:element name='GetUserByIdResponse' nillable='true' type='tns:GetUserByIdResponse'/>
+   <xs:element name='GetUserBySSN' nillable='true' type='tns:GetUserBySSN'/>
+   <xs:element name='GetUserBySSNResponse' nillable='true' type='tns:GetUserBySSNResponse'/>
+   <xs:element name='GetUsersByIds' nillable='true' type='tns:GetUsersByIds'/>
+   <xs:element name='GetUsersByIdsResponse' nillable='true' type='tns:GetUsersByIdsResponse'/>
+   <xs:complexType name='GetUserByEmployeeId'>
+    <xs:sequence>
+     <xs:element name='employeeId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUserByEmployeeIdResponse'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='user' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUserBySSN'>
+    <xs:sequence>
+     <xs:element name='ssn' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUserBySSNResponse'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='user' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetEmployees'>
+    <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name='GetEmployeesResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetEmployeesById'>
+    <xs:sequence>
+     <xs:element name='userId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetEmployeesByIdResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsById'>
+    <xs:sequence>
+     <xs:element name='userId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsByIdResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUserById'>
+    <xs:sequence>
+     <xs:element name='userId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUserByIdResponse'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='user' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUsersByIds'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='userId' nillable='true' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetUsersByIdsResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsByEmployeeId'>
+    <xs:sequence>
+     <xs:element name='employeeId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsByEmployeeIdResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsBySSN'>
+    <xs:sequence>
+     <xs:element name='ssn' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsBySSNResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetEmployeesByOrganization'>
+    <xs:sequence>
+     <xs:element name='organizationId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetEmployeesByOrganizationResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetOrganizationById'>
+    <xs:sequence>
+     <xs:element name='organizationId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetOrganizationByIdResponse'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='organization' type='ns1:Organization'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetOrganizationEmployees'>
+    <xs:sequence>
+     <xs:element name='employeeId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetOrganizationEmployeesResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetOrganizations'>
+    <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name='GetOrganizationsResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='organization' nillable='true' type='ns1:Organization'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsByOrganization'>
+    <xs:sequence>
+     <xs:element name='organizationId' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='GetSuperiorsByOrganizationResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='user' nillable='true' type='ns1:User'/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+ </types>
+ <message name='ldapService_GetEmployees'>
+  <part element='ns1:GetEmployees' name='GetEmployees'></part>
+ </message>
+ <message name='ldapService_GetOrganizationByIdResponse'>
+  <part element='ns1:GetOrganizationByIdResponse' name='GetOrganizationByIdResponse'></part>
+ </message>
+ <message name='ldapService_GetEmployeesByIdResponse'>
+  <part element='ns1:GetEmployeesByIdResponse' name='GetEmployeesByIdResponse'></part>
+ </message>
+ <message name='ldapService_GetEmployeesById'>
+  <part element='ns1:GetEmployeesById' name='GetEmployeesById'></part>
+ </message>
+ <message name='ldapService_GetEmployeesResponse'>
+  <part element='ns1:GetEmployeesResponse' name='GetEmployeesResponse'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsBySSN'>
+  <part element='ns1:GetSuperiorsBySSN' name='GetSuperiorsBySSN'></part>
+ </message>
+ <message name='ldapService_GetEmployeesByOrganization'>
+  <part element='ns1:GetEmployeesByOrganization' name='GetEmployeesByOrganization'></part>
+ </message>
+ <message name='ldapService_GetUserBySSN'>
+  <part element='ns1:GetUserBySSN' name='GetUserBySSN'></part>
+ </message>
+ <message name='ldapService_GetUserByIdResponse'>
+  <part element='ns1:GetUserByIdResponse' name='GetUserByIdResponse'></part>
+ </message>
+ <message name='ldapService_GetOrganizationEmployeesResponse'>
+  <part element='ns1:GetOrganizationEmployeesResponse' name='GetOrganizationEmployeesResponse'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsBySSNResponse'>
+  <part element='ns1:GetSuperiorsBySSNResponse' name='GetSuperiorsBySSNResponse'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsByEmployeeIdResponse'>
+  <part element='ns1:GetSuperiorsByEmployeeIdResponse' name='GetSuperiorsByEmployeeIdResponse'></part>
+ </message>
+ <message name='ldapService_GetUserByEmployeeIdResponse'>
+  <part element='ns1:GetUserByEmployeeIdResponse' name='GetUserByEmployeeIdResponse'></part>
+ </message>
+ <message name='ldapService_GetUserById'>
+  <part element='ns1:GetUserById' name='GetUserById'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsByEmployeeId'>
+  <part element='ns1:GetSuperiorsByEmployeeId' name='GetSuperiorsByEmployeeId'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsByOrganizationResponse'>
+  <part element='ns1:GetSuperiorsByOrganizationResponse' name='GetSuperiorsByOrganizationResponse'></part>
+ </message>
+ <message name='ldapService_GetUserByEmployeeId'>
+  <part element='ns1:GetUserByEmployeeId' name='GetUserByEmployeeId'></part>
+ </message>
+ <message name='ldapService_GetUsersByIds'>
+  <part element='ns1:GetUsersByIds' name='GetUsersByIds'></part>
+ </message>
+ <message name='ldapService_GetOrganizationById'>
+  <part element='ns1:GetOrganizationById' name='GetOrganizationById'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsByIdResponse'>
+  <part element='ns1:GetSuperiorsByIdResponse' name='GetSuperiorsByIdResponse'></part>
+ </message>
+ <message name='ldapService_GetOrganizationEmployees'>
+  <part element='ns1:GetOrganizationEmployees' name='GetOrganizationEmployees'></part>
+ </message>
+ <message name='ldapService_GetEmployeesByOrganizationResponse'>
+  <part element='ns1:GetEmployeesByOrganizationResponse' name='GetEmployeesByOrganizationResponse'></part>
+ </message>
+ <message name='ldapService_GetOrganizationsResponse'>
+  <part element='ns1:GetOrganizationsResponse' name='GetOrganizationsResponse'></part>
+ </message>
+ <message name='ldapService_GetOrganizations'>
+  <part element='ns1:GetOrganizations' name='GetOrganizations'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsById'>
+  <part element='ns1:GetSuperiorsById' name='GetSuperiorsById'></part>
+ </message>
+ <message name='ldapService_GetUsersByIdsResponse'>
+  <part element='ns1:GetUsersByIdsResponse' name='GetUsersByIdsResponse'></part>
+ </message>
+ <message name='ldapService_GetSuperiorsByOrganization'>
+  <part element='ns1:GetSuperiorsByOrganization' name='GetSuperiorsByOrganization'></part>
+ </message>
+ <message name='ldapService_GetUserBySSNResponse'>
+  <part element='ns1:GetUserBySSNResponse' name='GetUserBySSNResponse'></part>
+ </message>
+ <portType name='ldapService'>
+  <operation name='GetEmployees' parameterOrder='GetEmployees'>
+   <input message='tns:ldapService_GetEmployees'></input>
+   <output message='tns:ldapService_GetEmployeesResponse'></output>
+  </operation>
+  <operation name='GetEmployeesById' parameterOrder='GetEmployeesById'>
+   <input message='tns:ldapService_GetEmployeesById'></input>
+   <output message='tns:ldapService_GetEmployeesByIdResponse'></output>
+  </operation>
+  <operation name='GetEmployeesByOrganization' parameterOrder='GetEmployeesByOrganization'>
+   <input message='tns:ldapService_GetEmployeesByOrganization'></input>
+   <output message='tns:ldapService_GetEmployeesByOrganizationResponse'></output>
+  </operation>
+  <operation name='GetOrganizationById' parameterOrder='GetOrganizationById'>
+   <input message='tns:ldapService_GetOrganizationById'></input>
+   <output message='tns:ldapService_GetOrganizationByIdResponse'></output>
+  </operation>
+  <operation name='GetOrganizationEmployees' parameterOrder='GetOrganizationEmployees'>
+   <input message='tns:ldapService_GetOrganizationEmployees'></input>
+   <output message='tns:ldapService_GetOrganizationEmployeesResponse'></output>
+  </operation>
+  <operation name='GetOrganizations' parameterOrder='GetOrganizations'>
+   <input message='tns:ldapService_GetOrganizations'></input>
+   <output message='tns:ldapService_GetOrganizationsResponse'></output>
+  </operation>
+  <operation name='GetSuperiorsByEmployeeId' parameterOrder='GetSuperiorsByEmployeeId'>
+   <input message='tns:ldapService_GetSuperiorsByEmployeeId'></input>
+   <output message='tns:ldapService_GetSuperiorsByEmployeeIdResponse'></output>
+  </operation>
+  <operation name='GetSuperiorsById' parameterOrder='GetSuperiorsById'>
+   <input message='tns:ldapService_GetSuperiorsById'></input>
+   <output message='tns:ldapService_GetSuperiorsByIdResponse'></output>
+  </operation>
+  <operation name='GetSuperiorsByOrganization' parameterOrder='GetSuperiorsByOrganization'>
+   <input message='tns:ldapService_GetSuperiorsByOrganization'></input>
+   <output message='tns:ldapService_GetSuperiorsByOrganizationResponse'></output>
+  </operation>
+  <operation name='GetSuperiorsBySSN' parameterOrder='GetSuperiorsBySSN'>
+   <input message='tns:ldapService_GetSuperiorsBySSN'></input>
+   <output message='tns:ldapService_GetSuperiorsBySSNResponse'></output>
+  </operation>
+  <operation name='GetUserByEmployeeId' parameterOrder='GetUserByEmployeeId'>
+   <input message='tns:ldapService_GetUserByEmployeeId'></input>
+   <output message='tns:ldapService_GetUserByEmployeeIdResponse'></output>
+  </operation>
+  <operation name='GetUserById' parameterOrder='GetUserById'>
+   <input message='tns:ldapService_GetUserById'></input>
+   <output message='tns:ldapService_GetUserByIdResponse'></output>
+  </operation>
+  <operation name='GetUserBySSN' parameterOrder='GetUserBySSN'>
+   <input message='tns:ldapService_GetUserBySSN'></input>
+   <output message='tns:ldapService_GetUserBySSNResponse'></output>
+  </operation>
+  <operation name='GetUsersByIds' parameterOrder='GetUsersByIds'>
+   <input message='tns:ldapService_GetUsersByIds'></input>
+   <output message='tns:ldapService_GetUsersByIdsResponse'></output>
+  </operation>
+ </portType>
+ <binding name='ldapServiceBinding' type='tns:ldapService'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='GetEmployees'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetEmployees'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetEmployeesById'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetEmployeesById'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetEmployeesByOrganization'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/ws/ldap/GetEmployeesByOrganization'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetOrganizationById'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/ws/ldap/GetOrganizationById'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetOrganizationEmployees'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/ws/ldap/GetOrganizationEmployees'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetOrganizations'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/ws/ldap/GetOrganizations'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetSuperiorsByEmployeeId'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetSuperiorsByEmployeeId'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetSuperiorsById'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetSuperiorsById'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetSuperiorsByOrganization'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/ws/ldap/GetSuperiorsByOrganization'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetSuperiorsBySSN'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetSuperiorsBySSN'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetUserByEmployeeId'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetUserByEmployeeId'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetUserById'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetUserById'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetUserBySSN'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetUserBySSN'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='GetUsersByIds'>
+   <soap:operation soapAction='http://www.arcusys.fi/tampere/hrsoa/ws/ldap/GetUsersByIds'/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='ldapService'>
+  <port binding='tns:ldapServiceBinding' name='ldapServiceSOAP'>
+   <soap:address location='http://trelx40.sis.tampere.fi:8080/tampere-services/ldapService'/>
+  </port>
+ </service>
+</definitions>
