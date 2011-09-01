@@ -9,4 +9,5 @@
   <artifactId>ccisservice-api</artifactId>
   <name>ccisservice-api</name>
   <description>child care information system service</description>
+  <version>0.0.1-SNAPSHOT</version>
 </project>

@@ -9,5 +9,5 @@
   <artifactId>hisservice-api</artifactId>
   <name>hisservice-api</name>
   <description>Healthcare information system (his) interface API</description>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
 </project>
