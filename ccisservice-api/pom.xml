@@ -6,7 +6,7 @@
     <version>0.0.2-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>ccisservice</artifactId>
-  <name>ccisservice</name>
+  <artifactId>ccisservice-api</artifactId>
+  <name>ccisservice-api</name>
   <description>child care information system service</description>
 </project>
