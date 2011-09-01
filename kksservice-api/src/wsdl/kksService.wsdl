@@ -30,70 +30,70 @@
 
   <!--  message definitions -->
   <wsdl:message name="msgGetKksRequest">
-    <wsdl:part name="ChildPic" element="kks:childPic"/>
+    <wsdl:part name="ChildPic" element="tns:childPic"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksResponse">
-    <wsdl:part name="KKS" element="kks:kks"/>
+    <wsdl:part name="KKS" element="tns:kks"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetCreatableCollectionsRequest">
-    <wsdl:part name="ChildPic" element="kks:childPic"/>
+    <wsdl:part name="ChildPic" element="tns:childPic"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetCreatableCollectionsResponse">
-    <wsdl:part name="CreatableCollections" element="kks:creatableCollections"/>
+    <wsdl:part name="CreatableCollections" element="tns:creatableCollections"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetCollectionRequest">
-    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetCollectionResponse">
-    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
+    <wsdl:part name="KksCollection" element="tns:kksCollection"/>
   </wsdl:message>
   
   <wsdl:message name="msgAddCollectionVersionRequest">
-    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
   </wsdl:message>
   
   <wsdl:message name="msgAddCollectionVersionResponse">
-    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
+    <wsdl:part name="KksCollection" element="tns:kksCollection"/>
   </wsdl:message>
   
   <wsdl:message name="msgUpdateCollectionRequest">
-    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
+    <wsdl:part name="KksCollection" element="tns:kksCollection"/>
   </wsdl:message>
   
   <wsdl:message name="msgUpdateCollectionResponse">
-    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
+    <wsdl:part name="KksOperationSuccess" element="tns:kksOperationSuccess"/>
   </wsdl:message>
   
   <wsdl:message name="msgQueryEntriesRequest">
-    <wsdl:part name="KksSearchCriteria" element="kks:kksSearchCriteria"/>
+    <wsdl:part name="KksSearchCriteria" element="tns:kksSearchCriteria"/>
   </wsdl:message>
   
   <wsdl:message name="msgQueryEntriesResponse">
-    <wsdl:part name="KksSearchResult" element="kks:kksSearchResult"/>
+    <wsdl:part name="KksSearchResult" element="tns:kksSearchResult"/>
   </wsdl:message>
   
   
   <!-- CRUD notation not suitable for this? -->
   <wsdl:message name="msgActivateCollectionRequest">
-    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
   </wsdl:message>
   
   <wsdl:message name="msgActivateCollectionResponse">
-    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
+    <wsdl:part name="KksOperationSuccess" element="tns:kksOperationSuccess"/>
   </wsdl:message>
   
    <!-- CRUD notation not suitable for this? -->
   <wsdl:message name="msgLockCollectionRequest">
-    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
+    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
   </wsdl:message>
   
   <wsdl:message name="msgLockCollectionResponse">
-    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
+    <wsdl:part name="KksOperationSuccess" element="tns:kksOperationSuccess"/>
   </wsdl:message>
   
   
