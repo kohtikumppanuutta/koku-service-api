@@ -10,10 +10,11 @@
   >
 
   <wsdl:documentation>
-    KoKu kks service contract definition.
+    KoKu KKS service contract definition.
 
-    version: 0.1
+    version: 0.2
     Ixonos / tuomape
+    Ixonos / aspluma
     
   </wsdl:documentation>
 
@@ -70,32 +71,12 @@
   </wsdl:message>
   
   <wsdl:message name="msgQueryEntriesRequest">
-    <wsdl:part name="KksSearchCriteria" element="tns:kksSearchCriteria"/>
+    <wsdl:part name="KksQueryCriteria" element="tns:kksQueryCriteria"/>
   </wsdl:message>
   
   <wsdl:message name="msgQueryEntriesResponse">
     <wsdl:part name="KksSearchResult" element="tns:kksSearchResult"/>
   </wsdl:message>
-  
-  
-  <!-- CRUD notation not suitable for this? -->
-  <wsdl:message name="msgActivateCollectionRequest">
-    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
-  </wsdl:message>
-  
-  <wsdl:message name="msgActivateCollectionResponse">
-    <wsdl:part name="KksOperationSuccess" element="tns:kksOperationSuccess"/>
-  </wsdl:message>
-  
-   <!-- CRUD notation not suitable for this? -->
-  <wsdl:message name="msgLockCollectionRequest">
-    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
-  </wsdl:message>
-  
-  <wsdl:message name="msgLockCollectionResponse">
-    <wsdl:part name="KksOperationSuccess" element="tns:kksOperationSuccess"/>
-  </wsdl:message>
-  
   
   
   <!-- interface / port type -->
@@ -129,16 +110,6 @@
     <wsdl:operation name="opQueryEntries">
       <wsdl:input message="tns:msgQueryEntriesRequest"/>
       <wsdl:output message="tns:msgQueryEntriesResponse"/>
-    </wsdl:operation>
-
-    <wsdl:operation name="opActivateCollection">
-      <wsdl:input message="tns:msgActivateCollectionRequest"/>
-      <wsdl:output message="tns:msgActivateCollectionResponse"/>
-    </wsdl:operation>
-
-    <wsdl:operation name="opLockCollection">
-      <wsdl:input message="tns:msgLockCollectionRequest"/>
-      <wsdl:output message="tns:msgLockCollectionResponse"/>
     </wsdl:operation>
 
   </wsdl:portType>
@@ -208,28 +179,6 @@
       </wsdl:output>
     </wsdl:operation>
         
-    <wsdl:operation name="opActivateCollection">
-      <soap11:operation soapAction="http://koku.fi/action/kks/collection/activate"/>
-      <wsdl:input>
-        <soap11:body use="literal"/>
-        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap11:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    
-     <wsdl:operation name="opLockCollection">
-      <soap11:operation soapAction="http://koku.fi/action/kks/collection/lock"/>
-      <wsdl:input>
-        <soap11:body use="literal"/>
-        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap11:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    
   </wsdl:binding>
 
   

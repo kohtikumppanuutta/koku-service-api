@@ -2,13 +2,20 @@
   targetNamespace="http://services.koku.fi/utility/kks/v1"
   xmlns="http://services.koku.fi/utility/kks/v1"
   elementFormDefault="qualified"
-  version="0.1"
+  version="0.2"
   >
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       KoKu KKS service message type definitions.
       Ixonos / tuomape
+      Ixonos / aspluma
+      
+      TODO
+      - naming conventions
+      - use container element for lists of elements (e.g. classifications, values etc.)
+      - 
+      
     </xsd:documentation>
   </xsd:annotation>
   
@@ -31,7 +38,7 @@
   <xsd:element name="kksGroup" type="KksGroup"/>
   
   <!-- element for search criteria -->
-  <xsd:element name="kksSearchCriteria" type="KksSearchQueryCriteria"/>  
+  <xsd:element name="kksQueryCriteria" type="KksQueryCriteria"/>  
   
   <!-- element for search results -->
   <xsd:element name="kksSearchResult" type="KksSearchResult"/>
@@ -92,13 +99,13 @@
       classifications: search classifications
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksSearchQueryCriteria">
+  <xsd:complexType name="KksQueryCriteria">
     <xsd:sequence>
       <xsd:element name="pic" type="xsd:string"/>
       <xsd:element name="classifications" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
-  
+
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       collections: persons collections
@@ -281,7 +288,7 @@
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType name="KksSearchResult">
-    <xsd:sequence>
+    <xsd:sequence> <!-- TODO: miksei KkksCollection? -->
       <xsd:element name="collectionId" type="xsd:string"/>
       <xsd:element name="collectionState" type="xsd:string"/>
       <xsd:element name="collectionName" type="xsd:string"/>
