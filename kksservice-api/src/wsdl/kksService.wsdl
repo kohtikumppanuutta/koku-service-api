@@ -31,7 +31,7 @@
 
   <!--  message definitions -->
   <wsdl:message name="msgGetKksRequest">
-    <wsdl:part name="ChildPic" element="tns:childPic"/>
+    <wsdl:part name="CustomerPic" element="tns:customerPic"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksResponse">
@@ -39,7 +39,7 @@
   </wsdl:message>
   
   <wsdl:message name="msgGetCreatableCollectionsRequest">
-    <wsdl:part name="ChildPic" element="tns:childPic"/>
+    <wsdl:part name="CustomerPic" element="tns:customerPic"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetCreatableCollectionsResponse">
