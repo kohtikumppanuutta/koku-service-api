@@ -14,8 +14,9 @@
       TODO
       
       - Kokoelman hakuun parametreina laajuus (kirjaus mukana/ei) )		
-
-	  - reuse tags	
+      
+      - Kokoelma updaten tulee sisältää tuki versioinnille
+	
 
     </xsd:documentation>
   </xsd:annotation>
@@ -41,7 +42,6 @@
   
   <!-- element for search criteria -->
   <xsd:element name="kksQueryCriteria" type="KksQueryCriteriaType"/>  
-
   
   <!-- element for persons kks collection -->
   <xsd:element name="kks" type="KksType"/> 
