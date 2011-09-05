@@ -4,7 +4,7 @@
   xmlns="http://services.koku.fi/entity/customer/v1"
   xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
   elementFormDefault="qualified"
-  version="0.93"
+  version="0.94"
   >
 
   <xsd:annotation>
@@ -22,6 +22,8 @@
   <xsd:element name="customerNew" type="CustomerType"/>
   
   <xsd:element name="customerPic" type="xsd:string"/>
+  
+  <xsd:element name="customerId" type="numericId"/>
   
   <xsd:element name="customerPicRemove" type="xsd:string"/>
 
@@ -103,7 +105,7 @@
     <xsd:sequence>
       <xsd:annotation>
         <xsd:documentation xml:lang="fi">
-          kotiosoite, kayntiosoite, opiskelupaikan osoite, postiosoite, vapaa-ajan asunnon osoite, virallinen osoite
+          kotiosoite, kayntiosoite, opiskelupaikan osoite, postiosoite, vapaa-ajan asunnon osoite, _virallinen osoite_
         </xsd:documentation>
       </xsd:annotation>
       <xsd:element name="addressType" type="xsd:string"/>
@@ -154,5 +156,14 @@
       <xsd:maxLength value="19"/>
     </xsd:restriction>
   </xsd:simpleType>
-  
+
+  <xsd:element name="faultDetail">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="majorCode" type="xsd:int" />
+        <xsd:element name="minorCode" type="xsd:int" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
 </xsd:schema>
