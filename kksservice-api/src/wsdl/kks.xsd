@@ -2,7 +2,7 @@
   targetNamespace="http://services.koku.fi/utility/kks/v1"
   xmlns="http://services.koku.fi/utility/kks/v1"
   elementFormDefault="qualified"
-  version="0.2"
+  version="0.3"
   >
   
   <xsd:annotation>
@@ -12,57 +12,48 @@
       Ixonos / aspluma
       
       TODO
-      - use container element for lists of elements (e.g. classifications, values etc.)
-      - how is an initial collection created? opAddCollectionVersion requires collection id.
-      - collection versioning logic?
-      - missing concepts? kksEntryType? 
-      - naming conventions
-        * entryTypeGroups / KksGroup
-        * custom complex types should have "Type" suffix
-      - purpose of creatable?
-        don't we just need a list of all available collection types?
-        why is this parameterized with customer PIC?
-        is this used actually for listing customer's collection instances?
-      - reuse data types
+      
+      - Kokoelman hakuun parametreina laajuus (kirjaus mukana/ei) )		
+
+	  - reuse tags	
 
     </xsd:documentation>
   </xsd:annotation>
   
+  
   <!-- element for collection type (collection metadata) -->
-  <xsd:element name="kksCollectionType" type="KksCollectionType"/>
+  <xsd:element name="kksCollectionClass" type="KksCollectionClassType"/>
   
   <!-- element for entry type (entry metadata) -->
-  <xsd:element name="kksEntryType" type="KksEntryType"/>
+  <xsd:element name="kksEntryClass" type="KksEntryClassType"/>
   
   <!-- element for collection -->
-  <xsd:element name="kksCollection" type="KksCollection"/>
+  <xsd:element name="kksCollection" type="KksCollectionType"/>
   
   <!-- element for single entry -->
-  <xsd:element name="kksEntry" type="KksEntry"/>
+  <xsd:element name="kksEntry" type="KksType"/>
   
   <!-- element for classification -->
-  <xsd:element name="kksClassification" type="KksClassification"/>
+  <xsd:element name="kksTag" type="KksTagType"/>
   
   <!-- element for entry groups -->
-  <xsd:element name="kksGroup" type="KksGroup"/>
+  <xsd:element name="kksGroup" type="KksGroupType"/>
   
   <!-- element for search criteria -->
-  <xsd:element name="kksQueryCriteria" type="KksQueryCriteria"/>  
-  
-  <!-- element for search results -->
-  <xsd:element name="kksSearchResult" type="KksSearchResult"/>
+  <xsd:element name="kksQueryCriteria" type="KksQueryCriteriaType"/>  
+
   
   <!-- element for persons kks collection -->
-  <xsd:element name="kks" type="KKS"/> 
-  
-  <!-- element for collection types that can be created  -->
-  <xsd:element name="creatableCollections" type="KksCreatableCollections"/>  
-  
-  <!-- element for object that can be created  -->
-  <xsd:element name="creatable" type="KksCreatable"/>  
+  <xsd:element name="kks" type="KksType"/> 
   
   <!-- element for customer's pic -->
   <xsd:element name="customerPic" type="xsd:string"/>
+  
+  <!-- element for collection class type name -->
+  <xsd:element name="kksCollectionClassName" type="xsd:string"/>
+  
+  <!-- element for collection class type names -->
+  <xsd:element name="kksCollectionClassNames" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
   
   <!-- element for collection id -->
   <xsd:element name="kksCollectionId" type="xsd:string"/>
@@ -70,71 +61,76 @@
     <!-- element for general operation succeed (TEMP solution) -->
   <xsd:element name="kksOperationSuccess" type="xsd:boolean"/>
   
+  <xsd:element name="kksCollections" type="KksCollectionsType"/>
+  <xsd:element name="kksTags" type="KksTagsType"/>
+  <xsd:element name="kksTagIds" type="KksTagIdsType"/>
+  <xsd:element name="kksEntryClassId" type="xsd:string"/> 
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      collections: persons collections
+      kksCollections: persons kks collections
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KKS">
+  <xsd:complexType name="KksType">
     <xsd:sequence>
-      <xsd:element name="collections" type="KksCollection" minOccurs="0" maxOccurs="unbounded" /> <!-- wrap in container -->
+      <xsd:element name="kksCollections" type="KksCollectionsType"/> 
     </xsd:sequence>
-  </xsd:complexType>
+  </xsd:complexType>  
+  
+  <xsd:complexType name="KksCollectionsType">
+    <xsd:sequence>
+      <xsd:element name="kksCollection" type="KksCollectionType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>  
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       pic: search target person pic
-      classifications: search classifications
+      kksTagIds: search kks tag ids
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksQueryCriteria">
+  <xsd:complexType name="KksQueryCriteriaType">
     <xsd:sequence>
       <xsd:element name="pic" type="xsd:string"/>
-      <xsd:element name="classifications" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> <!-- wrap in container -->
-    </xsd:sequence>
+      <xsd:element name="kksTagIds" type="KksTagIdsType"/>     
+     </xsd:sequence>
   </xsd:complexType>
+  
+  <xsd:complexType name="KksTagIdsType">
+    <xsd:sequence>
+      <xsd:element name="kksTagId" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>   
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      collections: persons collections
-    </xsd:documentation>
-  </xsd:annotation>
-  <xsd:complexType name="KksCreatableCollections">
-    <xsd:sequence>
-      <xsd:element name="creatables" type="KksCreatable" minOccurs="0" maxOccurs="unbounded" /> <!-- wrap in container -->
-    </xsd:sequence>
-  </xsd:complexType>
-  
-   <xsd:annotation>
-    <xsd:documentation xml:lang="en">
-      id: Creatable identifier
-      name: Creatable name
-    </xsd:documentation>
-  </xsd:annotation>
-  <xsd:complexType name="KksCreatable">
-    <xsd:sequence>
-      <xsd:element name="id" type="xsd:string"/>
-      <xsd:element name="name" type="xsd:string"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  
-  <xsd:annotation>
-    <xsd:documentation xml:lang="en">
-      id: Collection identifier
+      id: Collection type identifier
       name: Collection type name
-      description: Collection type description
-      entryTypeGroups: Collections entry type groups
+      kksGroups: Collection groups
+      kksEntryClasses: Collections entry classes
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksCollectionType">
+  <xsd:complexType name="KksCollectionClassType">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
-      <xsd:element name="entryTypeGroups" type="KksGroup" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
+      <xsd:element name="kksGroups" type="KksGroupsType"/> <!-- kun otettiin pois ryhmä -> kirjaustyyppi suhde, jää tämän elementin relaatio oudoksi -->
+      <xsd:element name="kksEntryClasses" type="KksEntryClassesType" /> <!-- koska se joutuu sisältämään ryhmä määritykset, sekä kirjaustyypit (ennen kirjaustyypit löytyi groupeista) -->
     </xsd:sequence>
   </xsd:complexType>
+  
+    <xsd:complexType name="KksGroupsType">
+    <xsd:sequence>
+      <xsd:element name="kksGroup" type="KksGroupType" minOccurs="0" maxOccurs="unbounded"  />
+    </xsd:sequence>
+  </xsd:complexType> 
+  
+    <xsd:complexType name="KksEntryClassesType">
+    <xsd:sequence>
+		<xsd:element name="kksEntryClass" type="KksEntryClassType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>   
   
 
   <xsd:annotation>
@@ -144,22 +140,20 @@
       name: Group name
       description: Group description
       register: Register where group entry types are managed
-      entryTypes: Group entry types
-      customerGroups: Group customer groups
+      childGroups: Groups child groups
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksGroup">
+  <xsd:complexType name="KksGroupType">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="order" type="xsd:integer"/>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="register" type="xsd:string"/>
-      <!-- does group have to know about entry types? one-way association from entry type to group? -->
-      <xsd:element name="entryTypes" type="KksEntryType" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
-      <xsd:element name="customerGroups" type="KksGroup" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
+      <xsd:element name="childGroups" type="KksGroupsType" /> 
     </xsd:sequence>
   </xsd:complexType>
+
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -169,16 +163,14 @@
       description: Entry type description
       multiValue: Is entry type multivalue field or not
       dataType: Entry type data type (text, free_text, select, multi_select)
-      values: What kind of selection choices entry type can have (example checkbox choices etc)
-      group: entry type group
-      customerGroup: entry type customer group      
+      valueSpaces: What kind of selection choices entry type can have (example checkbox choices etc)
+      topGroupId: top group name (huoltaja, neuvola, etc), default value is empty  
+      secondGroupId: second group(lapsen tiedot, mittaukset, etc), default value is empty  
       register: Register where entry type is managed
-      responsible: the entity that is responsible for entry (e.g. guardian, day care, ...)
-      classifications: entry types classifications
-      developmentTypes: entry types developmentTypes
+      kksTagIds: entry type's tags
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksEntryType">
+  <xsd:complexType name="KksEntryClassType">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="sortOrder" type="xsd:integer"/>
@@ -186,19 +178,19 @@
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="multiValue" type="xsd:boolean"/>
       <xsd:element name="dataType" type="xsd:string"/>
-      <!-- is this "arvojoukko"? rename as "valueSpace" or similar -->
-      <xsd:element name="values" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> <!-- wrap in container -->
-      <xsd:element name="group" type="xsd:string"/>
-      <xsd:element name="customerGroup" type="xsd:string"/> <!-- group vs. customerGroup? -->
+      <xsd:element name="valueSpaces" type="ValueSpacesType"/> 
+      <xsd:element name="topGroupId" type="xsd:string" default=""/> 
+      <xsd:element name="secondGroupId" type="xsd:string" default=""/>
       <xsd:element name="register" type="xsd:string"/>
-      <xsd:element name="responsible" type="xsd:string"/>     <!-- should be in entry group ? -->
-      <!-- combine classifications and developmentTypes? -->
-      <!-- make a reference to the type. type ID or similar -->
-      <xsd:element name="classifications" type="KksClassification" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
-      <xsd:element name="developmentTypes" type="KksClassification" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
+      <xsd:element name="kksTagIds" type="KksTagIdsType"/> 
     </xsd:sequence>
   </xsd:complexType>
   
+  <xsd:complexType name="ValueSpacesType">
+    <xsd:sequence>
+		<xsd:element name="valueSpace" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType> 
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -207,38 +199,48 @@
       description: classification description
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksClassification">
+  <xsd:complexType name="KksTagType">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
-   
-  
+     
+  <xsd:complexType name="KksTagsType">
+    <xsd:sequence>
+		<xsd:element name="kksTag" type="KksTagType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>   
+     
    <xsd:annotation>
     <xsd:documentation xml:lang="en">
       id: Entry identifier
       modified: when entry was last modified
       creator: who made the entry
       version: entry version
-      entryType: entry type
-      classifications: entry specific classifications
-      values: Entry value(s)
+      entryClassId: entry class id
+      kksTagIds: entry specific tags
+      entryValues: entry value(s)
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksEntry">
+  <xsd:complexType name="KksEntryType">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="modified" type="xsd:dateTime"/>
       <xsd:element name="creator" type="xsd:string"/>
       <xsd:element name="version" type="xsd:integer"/>
-      <xsd:element name="entryType" type="KksEntryType"/> <!-- make a reference to the type. type ID or similar -->
-      <xsd:element name="classifications" type="KksClassification" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
-      <xsd:element name="values" type="xsd:string" minOccurs="0" maxOccurs="unbounded"  /> <!-- wrap in container -->
+      <xsd:element name="entryClassId" type="xsd:string"/> 
+      <xsd:element name="kksTagIds" type="KksTagIdsType"/> 
+      <xsd:element name="entryValues" type="EntryValuesType" />
     </xsd:sequence>
   </xsd:complexType>
   
+  <xsd:complexType name="EntryValuesType">
+    <xsd:sequence>
+		<xsd:element name="entryValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType> 
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -248,14 +250,14 @@
       status: collection status (active, locked)
       created: when the collection was created
       version: collection version
-      type: collection type
-      entries: collection entries
+      collectionClassId: collection class id
+      kksEntries: collection entries
       nextVersion: link to next collection version (if exist)
       prevVersion: link to previous collection (if exist)
       versioned: is collection versioned
     </xsd:documentation>
   </xsd:annotation>
-  <xsd:complexType name="KksCollection">
+  <xsd:complexType name="KksCollectionType">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
@@ -263,29 +265,17 @@
       <xsd:element name="status" type="xsd:string"/>
       <xsd:element name="created" type="xsd:dateTime"/>
       <xsd:element name="version" type="xsd:integer"/>
-      <xsd:element name="type" type="KksCollectionType"/> <!-- make a reference to the type. type ID or similar -->
-      <xsd:element name="entries" type="KksEntry" minOccurs="0" maxOccurs="unbounded"/> <!-- wrap in container -->
+      <xsd:element name="collectionClassId" type="xsd:string"/> 
+      <xsd:element name="kksEntries" type="KksEntriesType" /> 
       <xsd:element name="nextVersion" type="xsd:string"/>
       <xsd:element name="prevVersion" type="xsd:string"/>
       <xsd:element name="versioned" type="xsd:boolean"/>
     </xsd:sequence>
   </xsd:complexType>
 
-
-   <xsd:annotation>
-    <xsd:documentation xml:lang="en">
-      collectionId: id of the collection where entries are found
-      collectionStatus:  status of the collection where entries are found
-      collectionName:  name of the collection where entries are found
-      entries: searcj result entries
-    </xsd:documentation>
-  </xsd:annotation>
-  <xsd:complexType name="KksSearchResult">
-    <xsd:sequence> <!-- TODO: miksei KkksCollection? -->
-      <xsd:element name="collectionId" type="xsd:string"/>
-      <xsd:element name="collectionStatus" type="xsd:string"/>
-      <xsd:element name="collectionName" type="xsd:string"/>
-      <xsd:element name="entries" type="KksEntry" minOccurs="1" maxOccurs="unbounded" /> <!-- wrap in container -->
+  <xsd:complexType name="KksEntriesType">
+    <xsd:sequence>
+		<xsd:element name="entries" type="KksEntry" minOccurs="0" maxOccurs="unbounded"/> 
     </xsd:sequence>
   </xsd:complexType>
  
