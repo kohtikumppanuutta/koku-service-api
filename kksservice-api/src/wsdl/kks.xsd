@@ -53,8 +53,10 @@
   <!-- element for kks tags  -->
   <xsd:element name="kksTags" type="KksTagsType"/>
   
-  <!-- element for  -->
+  <!-- element for kks tag ids -->
   <xsd:element name="kksTagIds" type="KksTagIdsType"/>
+  
+  <!-- element for kks entry class ids -->
   <xsd:element name="kksEntryClassId" type="xsd:string"/> 
   
 
