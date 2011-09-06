@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.5"
+  version="0.6"
   >
   
   <xsd:annotation>
@@ -59,8 +59,9 @@
   <!-- element for kks entry class ids -->
   <xsd:element name="kksEntryClassId" type="xsd:string"/> 
   
-
-
+    <!-- element for kks collection criteria -->
+  <xsd:element name="kksCollectionCriteria" type="KksCollectionsCriteriaType"/> 
+  
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       kksCollections: persons kks collections
@@ -75,6 +76,19 @@
   <xsd:complexType name="KksCollectionsType">
     <xsd:sequence>
       <xsd:element name="kksCollection" type="KksCollectionType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>  
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      pic: collection target person pic
+      kksScope: collection scope (all, minimal)
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCollectionsCriteriaType">
+    <xsd:sequence>
+        <xsd:element name="pic" type="xsd:string"/>
+  		<xsd:element name="kksScope" type="xsd:string" default="all" /> 
     </xsd:sequence>
   </xsd:complexType>  
   
@@ -110,21 +124,20 @@
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
-      <xsd:element name="kksGroups" type="KksGroupsType"/> <!-- kun otettiin pois ryhmä -> kirjaustyyppi suhde, jää tämän elementin relaatio oudoksi -->
-      <xsd:element name="kksEntryClasses" type="KksEntryClassesType" /> <!-- koska se joutuu sisältämään ryhmä määritykset, sekä kirjaustyypit (ennen kirjaustyypit löytyi groupeista) -->
+      <xsd:element name="kksGroups" type="KksGroupsType"/> 
     </xsd:sequence>
   </xsd:complexType>
   
   
   <xsd:complexType name="KksCollectionClassesType">
     <xsd:sequence>
-      <xsd:element ref="kksCollectionClass" type="KksCollectionClassType" minOccurs="0" maxOccurs="unbounded"  />
+      <xsd:element name="kksCollectionClass" type="KksCollectionClassType" minOccurs="0" maxOccurs="unbounded"  />
     </xsd:sequence>
   </xsd:complexType> 
   
   <xsd:complexType name="KksGroupsType">
     <xsd:sequence>
-      <xsd:element ref="kksGroup" type="KksGroupType" minOccurs="0" maxOccurs="unbounded"  />
+      <xsd:element name="kksGroup" type="KksGroupType" minOccurs="0" maxOccurs="unbounded"  />
     </xsd:sequence>
   </xsd:complexType> 
   
@@ -152,7 +165,8 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="register" type="xsd:string"/>
-      <xsd:element name="childGroups" type="KksGroupsType" /> 
+      <xsd:element name="kksEntryClasses" type="KksEntryClassesType" />
+      <xsd:element name="subGroups" type="KksGroupsType" /> 
     </xsd:sequence>
   </xsd:complexType>
 
@@ -166,8 +180,7 @@
       multiValue: Is entry type multivalue field or not
       dataType: Entry type data type (text, free_text, select, multi_select)
       valueSpaces: What kind of selection choices entry type can have (example checkbox choices etc)
-      topGroupId: top group name (huoltaja, neuvola, etc), default value is empty  
-      secondGroupId: second group(lapsen tiedot, mittaukset, etc), default value is empty  
+      groupId: entry class group  
       register: Register where entry type is managed
       kksTagIds: entry type's tags
     </xsd:documentation>
@@ -181,8 +194,7 @@
       <xsd:element name="multiValue" type="xsd:boolean"/>
       <xsd:element name="dataType" type="xsd:string"/>
       <xsd:element name="valueSpaces" type="ValueSpacesType"/> 
-      <xsd:element name="topGroupId" type="xsd:string" default=""/> <!-- GROUP NAMES -->
-      <xsd:element name="secondGroupId" type="xsd:string" default=""/>
+      <xsd:element name="groupId" type="xsd:string" default=""/> 
       <xsd:element name="register" type="xsd:string"/>
       <xsd:element name="kksTagIds" type="KksTagIdsType"/> 
     </xsd:sequence>
@@ -279,7 +291,7 @@
 
   <xsd:complexType name="KksEntriesType">
     <xsd:sequence>
-		<xsd:element name="entries" type="KksEntry" minOccurs="0" maxOccurs="unbounded"/> 
+		<xsd:element name="entries" type="KksEntryType" minOccurs="0" maxOccurs="unbounded"/> 
     </xsd:sequence>
   </xsd:complexType>
  
