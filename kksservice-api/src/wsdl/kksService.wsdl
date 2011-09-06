@@ -22,15 +22,8 @@
     <xsd:schema>
       <xsd:import namespace="http://services.koku.fi/entity/kks/v1" schemaLocation="kks.xsd"/>
     </xsd:schema>
-        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://services.koku.fi/entity/kks/v1"><xsd:element name="in" type="xsd:string"></xsd:element>
-        	<xsd:element name="NewOperationResponse">
-        		<xsd:complexType>
-        			<xsd:sequence>
-        				<xsd:element name="out" type="xsd:string"></xsd:element>
-        			</xsd:sequence>
-        		</xsd:complexType>
-        	</xsd:element></xsd:schema>
-    </wsdl:types>
+        
+  </wsdl:types>
 
   <!-- common messages -->
   <wsdl:types>
@@ -120,6 +113,7 @@
   </wsdl:message>
   
 
+  <!-- interface / port type -->
   <wsdl:portType name="KksServicePortType">
   
     <wsdl:operation name="opGetKks">
