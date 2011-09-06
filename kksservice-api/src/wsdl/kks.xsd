@@ -1,8 +1,8 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://services.koku.fi/utility/kks/v1"
-  xmlns="http://services.koku.fi/utility/kks/v1"
+  targetNamespace="http://services.koku.fi/entity/kks/v1"
+  xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.3"
+  version="0.4"
   >
   
   <xsd:annotation>

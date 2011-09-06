@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions name="kksService"
-  targetNamespace="http://services.koku.fi/utility/kks/v1"
-  xmlns:tns="http://services.koku.fi/utility/kks/v1"
-  xmlns:kks="http://services.koku.fi/utility/kks/v1"
+  targetNamespace="http://services.koku.fi/entity/kks/v1"
+  xmlns:tns="http://services.koku.fi/entity/kks/v1"
+  xmlns:kks="http://services.koku.fi/entity/kks/v1"
   xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu KKS service contract definition.
 
-    version: 0.3
+    version: 0.4
     Ixonos / tuomape
     Ixonos / aspluma
     
@@ -20,38 +20,38 @@
 
   <wsdl:types>
     <xsd:schema>
-      <xsd:import namespace="http://services.koku.fi/utility/kks/v1" schemaLocation="kks.xsd"/>
+      <xsd:import namespace="http://services.koku.fi/entity/kks/v1" schemaLocation="kks.xsd"/>
     </xsd:schema>
   </wsdl:types>
 
   <!-- common messages -->
   <wsdl:message name="AuditHeader">
-    <wsdl:part name="AuditHeader" element="tns:auditInfo"/>
+    <wsdl:part name="AuditHeader" element="kks:auditInfo"/>
   </wsdl:message>
 
   <!--  message definitions -->
   <wsdl:message name="msgGetKksRequest">
-    <wsdl:part name="CustomerPic" element="tns:customerPic"/>
+    <wsdl:part name="CustomerPic" element="kks:customerPic"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksResponse">
-    <wsdl:part name="KksType" element="tns:kks"/>
+    <wsdl:part name="KksType" element="kks:kks"/>
   </wsdl:message>  
 
   <wsdl:message name="msgGetKksTagsRequest">
-    <wsdl:part name="KksTagIds" element="tns:kksTagIds"/>
+    <wsdl:part name="KksTagIds" element="kks:kksTagIds"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksTagsResponse">
-    <wsdl:part name="KksTags" element="tns:kksTags"/>
+    <wsdl:part name="KksTags" element="kks:kksTags"/>
   </wsdl:message>    
   
   <wsdl:message name="msgGetKksEntryClassRequest">
-    <wsdl:part name="KksEntryClassId" element="tns:kksEntryClassId"/>
+    <wsdl:part name="KksEntryClassId" element="kks:kksEntryClassId"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksEntryClassResponse">
-    <wsdl:part name="KksEntryClass" element="tns:kksEntryClass"/>
+    <wsdl:part name="KksEntryClass" element="kks:kksEntryClass"/>
   </wsdl:message>    
   
   
