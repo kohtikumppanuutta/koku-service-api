@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.4"
+  version="0.5"
   >
   
   <xsd:annotation>
@@ -11,36 +11,18 @@
       KoKu KKS service message type definitions.
       Ixonos / tuomape
       Ixonos / aspluma
-      
-      TODO
-      
-      - Kokoelman hakuun parametreina laajuus (kirjaus mukana/ei) )		
-      
-      - Kokoelma updaten tulee sisältää tuki versioinnille
-	
-
     </xsd:documentation>
   </xsd:annotation>
-  
-  
-  <!-- element for collection type (collection metadata) -->
+
+  <!-- element for collection class (collection metadata) -->
   <xsd:element name="kksCollectionClass" type="KksCollectionClassType"/>
   
-  <!-- element for entry type (entry metadata) -->
+  <!-- element for entry class (entry metadata) -->
   <xsd:element name="kksEntryClass" type="KksEntryClassType"/>
   
   <!-- element for collection -->
   <xsd:element name="kksCollection" type="KksCollectionType"/>
-  
-  <!-- element for single entry -->
-  <xsd:element name="kksEntry" type="KksType"/>
-  
-  <!-- element for classification -->
-  <xsd:element name="kksTag" type="KksTagType"/>
-  
-  <!-- element for entry groups -->
-  <xsd:element name="kksGroup" type="KksGroupType"/>
-  
+      
   <!-- element for search criteria -->
   <xsd:element name="kksQueryCriteria" type="KksQueryCriteriaType"/>  
   
@@ -52,20 +34,30 @@
   
   <!-- element for collection class type name -->
   <xsd:element name="kksCollectionClassName" type="xsd:string"/>
-  
-  <!-- element for collection class type names -->
-  <xsd:element name="kksCollectionClassNames" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-  
+    
   <!-- element for collection id -->
   <xsd:element name="kksCollectionId" type="xsd:string"/>
   
     <!-- element for general operation succeed (TEMP solution) -->
   <xsd:element name="kksOperationSuccess" type="xsd:boolean"/>
   
+    <!-- element for result scope (all, minimal) -->
+  <xsd:element name="kksScope" type="xsd:string" default="all" /> 
+  
+  <!-- element for kks collections -->
   <xsd:element name="kksCollections" type="KksCollectionsType"/>
+  
+  <!--  element for kks collection classes -->
+  <xsd:element name="kksCollectionClasses" type="KksCollectionClassesType"/>
+  
+  <!-- element for kks tags  -->
   <xsd:element name="kksTags" type="KksTagsType"/>
+  
+  <!-- element for  -->
   <xsd:element name="kksTagIds" type="KksTagIdsType"/>
   <xsd:element name="kksEntryClassId" type="xsd:string"/> 
+  
+
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -121,13 +113,20 @@
     </xsd:sequence>
   </xsd:complexType>
   
-    <xsd:complexType name="KksGroupsType">
+  
+  <xsd:complexType name="KksCollectionClassesType">
     <xsd:sequence>
-      <xsd:element name="kksGroup" type="KksGroupType" minOccurs="0" maxOccurs="unbounded"  />
+      <xsd:element ref="kksCollectionClass" type="KksCollectionClassType" minOccurs="0" maxOccurs="unbounded"  />
     </xsd:sequence>
   </xsd:complexType> 
   
-    <xsd:complexType name="KksEntryClassesType">
+  <xsd:complexType name="KksGroupsType">
+    <xsd:sequence>
+      <xsd:element ref="kksGroup" type="KksGroupType" minOccurs="0" maxOccurs="unbounded"  />
+    </xsd:sequence>
+  </xsd:complexType> 
+  
+  <xsd:complexType name="KksEntryClassesType">
     <xsd:sequence>
 		<xsd:element name="kksEntryClass" type="KksEntryClassType" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
@@ -180,7 +179,7 @@
       <xsd:element name="multiValue" type="xsd:boolean"/>
       <xsd:element name="dataType" type="xsd:string"/>
       <xsd:element name="valueSpaces" type="ValueSpacesType"/> 
-      <xsd:element name="topGroupId" type="xsd:string" default=""/> 
+      <xsd:element name="topGroupId" type="xsd:string" default=""/> <!-- GROUP NAMES -->
       <xsd:element name="secondGroupId" type="xsd:string" default=""/>
       <xsd:element name="register" type="xsd:string"/>
       <xsd:element name="kksTagIds" type="KksTagIdsType"/> 
@@ -256,6 +255,7 @@
       nextVersion: link to next collection version (if exist)
       prevVersion: link to previous collection (if exist)
       versioned: is collection versioned
+      newVersion: tells is new version needed from collection
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType name="KksCollectionType">
@@ -266,11 +266,12 @@
       <xsd:element name="status" type="xsd:string"/>
       <xsd:element name="created" type="xsd:dateTime"/>
       <xsd:element name="version" type="xsd:integer"/>
-      <xsd:element name="collectionClassId" type="xsd:string"/> 
+      <xsd:element name="collectionClassId" type="xsd:string"/> <!-- COULD IDS BE REFERENCED SOMEHOW -->
       <xsd:element name="kksEntries" type="KksEntriesType" /> 
       <xsd:element name="nextVersion" type="xsd:string"/>
       <xsd:element name="prevVersion" type="xsd:string"/>
       <xsd:element name="versioned" type="xsd:boolean"/>
+      <xsd:element name="newVersion" type="xsd:boolean" default="false"/>
     </xsd:sequence>
   </xsd:complexType>
 

@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu KKS service contract definition.
 
-    version: 0.4
+    version: 0.5
     Ixonos / tuomape
     Ixonos / aspluma
     
@@ -22,9 +22,22 @@
     <xsd:schema>
       <xsd:import namespace="http://services.koku.fi/entity/kks/v1" schemaLocation="kks.xsd"/>
     </xsd:schema>
-  </wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://services.koku.fi/entity/kks/v1"><xsd:element name="in" type="xsd:string"></xsd:element>
+        	<xsd:element name="NewOperationResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="out" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element></xsd:schema>
+    </wsdl:types>
 
   <!-- common messages -->
+  <wsdl:types>
+  	<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  		<xsd:import namespace="http://services.koku.fi/entity/kks/v1"
+  			schemaLocation="kks.xsd">
+  		</xsd:import></xsd:schema></wsdl:types>
   <wsdl:message name="AuditHeader">
     <wsdl:part name="AuditHeader" element="kks:auditInfo"/>
   </wsdl:message>
@@ -32,10 +45,11 @@
   <!--  message definitions -->
   <wsdl:message name="msgGetKksRequest">
     <wsdl:part name="CustomerPic" element="kks:customerPic"/>
+    <wsdl:part name="KksScope" element="kks:kksScope"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksResponse">
-    <wsdl:part name="KksType" element="kks:kks"/>
+    <wsdl:part name="KksType" element="kks:kks"/>    
   </wsdl:message>  
 
   <wsdl:message name="msgGetKksTagsRequest">
@@ -57,54 +71,55 @@
   
   <!-- single collection class (collection metadata) request -->
   <wsdl:message name="msgGetKksCollectionClassRequest">
-    <wsdl:part name="KksCollectionClassName" element="tns:kksCollectionClassName"/>
+    <wsdl:part name="KksCollectionClassName" element="kks:kksCollectionClassName"/>
   </wsdl:message>
     
   <wsdl:message name="msgGetKksCollectionClassResponse">
-    <wsdl:part name="KksCollectionClass" element="tns:kksCollectionClass"/>
+    <wsdl:part name="KksCollectionClass" element="kks:kksCollectionClass"/>
   </wsdl:message>
     
    <!-- collection class names request --> 
-  <wsdl:message name="msgGetKksCollectionClassNamesRequest"/>
+  <wsdl:message name="msgGetKksCollectionClassesRequest">
+  	 <wsdl:part name="KksScope" element="kks:kksScope"/>
+  </wsdl:message>
   
-  <wsdl:message name="msgGetKksCollectionClassNamesResponse">
-    <wsdl:part name="KksCollectionClassNames" element="tns:kksCollectionClassNames"/>
+  <wsdl:message name="msgGetKksCollectionClassesResponse">
+    <wsdl:part name="KksCollectionClasses" element="kks:kksCollectionClasses"/>
   </wsdl:message>
   
   <wsdl:message name="msgAddKksCollectionRequest">
-    <wsdl:part name="KksCollectionClassName" element="tns:tns:kksCollectionClassName"/>
+    <wsdl:part name="KksCollectionClassName" element="kks:kksCollectionClassName"/>
   </wsdl:message>
   
   <wsdl:message name="msgAddKksCollectionResponse">
-    <wsdl:part name="KksCollection" element="tns:kksCollection"/>
+    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
   </wsdl:message>
     
   <wsdl:message name="msgGetKksCollectionRequest">
-    <wsdl:part name="KksCollectionId" element="tns:kksCollectionId"/>
+    <wsdl:part name="KksCollectionId" element="kks:kksCollectionId"/>
   </wsdl:message>
   
   <wsdl:message name="msgGetKksCollectionResponse">
-    <wsdl:part name="KksCollection" element="tns:kksCollection"/>
+    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
   </wsdl:message>  
   
   <wsdl:message name="msgUpdateKksCollectionRequest">
-    <wsdl:part name="KksCollection" element="tns:kksCollection"/>
+    <wsdl:part name="KksCollection" element="kks:kksCollection"/>
   </wsdl:message>
   
   <wsdl:message name="msgUpdateKksCollectionResponse">
-    <wsdl:part name="KksOperationSuccess" element="tns:kksOperationSuccess"/>
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>
   </wsdl:message>
   
   <wsdl:message name="msgQueryKksCriteriaRequest">
-    <wsdl:part name="KksQueryCriteria" element="tns:kksQueryCriteria"/>
+    <wsdl:part name="KksQueryCriteria" element="kks:kksQueryCriteria"/>
   </wsdl:message>
   
   <wsdl:message name="msgQueryKksCriteriaResponse">
-    <wsdl:part name="KksCollections" element="tns:kksCollections"/>
+    <wsdl:part name="KksCollections" element="kks:kksCollections"/>
   </wsdl:message>
   
-  
-  <!-- interface / port type -->
+
   <wsdl:portType name="KksServicePortType">
   
     <wsdl:operation name="opGetKks">
@@ -123,13 +138,13 @@
     </wsdl:operation>
     
     <wsdl:operation name="opGetKksCollectionClass">
-      <wsdl:input message="tns:msgGetKksCollectionClassResponse"/>
+      <wsdl:input message="tns:msgGetKksCollectionClassRequest"/>
       <wsdl:output message="tns:msgGetKksCollectionClassResponse"/>
     </wsdl:operation>    
     
     <wsdl:operation name="opGetKksCollectionClassNames">
-      <wsdl:input message="tns:msgGetKksCollectionClassNamesRequest"/>
-      <wsdl:output message="tns:msgGetKksCollectionClassNamesResponse"/>
+      <wsdl:input message="tns:msgGetKksCollectionClassesRequest"/>
+      <wsdl:output message="tns:msgGetKksCollectionClassesResponse"/>
     </wsdl:operation>    
     
     <wsdl:operation name="opGetKksCollection">
