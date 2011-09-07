@@ -95,7 +95,6 @@
   <modules>
     <module>customerservice-api</module>
     <module>lokservice-api</module>
-    <module>common-service-api</module>
     <module>kksservice-api</module>
     <module>hisservice-api</module>
     <module>ccisservice-api</module>
