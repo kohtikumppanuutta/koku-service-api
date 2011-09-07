@@ -3,10 +3,10 @@
   <parent>
     <artifactId>service-api</artifactId>
     <groupId>kohti-kumppanuutta</groupId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
   <artifactId>kksservice-api</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.4-SNAPSHOT</version>
   <name>kksservice-api</name>
 </project>

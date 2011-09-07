@@ -3,12 +3,12 @@
   <parent>
     <artifactId>service-api</artifactId>
     <groupId>kohti-kumppanuutta</groupId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
   </parent>
 
   <artifactId>customerservice-api</artifactId>
   <packaging>jar</packaging>
   <name>customerservice-api</name>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
 
 </project>
