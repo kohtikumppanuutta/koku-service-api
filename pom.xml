@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>kohti-kumppanuutta</groupId>
   <artifactId>service-api</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.4</version>
   <packaging>pom</packaging>
   <description>soa service APIs</description>
 
