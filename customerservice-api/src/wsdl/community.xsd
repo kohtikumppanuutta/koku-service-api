@@ -38,7 +38,7 @@
   <xsd:complexType name="CommunityType">
     <xsd:sequence>
       <xsd:annotation>
-        <xsd:documentation xml:lang="fi">huoltajayhteiso, perheyhteiso</xsd:documentation>
+        <xsd:documentation xml:lang="fi">guardian_community, family_community</xsd:documentation>
       </xsd:annotation>
       <xsd:element name="type" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string" minOccurs="0"/>
@@ -56,7 +56,7 @@
   <xsd:complexType name="MemberType">
     <xsd:sequence>
       <xsd:annotation>
-        <xsd:documentation xml:lang="fi">huoltaja, huollettava, vanhempi, isa, aiti</xsd:documentation>
+        <xsd:documentation xml:lang="fi">guardian, dependent, parent, father, mother</xsd:documentation>
       </xsd:annotation>
       <xsd:element name="role" type="xsd:string"/>
       <xsd:element name="pic" type="jhs:HenkiloTunnusTyyppi"/> 
