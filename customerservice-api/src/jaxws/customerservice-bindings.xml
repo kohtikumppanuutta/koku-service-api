@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jxb:bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" version="1.0">
+<jxb:bindings
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  version="1.0">
+
+  <jxb:globalBindings>
+    <jxb:javaType name="java.util.Calendar" xmlType="xsd:date"
+    parseMethod="javax.xml.bind.DatatypeConverter.parseDate" printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+  </jxb:globalBindings>
 
   <jxb:bindings schemaLocation="../wsdl/jhs-ydin-20091019.xsd" node="/xsd:schema">
     <jxb:schemaBindings>
       <jxb:package name="fi.kuntait.jhs.ydin" />
     </jxb:schemaBindings>
   </jxb:bindings>
-  
+
 </jxb:bindings>
     

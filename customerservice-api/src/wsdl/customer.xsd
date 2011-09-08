@@ -4,7 +4,7 @@
   xmlns="http://services.koku.fi/entity/customer/v1"
   xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
   elementFormDefault="qualified"
-  version="0.94"
+  version="0.96"
   >
 
   <xsd:annotation>
@@ -157,13 +157,18 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:element name="faultDetail">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="majorCode" type="xsd:int" />
-        <xsd:element name="minorCode" type="xsd:int" />
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
+  <xsd:element name="void" type="VoidType"/>
+
+  <xsd:complexType name="VoidType">
+  </xsd:complexType>
+
+  <xsd:element name="serviceFaultDetail" type="ServiceFaultDetailType"/>
+
+  <xsd:complexType name="ServiceFaultDetailType">
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:int" />
+      <xsd:element name="message" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
 
 </xsd:schema>
