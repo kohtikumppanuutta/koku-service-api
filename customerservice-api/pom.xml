@@ -9,6 +9,6 @@
   <artifactId>customerservice-api</artifactId>
   <packaging>jar</packaging>
   <name>customerservice-api</name>
-  <version>0.0.5</version>
+  <version>0.0.6-SNAPSHOT</version>
 
 </project>
