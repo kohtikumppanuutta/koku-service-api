@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu log service contract definition.
 
-    version: 0.6
+    version: 0.9
     Ixonos / aspluma
     
   </wsdl:documentation>
@@ -45,21 +45,40 @@
     <wsdl:part name="LogEntries" element="log:logEntries"/>
   </wsdl:message>
   
+  <wsdl:message name="serviceFault">
+    <wsdl:part name="serviceFaultDetail" element="log:serviceFaultDetail" />
+  </wsdl:message>
   
+  <wsdl:message name="voidResponse">
+    <wsdl:part name="VoidResponse" element="log:void"/>
+  </wsdl:message>
+  
+
   <!-- interface / port type -->
+
   <wsdl:portType name="logServicePortType">
+    <wsdl:documentation>
+      opQueryLog
+      query log entries based on a given query criteria.
+      returns at maximum N log entries.
+    </wsdl:documentation>
 
     <wsdl:operation name="opLog">
       <wsdl:input message="tns:msgLogRequest"/>
+      <wsdl:output message="tns:voidResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
     
     <wsdl:operation name="opArchiveLog">
       <wsdl:input message="tns:msgArchiveLogRequest"/>
+      <wsdl:output message="tns:voidResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
 
     <wsdl:operation name="opQueryLog">
       <wsdl:input message="tns:msgQueryLogRequest"/>
       <wsdl:output message="tns:msgQueryLogResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
 
   </wsdl:portType>
@@ -75,6 +94,12 @@
         <soap11:body use="literal"/>
         <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
       </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
 
     <wsdl:operation name="opArchiveLog">
@@ -83,6 +108,12 @@
         <soap11:body use="literal"/>
         <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
       </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
 
     <wsdl:operation name="opQueryLog">
@@ -94,6 +125,9 @@
       <wsdl:output>
         <soap11:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
 
   </wsdl:binding>

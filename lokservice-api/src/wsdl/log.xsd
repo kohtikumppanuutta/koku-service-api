@@ -2,7 +2,7 @@
   targetNamespace="http://services.koku.fi/utility/log/v1"
   xmlns="http://services.koku.fi/utility/log/v1"
   elementFormDefault="qualified"
-  version="0.5"
+  version="0.9"
   >
   
   <xsd:annotation>
@@ -88,5 +88,19 @@
       <xsd:maxLength value="19"/>
     </xsd:restriction>
   </xsd:simpleType>
+
+  <xsd:element name="void" type="VoidType"/>
+
+  <xsd:complexType name="VoidType">
+  </xsd:complexType>
+
+  <xsd:element name="serviceFaultDetail" type="ServiceFaultDetailType"/>
+
+  <xsd:complexType name="ServiceFaultDetailType">
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:int" />
+      <xsd:element name="message" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
 
 </xsd:schema>
