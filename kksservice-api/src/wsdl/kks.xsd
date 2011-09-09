@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.6"
+  version="0.7"
   >
   
   <xsd:annotation>
@@ -28,13 +28,7 @@
   
   <!-- element for persons kks collection -->
   <xsd:element name="kks" type="KksType"/> 
-  
-  <!-- element for customer's pic -->
-  <xsd:element name="customerPic" type="xsd:string"/>
-  
-  <!-- element for collection class type name -->
-  <xsd:element name="kksCollectionClassName" type="xsd:string"/>
-    
+      
   <!-- element for collection id -->
   <xsd:element name="kksCollectionId" type="xsd:string"/>
   
@@ -61,6 +55,9 @@
   
     <!-- element for kks collection criteria -->
   <xsd:element name="kksCollectionCriteria" type="KksCollectionsCriteriaType"/> 
+  
+      <!-- element for kks collection creation criteria -->
+  <xsd:element name="kksCollectionCreationCriteria" type="KksCollectionCreationCriteriaType"/> 
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -91,6 +88,22 @@
   		<xsd:element name="kksScope" type="xsd:string" default="all" /> 
     </xsd:sequence>
   </xsd:complexType>  
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      pic: collection target person pic
+      collectionName: collection name
+      collectionTypeId: id of collection type
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCollectionCreationCriteriaType">
+    <xsd:sequence>
+        <xsd:element name="pic" type="xsd:string"/>
+        <xsd:element name="collectionName" type="xsd:string"/>
+        <xsd:element name="collectionTypeId" type="xsd:string"/> 
+    </xsd:sequence>
+  </xsd:complexType>  
+  
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -235,6 +248,7 @@
       entryClassId: entry class id
       kksTagIds: entry specific tags
       entryValues: entry value(s)
+      customerId: pic for the customer of this collection
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType name="KksEntryType">
@@ -246,6 +260,7 @@
       <xsd:element name="entryClassId" type="xsd:string"/> 
       <xsd:element name="kksTagIds" type="KksTagIdsType"/> 
       <xsd:element name="entryValues" type="EntryValuesType" />
+      <xsd:element name="customerId" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
   
@@ -268,6 +283,7 @@
       nextVersion: link to next collection version (if exist)
       prevVersion: link to previous collection (if exist)
       versioned: is collection versioned
+      customerId: pic for the customer of this collection
       newVersion: tells is new version needed from collection
     </xsd:documentation>
   </xsd:annotation>
@@ -279,11 +295,12 @@
       <xsd:element name="status" type="xsd:string"/>
       <xsd:element name="created" type="xsd:dateTime"/>
       <xsd:element name="version" type="xsd:integer"/>
-      <xsd:element name="collectionClassId" type="xsd:string"/> <!-- COULD IDS BE REFERENCED SOMEHOW -->
+      <xsd:element name="collectionClassId" type="xsd:string"/> 
       <xsd:element name="kksEntries" type="KksEntriesType" /> 
       <xsd:element name="nextVersion" type="xsd:string"/>
       <xsd:element name="prevVersion" type="xsd:string"/>
       <xsd:element name="versioned" type="xsd:boolean"/>
+      <xsd:element name="customerId" type="xsd:string"/>
       <xsd:element name="newVersion" type="xsd:boolean" default="false"/>
     </xsd:sequence>
   </xsd:complexType>
@@ -312,5 +329,14 @@
       <xsd:maxLength value="19"/>
     </xsd:restriction>
   </xsd:simpleType>
+  
+ <xsd:element name="serviceFaultDetail" type="ServiceFaultDetailType"/>
+
+  <xsd:complexType name="ServiceFaultDetailType">
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:int" />
+      <xsd:element name="message" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
 
 </xsd:schema>

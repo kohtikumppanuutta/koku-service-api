@@ -63,7 +63,7 @@
   </wsdl:message>  
 
   <wsdl:message name="msgAddKksCollectionRequest">
-    <wsdl:part name="KksCollectionClassName" element="kks:kksCollectionClassName"/>
+    <wsdl:part name="KksCollectionCreationCriteria" element="kks:kksCollectionCreationCriteria"/>
   </wsdl:message>
   
   <wsdl:message name="msgAddKksCollectionResponse">
@@ -94,6 +94,11 @@
     <wsdl:part name="KksCollections" element="kks:kksCollections"/>
   </wsdl:message>
   
+  <!-- faults -->
+  <wsdl:message name="serviceFault">
+    <wsdl:part name="serviceFaultDetail" element="kks:serviceFaultDetail" />
+  </wsdl:message>
+  
 
   <!-- interface / port type -->
   <wsdl:portType name="KksServicePortType">
@@ -102,37 +107,44 @@
     <wsdl:operation name="opGetKksTags">
       <wsdl:input message="tns:msgGetKksTagsRequest"/>
       <wsdl:output message="tns:msgGetKksTagsResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
         
     <wsdl:operation name="opGetKksCollectionClasses">
       <wsdl:input message="tns:msgGetKksCollectionClassesRequest"/>
       <wsdl:output message="tns:msgGetKksCollectionClassesResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>   
     
     <!-- data related port types -->
     <wsdl:operation name="opGetKks">
       <wsdl:input message="tns:msgGetKksRequest"/>
       <wsdl:output message="tns:msgGetKksResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
       
     <wsdl:operation name="opGetKksCollection">
       <wsdl:input message="tns:msgGetKksCollectionRequest"/>
       <wsdl:output message="tns:msgGetKksCollectionResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
     
     <wsdl:operation name="opAddKksCollection">
       <wsdl:input message="tns:msgAddKksCollectionRequest"/>
       <wsdl:output message="tns:msgAddKksCollectionResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
  
     <wsdl:operation name="opUpdateKksCollection">
       <wsdl:input message="tns:msgUpdateKksCollectionRequest"/>
       <wsdl:output message="tns:msgUpdateKksCollectionResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
      
     <wsdl:operation name="opQueryKks">
       <wsdl:input message="tns:msgQueryKksCriteriaRequest"/>
       <wsdl:output message="tns:msgQueryKksCriteriaResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
 
   </wsdl:portType>
@@ -151,6 +163,9 @@
       <wsdl:output>
         <soap11:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
     
     <wsdl:operation name="opGetKksCollectionClasses">
@@ -162,6 +177,9 @@
       <wsdl:output>
         <soap11:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
 
     <wsdl:operation name="opGetKks">
@@ -184,6 +202,9 @@
       <wsdl:output>
         <soap11:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
     
     <wsdl:operation name="opGetKksCollection">
@@ -195,6 +216,9 @@
       <wsdl:output>
         <soap11:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
 
     <wsdl:operation name="opUpdateKksCollection">
@@ -205,7 +229,10 @@
       </wsdl:input>
       <wsdl:output>
         <soap11:body use="literal"/>
-      </wsdl:output>
+      </wsdl:output>      
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
     
     <wsdl:operation name="opQueryKks">
@@ -216,7 +243,10 @@
       </wsdl:input>
       <wsdl:output>
         <soap11:body use="literal"/>
-      </wsdl:output>
+      </wsdl:output>      
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>        
   </wsdl:binding>
 
