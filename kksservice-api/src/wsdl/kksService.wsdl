@@ -191,6 +191,9 @@
       <wsdl:output>
         <soap11:body use="literal"/>
       </wsdl:output>
+     <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
     </wsdl:operation>
     
     <wsdl:operation name="opAddKksCollection">
