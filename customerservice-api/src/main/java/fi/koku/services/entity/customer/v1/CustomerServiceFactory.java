@@ -27,7 +27,7 @@ public class CustomerServiceFactory {
     CustomerService service = new CustomerService(wsdlLocation, new QName(
         "http://services.koku.fi/entity/customer/v1", "customerService"));
     CustomerServicePortType port = service.getCustomerServiceSoap11Port();
-    String epAddr = endpointBaseUrl + "/customer-service-" + implVersion + "/CustomerServiceBean";
+    String epAddr = endpointBaseUrl + "/customer-service-" + implVersion + "/CustomerServiceEndpointBean";
 
     ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
     ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
