@@ -2,7 +2,7 @@
   targetNamespace="http://services.koku.fi/utility/log/v1"
   xmlns="http://services.koku.fi/utility/log/v1"
   elementFormDefault="qualified"
-  version="0.9"
+  version="0.91"
   >
   
   <xsd:annotation>
@@ -66,7 +66,7 @@
       <xsd:element name="customerPic" type="xsd:string"/>
       <xsd:element name="dataItemType" type="xsd:string"/>
       <xsd:element name="startTime" type="xsd:date"/>
-      <xsd:element name="endDdate" type="xsd:date"/>
+      <xsd:element name="endDate" type="xsd:date"/>
     </xsd:sequence>
   </xsd:complexType>
 
