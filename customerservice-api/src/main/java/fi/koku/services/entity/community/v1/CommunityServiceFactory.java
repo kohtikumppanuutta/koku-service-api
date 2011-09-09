@@ -15,7 +15,7 @@ public class CommunityServiceFactory {
   private String pwd;
   private String endpointBaseUrl;
   private String implVersion = "0.0.1-SNAPSHOT";
-  private final URL wsdlLocation = getClass().getClassLoader().getResource("/wsdl/communityService.wsdl");
+  private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/communityService.wsdl");
 
   public CommunityServiceFactory(String uid, String pwd, String endpointBaseUrl) {
     this.uid = uid;

@@ -15,7 +15,7 @@ public class CustomerServiceFactory {
   private String pwd;
   private String endpointBaseUrl;
   private String implVersion = "0.0.1-SNAPSHOT";
-  private final URL wsdlLocation = getClass().getClassLoader().getResource("/wsdl/customerService.wsdl");
+  private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/customerService.wsdl");
 
   public CustomerServiceFactory(String uid, String pwd, String endpointBaseUrl) {
     this.uid = uid;
