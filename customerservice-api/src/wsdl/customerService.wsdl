@@ -87,6 +87,7 @@
       
       opQueryCustomers
       query customers based on a given query criteria (currently either by id or pic).
+      returns at maximum N customers.
       selection identifies information set to return. selection values: basic (default): no contact info; all: basic + contact info.
     </wsdl:documentation>
     <wsdl:operation name="opAddCustomer">
