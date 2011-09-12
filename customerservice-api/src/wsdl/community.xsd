@@ -4,7 +4,7 @@
   xmlns="http://services.koku.fi/entity/community/v1"
   xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
   elementFormDefault="qualified"
-  version="0.95"
+  version="0.96"
   >
 
   <xsd:annotation>
@@ -65,7 +65,7 @@
 
   <xsd:complexType name="CommunityQueryCriteriaType">
     <xsd:sequence>
-      <xsd:element name="memberPic" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="memberPic" type="xsd:string"/>
       <xsd:element name="communityType" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
