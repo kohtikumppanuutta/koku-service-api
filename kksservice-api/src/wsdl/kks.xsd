@@ -208,7 +208,7 @@
       <xsd:element name="dataType" type="xsd:string"/>
       <xsd:element name="valueSpaces" type="ValueSpacesType"/> 
       <xsd:element name="groupId" type="xsd:string" default=""/> 
-      <xsd:element name="kksTagIds" type="KksTagIdsType"/> 
+      <xsd:element name="kksTags" type="KksTagsType"/> 
     </xsd:sequence>
   </xsd:complexType>
   
