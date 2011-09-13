@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu KKS service contract definition.
 
-    version: 0.6
+    version: 0.8
     Ixonos / tuomape
     Ixonos / aspluma
     
@@ -94,6 +94,30 @@
     <wsdl:part name="KksCollections" element="kks:kksCollections"/>
   </wsdl:message>
   
+  <wsdl:message name="msgAddKksEntryRequest">
+    <wsdl:part name="KksEntryAddType" element="kks:kksEntryAddType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgAddKksEntryResponse">
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>   
+  </wsdl:message>  
+  
+  <wsdl:message name="msgDeleteKksEntryRequest">
+  	<wsdl:part name="KksEntryDeleteType" element="kks:kksEntryDeleteType"/>    
+  </wsdl:message>
+  
+  <wsdl:message name="msgDeleteKksEntryResponse">
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>   
+  </wsdl:message> 
+  
+  <wsdl:message name="msgUpdateKksEntryRequest">
+    <wsdl:part name="KksEntryUpdateType" element="kks:kksEntryUpdateType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgUpdateKksEntryResponse">
+    <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>   
+  </wsdl:message> 
+  
   <!-- faults -->
   <wsdl:message name="serviceFault">
     <wsdl:part name="serviceFaultDetail" element="kks:serviceFaultDetail" />
@@ -146,6 +170,25 @@
       <wsdl:output message="tns:msgQueryKksCriteriaResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
+    
+    <wsdl:operation name="opAddEntry">
+      <wsdl:input message="tns:msgAddKksEntryRequest"/>
+      <wsdl:output message="tns:msgAddKksEntryResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+    
+    <wsdl:operation name="opUpdateEntry">
+      <wsdl:input message="tns:msgUpdateKksEntryRequest"/>
+      <wsdl:output message="tns:msgUpdateKksEntryResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+    
+    
+    <wsdl:operation name="opDeleteEntry">
+      <wsdl:input message="tns:msgDeleteKksEntryRequest"/>
+      <wsdl:output message="tns:msgDeleteKksEntryResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>        
 
   </wsdl:portType>
   
@@ -250,9 +293,55 @@
       <wsdl:fault name="serviceFault">
         <soap11:fault use="literal" name="serviceFault"/>
       </wsdl:fault>
-    </wsdl:operation>        
+    </wsdl:operation> 
+    
+    
+    <wsdl:operation name="opAddEntry">
+      <soap11:operation soapAction="http://koku.fi/action/kks/entry/add"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>      
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>       
+  
+  
+    <wsdl:operation name="opDeleteEntry">
+      <soap11:operation soapAction="http://koku.fi/action/kks/entry/delete"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>      
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>       
+  
+  
+    <wsdl:operation name="opUpdateEntry">
+      <soap11:operation soapAction="http://koku.fi/action/kks/entry/update"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>      
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation> 
+                
   </wsdl:binding>
-
+  
   
   <!-- service definitions -->
   <wsdl:service name="kksService">

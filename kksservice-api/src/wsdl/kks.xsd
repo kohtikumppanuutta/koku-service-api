@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.7"
+  version="0.8"
   >
   
   <xsd:annotation>
@@ -56,8 +56,18 @@
     <!-- element for kks collection criteria -->
   <xsd:element name="kksCollectionCriteria" type="KksCollectionsCriteriaType"/> 
   
-      <!-- element for kks collection creation criteria -->
+  <!-- element for kks collection creation criteria -->
   <xsd:element name="kksCollectionCreationCriteria" type="KksCollectionCreationCriteriaType"/> 
+  
+   <!-- element for kks entry add criteria -->
+  <xsd:element name="kksEntryAddType" type="KksEntryCriteriaType"/> 
+  
+    <!-- element for kks entry add criteria -->
+  <xsd:element name="kksEntryUpdateType" type="KksEntryCriteriaType"/> 
+  
+     <!-- element for kks entry add criteria -->
+  <xsd:element name="kksEntryDeleteType" type="KksEntryCriteriaType"/> 
+   
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -94,6 +104,7 @@
       pic: collection target person pic
       collectionName: collection name
       collectionTypeId: id of collection type
+      kksScope: creation scope (new, version, empty_version )
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType name="KksCollectionCreationCriteriaType">
@@ -101,9 +112,26 @@
         <xsd:element name="pic" type="xsd:string"/>
         <xsd:element name="collectionName" type="xsd:string"/>
         <xsd:element name="collectionTypeId" type="xsd:string"/> 
+        <xsd:element name="kksScope" type="xsd:string" default="new" />
     </xsd:sequence>
   </xsd:complexType>  
   
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      pic: target person pic
+      entryId: entry id
+      value: entry value
+      modified: modify time
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksEntryCriteriaType">
+    <xsd:sequence>
+        <xsd:element name="pic" type="xsd:string"/>
+        <xsd:element name="entryId" type="xsd:string"/>
+        <xsd:element name="value" type="KksEntryValueType"/> 
+        <xsd:element name="modified" type="xsd:dateTime" />
+    </xsd:sequence>
+  </xsd:complexType>  
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -114,7 +142,7 @@
   <xsd:complexType name="KksQueryCriteriaType">
     <xsd:sequence>
       <xsd:element name="pic" type="xsd:string"/>
-      <xsd:element name="kksTagIds" type="KksTagIdsType"/>     
+      <xsd:element name="kksTagNames" type="KksTagNamesType"/>     
      </xsd:sequence>
   </xsd:complexType>
   
@@ -123,6 +151,13 @@
       <xsd:element name="kksTagId" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>   
+  
+  <xsd:complexType name="KksTagNamesType">
+    <xsd:sequence>
+      <xsd:element name="kksTagName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType> 
+  
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -266,9 +301,23 @@
   
   <xsd:complexType name="EntryValuesType">
     <xsd:sequence>
-		<xsd:element name="entryValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="entryValue" type="KksEntryValueType" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType> 
+  
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      id: Entry identifier
+      value: Entry value
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksEntryValueType">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="value" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
