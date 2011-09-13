@@ -48,7 +48,7 @@
       <xsd:element ref="jhs:KansalaisuusKoodi"/>
       <xsd:element ref="jhs:KuntaKoodi"/>
       <xsd:element ref="jhs:KieliKoodi"/>
-      <xsd:element ref="jhs:TurvakieltoKytkin"/>
+      <xsd:element ref="jhs:TurvakieltoKytkin"/> <!-- Denial of personal data -->
 
       <xsd:element name="addresses" type="AddressesType"/>
       <xsd:element name="phoneNumbers" type="PhoneNumbersType"/>
