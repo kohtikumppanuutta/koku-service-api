@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu KKS service contract definition.
 
-    version: 0.8
+    version: 0.9
     Ixonos / tuomape
     Ixonos / aspluma
     
@@ -110,11 +110,11 @@
     <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>   
   </wsdl:message> 
   
-  <wsdl:message name="msgUpdateKksEntryRequest">
-    <wsdl:part name="KksEntryUpdateType" element="kks:kksEntryUpdateType"/>
+  <wsdl:message name="msgUpdateKksCollectionStatusRequest">
+    <wsdl:part name="KksCollectionStateCriteriaType" element="kks:kksCollectionStateCriteriaType"/>
   </wsdl:message>
   
-  <wsdl:message name="msgUpdateKksEntryResponse">
+  <wsdl:message name="msgUpdateKksCollectionStatusResponse">
     <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>   
   </wsdl:message> 
   
@@ -177,9 +177,9 @@
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
     
-    <wsdl:operation name="opUpdateEntry">
-      <wsdl:input message="tns:msgUpdateKksEntryRequest"/>
-      <wsdl:output message="tns:msgUpdateKksEntryResponse"/>
+    <wsdl:operation name="opUpdateKksCollectionStatus">
+      <wsdl:input message="tns:msgUpdateKksCollectionStatusRequest"/>
+      <wsdl:output message="tns:msgUpdateKksCollectionStatusResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
     
@@ -326,7 +326,7 @@
     </wsdl:operation>       
   
   
-    <wsdl:operation name="opUpdateEntry">
+    <wsdl:operation name="opUpdateKksCollectionStatus">
       <soap11:operation soapAction="http://koku.fi/action/kks/entry/update"/>
       <wsdl:input>
         <soap11:body use="literal"/>

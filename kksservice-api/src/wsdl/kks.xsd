@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.8"
+  version="0.9"
   >
   
   <xsd:annotation>
@@ -67,6 +67,10 @@
   
      <!-- element for kks entry add criteria -->
   <xsd:element name="kksEntryDeleteType" type="KksEntryCriteriaType"/> 
+  
+  
+     <!-- element for kks collection state criteria -->
+  <xsd:element name="kksCollectionStateCriteriaType" type="KksCollectionStateCriteriaType"/>
    
   
   <xsd:annotation>
@@ -132,6 +136,20 @@
         <xsd:element name="modified" type="xsd:dateTime" />
     </xsd:sequence>
   </xsd:complexType>  
+  
+    <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      collectionId: collection id
+      state: collection state
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="KksCollectionStateCriteriaType">
+    <xsd:sequence>
+        <xsd:element name="collectionId" type="xsd:string"/>
+        <xsd:element name="state" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>  
+  
   
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
