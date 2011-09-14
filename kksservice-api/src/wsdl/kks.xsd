@@ -344,6 +344,7 @@
       description: collection description
       status: collection status (active, locked)
       created: when the collection was created
+      creator: person who is created the collection
       version: collection version
       collectionClassId: collection class id
       kksEntries: collection entries
@@ -361,6 +362,7 @@
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="status" type="xsd:string"/>
       <xsd:element name="created" type="xsd:dateTime"/>
+      <xsd:element name="creator" type="xsd:string"/>
       <xsd:element name="version" type="xsd:integer"/>
       <xsd:element name="collectionClassId" type="xsd:string"/> 
       <xsd:element name="kksEntries" type="KksEntriesType" /> 
