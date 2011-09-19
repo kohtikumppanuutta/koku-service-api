@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="1.0"
+  version="1.1"
   >
   
   <xsd:annotation>
@@ -104,6 +104,7 @@
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       pic: collection target person pic
+      relatedCollectionId: id for collection that is related for the creation
       collectionName: collection name
       collectionTypeId: id of collection type
       kksScope: creation scope (new, version, empty_version )
@@ -112,6 +113,7 @@
   <xsd:complexType name="KksCollectionCreationCriteriaType">
     <xsd:sequence>
         <xsd:element name="pic" type="xsd:string"/>
+        <xsd:element name="relatedCollectionId" type="xsd:string" nillable="true"/>
         <xsd:element name="collectionName" type="xsd:string"/>
         <xsd:element name="collectionTypeId" type="xsd:string"/> 
         <xsd:element name="kksScope" type="xsd:string" default="new" />
