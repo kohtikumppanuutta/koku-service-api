@@ -1,0 +1,53 @@
+<definitions name='KokuCommonMessagingService' targetNamespace='http://services.koku.fi/entity/kv/v1' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://services.koku.fi/entity/kv/v1' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <xs:schema targetNamespace='http://services.koku.fi/entity/kv/v1' version='1.0' xmlns:tns='http://services.koku.fi/entity/kv/v1' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:element name='deliverMessage' type='tns:deliverMessage'/>
+   <xs:element name='deliverMessageResponse' type='tns:deliverMessageResponse'/>
+   <xs:complexType name='deliverMessage'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='fromUser' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='toUser' type='xs:string'/>
+
+     <xs:element minOccurs='0' name='subject' type='xs:string'/>
+     <xs:element minOccurs='0' name='content' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='deliverMessageResponse'>
+    <xs:sequence/>
+   </xs:complexType>
+  </xs:schema>
+ </types>
+
+ <message name='KokuCommonMessagingService_deliverMessageResponse'>
+  <part element='tns:deliverMessageResponse' name='deliverMessageResponse'></part>
+ </message>
+ <message name='KokuCommonMessagingService_deliverMessage'>
+  <part element='tns:deliverMessage' name='deliverMessage'></part>
+ </message>
+ <portType name='KokuCommonMessagingService'>
+  <operation name='deliverMessage' parameterOrder='deliverMessage'>
+   <input message='tns:KokuCommonMessagingService_deliverMessage'></input>
+
+   <output message='tns:KokuCommonMessagingService_deliverMessageResponse'></output>
+  </operation>
+ </portType>
+ <binding name='KokuCommonMessagingServiceBinding' type='tns:KokuCommonMessagingService'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='deliverMessage'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='KokuCommonMessagingService'>
+  <port binding='tns:KokuCommonMessagingServiceBinding' name='KokuCommonMessagingServicePort'>
+   <soap:address location='http://localhost:8180/arcusys-koku-0.1-SNAPSHOT-kv-model-0.1-SNAPSHOT/KokuCommonMessagingServiceImpl'/>
+
+  </port>
+ </service>
+</definitions>
