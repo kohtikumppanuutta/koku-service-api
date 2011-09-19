@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu KKS service contract definition.
 
-    version: 0.9
+    version: 1.0
     Ixonos / tuomape
     Ixonos / aspluma
     
@@ -118,10 +118,20 @@
     <wsdl:part name="KksOperationSuccess" element="kks:kksOperationSuccess"/>   
   </wsdl:message> 
   
+    
+  <wsdl:message name="msgVoidResponse">
+    <wsdl:part name="VoidResponse" element="kks:void"/>
+  </wsdl:message>
+  
+   <wsdl:message name="msgIdResponse">
+    <wsdl:part name="IdResponse" element="kks:id"/>
+  </wsdl:message>
+  
   <!-- faults -->
   <wsdl:message name="serviceFault">
     <wsdl:part name="serviceFaultDetail" element="kks:serviceFaultDetail" />
   </wsdl:message>
+  
   
 
   <!-- interface / port type -->
@@ -155,13 +165,13 @@
     
     <wsdl:operation name="opAddKksCollection">
       <wsdl:input message="tns:msgAddKksCollectionRequest"/>
-      <wsdl:output message="tns:msgAddKksCollectionResponse"/>
+      <wsdl:output message="tns:msgIdResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
  
     <wsdl:operation name="opUpdateKksCollection">
       <wsdl:input message="tns:msgUpdateKksCollectionRequest"/>
-      <wsdl:output message="tns:msgUpdateKksCollectionResponse"/>
+      <wsdl:output message="tns:msgVoidResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
      
@@ -173,20 +183,20 @@
     
     <wsdl:operation name="opAddEntry">
       <wsdl:input message="tns:msgAddKksEntryRequest"/>
-      <wsdl:output message="tns:msgAddKksEntryResponse"/>
+      <wsdl:output message="tns:msgIdResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
     
     <wsdl:operation name="opUpdateKksCollectionStatus">
       <wsdl:input message="tns:msgUpdateKksCollectionStatusRequest"/>
-      <wsdl:output message="tns:msgUpdateKksCollectionStatusResponse"/>
+      <wsdl:output message="tns:msgVoidResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
     
     
     <wsdl:operation name="opDeleteEntry">
       <wsdl:input message="tns:msgDeleteKksEntryRequest"/>
-      <wsdl:output message="tns:msgDeleteKksEntryResponse"/>
+      <wsdl:output message="tns:msgVoidResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>        
 

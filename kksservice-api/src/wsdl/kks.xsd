@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="0.9"
+  version="1.0"
   >
   
   <xsd:annotation>
@@ -62,15 +62,13 @@
    <!-- element for kks entry add criteria -->
   <xsd:element name="kksEntryAddType" type="KksEntryCriteriaType"/> 
   
-    <!-- element for kks entry add criteria -->
-  <xsd:element name="kksEntryUpdateType" type="KksEntryCriteriaType"/> 
-  
      <!-- element for kks entry add criteria -->
-  <xsd:element name="kksEntryDeleteType" type="KksEntryCriteriaType"/> 
-  
+  <xsd:element name="kksEntryDeleteType" type="KksEntryCriteriaType"/>   
   
      <!-- element for kks collection state criteria -->
   <xsd:element name="kksCollectionStateCriteriaType" type="KksCollectionStateCriteriaType"/>
+  
+  
    
   
   <xsd:annotation>
@@ -124,6 +122,8 @@
     <xsd:documentation xml:lang="en">
       pic: target person pic
       entryId: entry id
+      collectionId: collection id (if known)
+      creator: creator/modifier of collection
       value: entry value
       modified: modify time
     </xsd:documentation>
@@ -132,6 +132,8 @@
     <xsd:sequence>
         <xsd:element name="pic" type="xsd:string"/>
         <xsd:element name="entryId" type="xsd:string"/>
+        <xsd:element name="collectionId" type="xsd:string" nillable="true"/>
+        <xsd:element name="creator" type="xsd:string"/>
         <xsd:element name="value" type="KksEntryValueType"/> 
         <xsd:element name="modified" type="xsd:dateTime" />
     </xsd:sequence>
@@ -398,6 +400,19 @@
       <xsd:maxLength value="19"/>
     </xsd:restriction>
   </xsd:simpleType>
+  
+  <xsd:element name="void" type="VoidType"/>
+
+  <xsd:complexType name="VoidType">
+  </xsd:complexType>
+  
+    <xsd:element name="id" type="IdType"/>
+
+  <xsd:complexType name="IdType">
+  	<xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
   
  <xsd:element name="serviceFaultDetail" type="ServiceFaultDetailType"/>
 
