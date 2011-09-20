@@ -8,11 +8,18 @@ package fi.koku.services.entity.userinfo.v1.model;
  *
  */
 public class Group {
-
    private String id;
    private String name;
+
+   public Group(String id) {
+     this.id = id;
+   }
    
-   
+  public Group(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
   public String getId() {
     return id;
   }

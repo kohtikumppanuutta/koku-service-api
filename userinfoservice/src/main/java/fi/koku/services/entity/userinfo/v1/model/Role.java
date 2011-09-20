@@ -8,11 +8,18 @@ package fi.koku.services.entity.userinfo.v1.model;
  *
  */
 public class Role {
-
   private String id;
   private String name;
   
+  public Role(String id) {
+    this.id = id;
+  }
   
+  public Role(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
   public String getId() {
     return id;
   }

@@ -20,51 +20,30 @@ import fi.koku.services.entity.userinfo.v1.model.User;
 public class UserInfoServiceDummyImpl implements UserInfoService {
 
   public List<Registry> getUsersAuthorizedRegistries(String uid) {
-    
     List<Registry> ret = new ArrayList<Registry>(2);
-    
-    Registry r1 = new Registry();
-    r1.setId("healthcareregistry");
-    r1.setName("Potilastietorekisteri");
-    ret.add(r1);
-    
-    Registry r2 = new Registry();
-    r2.setId("daycareregistry");
-    r2.setName("Paivahoidon rekisteri");
-    ret.add(r2);    
+    ret.add(new Registry("healthcareregistry", "Potilastietorekisteri"));
+    ret.add(new Registry("daycareregistry", "Paivahoidon rekisteri"));    
     
     return ret;
   }
 
   public List<Role> getUsersRoles(String context, String uid) {
     List<Role> ret = new ArrayList<Role>(1);
-
-    Role r1 = new Role();
-    r1.setId("LOG_ADMIN_ROLE");
-    r1.setName("Lokin paakayttajaarooli");
-    ret.add(r1);
+    ret.add(new Role("LOG_ADMIN_ROLE", "Lokin paakayttajaarooli"));
     
     return ret;
   }
 
   public List<OrgUnit> getUsersOrgUnits(String context, String uid) {
     List<OrgUnit> ret = new ArrayList<OrgUnit>(1);
-    
-    OrgUnit o1 = new OrgUnit();
-    o1.setId("oid1");
-    o1.setName("Day care unit of Porolahti");
-    ret.add(o1);
+    ret.add(new OrgUnit("oid1", "Day care unit of Porolahti"));
     
     return ret;
   }
 
   public List<Group> getUsersGroups(String context, String uid) {
     List<Group> ret = new ArrayList<Group>(1);
-    
-    Group g1 = new Group();
-    g1.setId("gid1");
-    g1.setName("City region wide day care workgroup - consists of people from serveral organization units");
-    ret.add(g1);
+    ret.add(new Group("gid1", "City region wide day care workgroup - consists of people from serveral organization units"));
     
     return ret;
   }

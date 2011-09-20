@@ -8,11 +8,18 @@ package fi.koku.services.entity.userinfo.v1.model;
  *
  */
 public class OrgUnit {
-
    private String id;
    private String name;
    
+   public OrgUnit(String id) {
+     this.id = id;
+   }
    
+  public OrgUnit(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
   public String getId() {
     return id;
   }

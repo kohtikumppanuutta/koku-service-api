@@ -35,9 +35,7 @@ public class SampleClientUsage {
     // Check user role
     List<Role> roles = serv.getUsersRoles("log", "111111-1111");
     LOG.info("size=" + roles.size());
-    Role neededRole = new Role();
-    neededRole.setId("LOG_ADMIN_ROLE");
-    if (roles.contains(neededRole)) {
+    if (roles.contains(new Role("LOG_ADMIN_ROLE"))) {
       LOG.info("SUCCESS: User with uid=111111-1111 had role.id=LOG_ADMIN_ROLE. We may proceed archiving log.");
     } else {
       LOG.info("FAILURE: User does not have LOG_ADMIN_ROLE and we may not proceed.");
@@ -50,16 +48,12 @@ public class SampleClientUsage {
 
     // Check registry permission
     List<Registry> regs = serv.getUsersAuthorizedRegistries("111111-1111");
-    Registry neededReqistry = new Registry();
-    neededReqistry.setId("healthcareregistry");
-    if (regs.contains(neededReqistry)) {
+    if (regs.contains(new Registry("healthcareregistry"))) {
       LOG.info("SUCCESS: User has permission to access registry data");
 
       // Check organization unit
       List<OrgUnit> orgUnits = serv.getUsersOrgUnits("tampere", "111111-1111");
-      OrgUnit neededOrgUnit = new OrgUnit();
-      neededOrgUnit.setId("oid1");
-      if (orgUnits.contains(neededOrgUnit)) {
+      if (orgUnits.contains(new OrgUnit("oid1"))) {
         LOG.info("SUCCESS: User belongs to porolahtiPK organization unit.");
       } else {
         LOG.info("FAILURE: User does not belong to porolahtiPK organization unit");
@@ -74,9 +68,7 @@ public class SampleClientUsage {
     // Other:
     
     List<Group> groups = serv.getUsersGroups("context", "111111-1111");
-    Group neededGroup = new Group();
-    neededGroup.setId("gid1");
-    if(groups.contains(neededGroup)){
+    if(groups.contains(new Group("gid1"))){
       LOG.info("SUCCESS: User belongs to gid1, we may proceed.");
     }else{
       LOG.info("FAILURE: User does not belong to gid1. No access.");

@@ -8,10 +8,18 @@ package fi.koku.services.entity.userinfo.v1.model;
  *
  */
 public class Registry {
-
     private String id;
     private String name;
     
+    public Registry(String id) {
+      this.id = id;
+    }
+    
+    public Registry(String id, String name) {
+      this.id = id;
+      this.name = name;
+    }
+
     public String getId() {
       return id;
     }
