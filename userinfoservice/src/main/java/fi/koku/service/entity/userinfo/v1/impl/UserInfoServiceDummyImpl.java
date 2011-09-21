@@ -1,7 +1,7 @@
 /**
  * Dummy implementation of UserInfoService
  */
-package fi.koku.service.entity.userinfo.v1.impl;
+package fi.koku.services.entity.userinfo.v1.impl;
 
 import java.util.ArrayList;
 import java.util.List;
