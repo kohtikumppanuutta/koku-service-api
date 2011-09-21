@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import fi.koku.service.entity.userinfo.v1.impl.UserInfoServiceDummyImpl;
+import fi.koku.services.entity.userinfo.v1.Constants;
 import fi.koku.services.entity.userinfo.v1.UserInfoService;
 import fi.koku.services.entity.userinfo.v1.model.Group;
 import fi.koku.services.entity.userinfo.v1.model.OrgUnit;
@@ -33,7 +34,7 @@ public class SampleClientUsage {
     // namespace collisions
 
     // Check user role
-    List<Role> roles = serv.getUsersRoles("log", "111111-1111");
+    List<Role> roles = serv.getUsersRoles(Constants.DOMAIN_LOG, "111111-1111");
     LOG.info("size=" + roles.size());
     if (roles.contains(Constants.ROLE_LOG_VIEWER)) {
       LOG.info("SUCCESS: User with uid=111111-1111 had role.id=LOG_ADMIN_ROLE. We may proceed archiving log.");
@@ -67,7 +68,7 @@ public class SampleClientUsage {
     // Requires: User has to belong to userGroup=gid1 
     // Other:
     
-    List<Group> groups = serv.getUsersGroups("paivahoito", "111111-1111");
+    List<Group> groups = serv.getUsersGroups(Constants.DOMAIN_DAYCARE, "111111-1111");
     if(groups.contains(new Group("gid1"))){
       LOG.info("SUCCESS: User belongs to gid1, we may proceed.");
     }else{
@@ -77,11 +78,4 @@ public class SampleClientUsage {
     
   }
   
-  private static void isPersonInAnyOrgUnit(String domain, String hetu, String[] orgUnitIds) {
-  }
-
-  public static class Constants {
-    public static Role ROLE_LOG_VIEWER = new Role("LOG_ADMIN_ROLE");
-  }
-
 }

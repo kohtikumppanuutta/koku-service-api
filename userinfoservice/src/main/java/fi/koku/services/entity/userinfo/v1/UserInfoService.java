@@ -2,7 +2,7 @@
  * First draft of UserInfoService as plain java interface and impl-class
  * 
  *  TBD: 
- *    How to use context-parameters? 
+ *    How to use domain-parameters? 
  *    How to share that information between client and implementation?
  *    Exceptions
  * 
@@ -34,47 +34,47 @@ public interface UserInfoService {
   
   
   /**
-   * Returns list of Role-objects that user has in given context.
-   * #TODO# Context will probably be defined KEY-value for corresponding context/domain/system
+   * Returns list of Role-objects that user has in given domain.
+   * #TODO# domain will probably be defined KEY-value for corresponding context/domain/system
    * 
-   * @param context, TBD
+   * @param domain, TBD
    * @param uid = pic (hetu)
    * @return List containing Role-objects or null if user has none
    */
-  List<Role> getUsersRoles(String context, String uid);
+  List<Role> getUsersRoles(String domain, String uid);
     
   
   /**
-   * Returns list of OrgUnit-objects that is belongs to in given context
-   * #TODO# Context will probably be defined KEY-value for corresponding context/domain/system
+   * Returns list of OrgUnit-objects that is belongs to in given domain
+   * #TODO# domain will probably be defined KEY-value for corresponding context/domain/system
    * 
-   * @param context, TBD
+   * @param domain, TBD
    * @param uid = pic (hetu)
    * @return List containing OrgUnit-objects or null if user has none
    */
-  List<OrgUnit> getUsersOrgUnits(String context, String uid);
+  List<OrgUnit> getUsersOrgUnits(String domain, String uid);
   
   
   /**
-   * Returns list of Group-objects that is belongs to in given context
-   * #TODO# Context will probably be defined KEY-value for corresponding context/domain/system
+   * Returns list of Group-objects that is belongs to in given domain
+   * #TODO# domain will probably be defined KEY-value for corresponding context/domain/system
    * 
-   * @param context, TBD
+   * @param domain, TBD
    * @param uid = pic (hetu)
    * @return List containing Group-objects or null if user has none
    */
-  List<Group> getUsersGroups(String context, String uid);
+  List<Group> getUsersGroups(String domain, String uid);
   
   
   
   /**
-   * Returns list of User-objects whom belong to given group in given context
-   * #TODO# Context will probably be defined KEY-value for corresponding context/domain/system
+   * Returns list of User-objects whom belong to given group in given domain
+   * #TODO# domain will probably be defined KEY-value for corresponding context/domain/system
    * 
-   * @param context, TBD
+   * @param domain, TBD
    * @param gid = groupId
    * @return List containing User-objects or null if user has none
    */
-  List<User> getGroupMembersByGroupId(String context, String gid);
+  List<User> getGroupMembersByGroupId(String domain, String gid);
   
 }
