@@ -27,7 +27,7 @@ public class CommunityServiceFactory {
     CommunityService service = new CommunityService(wsdlLocation, new QName(
         "http://services.koku.fi/entity/community/v1", "communityService"));
     CommunityServicePortType port = service.getCommunityServiceSoap11Port();
-    String epAddr = endpointBaseUrl + "/customer-service-" + implVersion + "/CommunityServiceBean";
+    String epAddr = endpointBaseUrl + "/customer-service-" + implVersion + "/CommunityServiceEndpointBean";
 
     ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
     ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
