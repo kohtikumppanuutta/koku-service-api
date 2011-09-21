@@ -6,9 +6,9 @@ package fi.koku.services.entity.userinfo.sample;
 import java.util.List;
 import java.util.logging.Logger;
 
-import fi.koku.service.entity.userinfo.v1.impl.UserInfoServiceDummyImpl;
 import fi.koku.services.entity.userinfo.v1.Constants;
 import fi.koku.services.entity.userinfo.v1.UserInfoService;
+import fi.koku.services.entity.userinfo.v1.impl.UserInfoServiceDummyImpl;
 import fi.koku.services.entity.userinfo.v1.model.Group;
 import fi.koku.services.entity.userinfo.v1.model.OrgUnit;
 import fi.koku.services.entity.userinfo.v1.model.Registry;

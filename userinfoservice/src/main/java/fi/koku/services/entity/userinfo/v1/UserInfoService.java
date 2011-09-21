@@ -1,5 +1,6 @@
 /**
  * First draft of UserInfoService as plain java interface and impl-class
+ * NOTICE: Constants -file contains 
  * 
  *  TBD: 
  *    How to use domain-parameters? 
