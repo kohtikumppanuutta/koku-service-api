@@ -35,7 +35,7 @@ public class SampleClientUsage {
     // Check user role
     List<Role> roles = serv.getUsersRoles("log", "111111-1111");
     LOG.info("size=" + roles.size());
-    if (roles.contains(new Role("LOG_ADMIN_ROLE"))) {
+    if (roles.contains(Constants.ROLE_LOG_VIEWER)) {
       LOG.info("SUCCESS: User with uid=111111-1111 had role.id=LOG_ADMIN_ROLE. We may proceed archiving log.");
     } else {
       LOG.info("FAILURE: User does not have LOG_ADMIN_ROLE and we may not proceed.");
@@ -52,7 +52,7 @@ public class SampleClientUsage {
       LOG.info("SUCCESS: User has permission to access registry data");
 
       // Check organization unit
-      List<OrgUnit> orgUnits = serv.getUsersOrgUnits("tampere", "111111-1111");
+      List<OrgUnit> orgUnits = serv.getUsersOrgUnits("neuvola", "111111-1111"); // rename?   getPersonOrgUnits
       if (orgUnits.contains(new OrgUnit("oid1"))) {
         LOG.info("SUCCESS: User belongs to porolahtiPK organization unit.");
       } else {
@@ -67,7 +67,7 @@ public class SampleClientUsage {
     // Requires: User has to belong to userGroup=gid1 
     // Other:
     
-    List<Group> groups = serv.getUsersGroups("context", "111111-1111");
+    List<Group> groups = serv.getUsersGroups("paivahoito", "111111-1111");
     if(groups.contains(new Group("gid1"))){
       LOG.info("SUCCESS: User belongs to gid1, we may proceed.");
     }else{
@@ -75,6 +75,13 @@ public class SampleClientUsage {
     }
     
     
+  }
+  
+  private static void isPersonInAnyOrgUnit(String domain, String hetu, String[] orgUnitIds) {
+  }
+
+  public static class Constants {
+    public static Role ROLE_LOG_VIEWER = new Role("LOG_ADMIN_ROLE");
   }
 
 }
