@@ -123,7 +123,8 @@
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       pic: target person pic
-      entryId: entry id
+      entryId: entry id if needed
+      entryClassId: entry class id if needed
       collectionId: collection id (if known)
       creator: creator/modifier of collection
       value: entry value
@@ -133,7 +134,8 @@
   <xsd:complexType name="KksEntryCriteriaType">
     <xsd:sequence>
         <xsd:element name="pic" type="xsd:string"/>
-        <xsd:element name="entryId" type="xsd:string"/>
+        <xsd:element name="entryId" type="xsd:string" nillable="true"/>
+        <xsd:element name="entryClassId" type="xsd:string" nillable="true"/>
         <xsd:element name="collectionId" type="xsd:string" nillable="true"/>
         <xsd:element name="creator" type="xsd:string"/>
         <xsd:element name="value" type="KksEntryValueType"/> 
