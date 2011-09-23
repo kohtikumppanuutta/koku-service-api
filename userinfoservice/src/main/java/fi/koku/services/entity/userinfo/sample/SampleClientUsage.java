@@ -53,7 +53,7 @@ public class SampleClientUsage {
       LOG.info("SUCCESS: User has permission to access registry data");
 
       // Check organization unit
-      List<OrgUnit> orgUnits = serv.getUsersOrgUnits(Constants.DOMAIN_DAYCARE, "111111-1111"); // rename?   getPersonOrgUnits
+      List<OrgUnit> orgUnits = serv.getUsersOrgUnits(Constants.DOMAIN_CHILD_WELFARE_CLINIC, "111111-1111"); // rename?   getPersonOrgUnits
       if (orgUnits.contains(new OrgUnit("oid1"))) {
         LOG.info("SUCCESS: User belongs to porolahtiPK organization unit.");
       } else {
