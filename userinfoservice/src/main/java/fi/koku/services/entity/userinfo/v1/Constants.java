@@ -25,6 +25,7 @@ public class Constants {
    */
   public static String DOMAIN_DAYCARE = "DAYCARE";
   public static String DOMAIN_LOG = "LOG";
+  public static String DOMAIN_CHILD_WELFARE_CLINIC;//Neuvola in Finnish
   
   //REGISTRIES (Potilastieto, päivähoidon asiakastieto)
   public static Registry REGISTRY_PATIENT_INFORMATION = new Registry("PATIENT_INFORMATION");
