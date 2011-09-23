@@ -34,7 +34,7 @@ public LogServiceFactory(String uid, String pwd, String endpointBaseUrl) {
 }
 
 
-public LogServicePortType getCustomerService() {
+public LogServicePortType getLogService() {
   LogService service = new LogService(wsdlLocation, new QName(
       "http://services.koku.fi/utility/log/v1", "logService"));
   LogServicePortType port = service.getLogServiceSoap11Port();
