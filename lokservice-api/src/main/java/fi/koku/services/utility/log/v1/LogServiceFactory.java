@@ -38,7 +38,7 @@ public LogServicePortType getLogService() {
   LogService service = new LogService(wsdlLocation, new QName(
       "http://services.koku.fi/utility/log/v1", "logService"));
   LogServicePortType port = service.getLogServiceSoap11Port();
-  String epAddr = endpointBaseUrl + "/log-service-" + implVersion + "/LogServiceBean";
+  String epAddr = endpointBaseUrl + "/lok-service-" + implVersion + "/LogServiceEndpointBean";
   
   ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
   ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
