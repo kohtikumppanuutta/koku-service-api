@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="1.1"
+  version="1.2"
   >
   
   <xsd:annotation>
@@ -196,7 +196,8 @@
       <xsd:element name="id" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
-      <xsd:element name="concessionType" type="xsd:string"/>
+      <xsd:element name="typeCode" type="xsd:string"/>
+      <xsd:element name="consessionType" type="xsd:string"/>
       <xsd:element name="kksGroups" type="KksGroupsType"/> 
     </xsd:sequence>
   </xsd:complexType>
