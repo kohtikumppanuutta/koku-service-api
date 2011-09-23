@@ -43,9 +43,7 @@ public LogServicePortType getLogService() {
   ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
   ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
   ((BindingProvider) port).getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, pwd);
-
-  //#TODO# Check if log level should be info -> debug and decide if uid and pwd should be logged at all!
-  log.info("Created logServiceClient with epAddr="+epAddr+", uid="+uid+" and pwd="+pwd);
+  log.debug("Created logServiceClient with epAddr="+epAddr+", uid="+uid);
   
   return port;
 }
