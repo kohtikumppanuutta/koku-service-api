@@ -54,12 +54,35 @@
   </wsdl:message>
   
   <wsdl:message name="msgQueryCommunitiesRequest">
-    <wsdl:part name="CommunityQueryCriteria" element="tns:communityQueryCriteria"/>
+    <wsdl:part name="CommunityQueryCriteria" element="commu:communityQueryCriteria"/>
   </wsdl:message>
 
   <wsdl:message name="msgQueryCommunitiesResponse">
     <wsdl:part name="Communities" element="commu:communities"/>
   </wsdl:message>
+
+  <!-- **** membership request **** -->
+
+  <wsdl:message name="msgAddMembershipRequestRequest">
+    <wsdl:part name="MembershipRequest" element="commu:membershipRequest"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgAddMembershipRequestResponse">
+    <wsdl:part name="MembershipRequests" element="commu:membershipRequests"/>
+  </wsdl:message>
+
+  <wsdl:message name="msgQueryMembershipRequestsRequest">
+    <wsdl:part name="MembershipRequestQueryCriteria" element="commu:membershipRequestQueryCriteria"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgQueryMembershipRequestsResponse">
+    <wsdl:part name="MembershipRequests" element="commu:membershipRequests"/>
+  </wsdl:message>
+  
+  <wsdl:message name="msgUpdateMembershipApprovalRequest">
+    <wsdl:part name="MembershipApproval" element="commu:membershipApproval"/>
+  </wsdl:message>
+  
 
   <wsdl:message name="serviceFault">
     <wsdl:part name="serviceFaultDetail" element="commu:serviceFaultDetail" />
@@ -96,6 +119,23 @@
       <wsdl:output message="tns:msgQueryCommunitiesResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
+
+    <wsdl:operation name="opAddMembershipRequest">
+      <wsdl:input message="tns:msgAddMembershipRequestRequest"/>
+      <wsdl:output message="tns:msgAddMembershipRequestResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="opQueryMembershipRequests">
+      <wsdl:input message="tns:msgQueryMembershipRequestsRequest"/>
+      <wsdl:output message="tns:msgQueryMembershipRequestsResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="opUpdateMembershipApproval">
+      <wsdl:input message="tns:msgUpdateMembershipApprovalRequest"/>
+      <wsdl:output message="tns:voidResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+
   </wsdl:portType>
   
   <!-- bindings -->
@@ -163,6 +203,48 @@
       <wsdl:input>
         <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
         <soap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="opAddMembershipRequest">
+      <soap11:operation soapAction="http://koku.fi/action/community/membership/add"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="opQueryMembershipRequests">
+      <soap11:operation soapAction="http://koku.fi/action/community/membership/query"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="opUpdateMembershipApproval">
+      <soap11:operation soapAction="http://koku.fi/action/community/membership/updateApproval"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+        <soap11:header use="literal" part="AuditHeader" message="tns:AuditHeader" wsdl:required="true"/>
       </wsdl:input>
       <wsdl:output>
         <soap11:body use="literal"/>
