@@ -22,16 +22,11 @@
     <xsd:schema>
       <xsd:import namespace= "http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19" schemaLocation="jhs-ydin-20091019.xsd"/>
       <xsd:import namespace="http://services.koku.fi/entity/kks/v1" schemaLocation="kks.xsd"/>
-    </xsd:schema>
-        
+    </xsd:schema>        
   </wsdl:types>
 
   <!-- common messages -->
-  <wsdl:types>
-  	<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  		<xsd:import namespace="http://services.koku.fi/entity/kks/v1"
-  			schemaLocation="kks.xsd">
-  		</xsd:import></xsd:schema></wsdl:types>
+
   <wsdl:message name="AuditHeader">
     <wsdl:part name="AuditHeader" element="kks:auditInfo"/>
   </wsdl:message>
