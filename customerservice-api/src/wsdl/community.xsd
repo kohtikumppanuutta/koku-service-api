@@ -4,7 +4,7 @@
   xmlns="http://services.koku.fi/entity/community/v1"
   xmlns:jhs="http://skeemat.jhs-suositukset.fi/yhteiset/2009/10/19"
   elementFormDefault="qualified"
-  version="0.98"
+  version="0.99"
   >
 
   <xsd:annotation>
@@ -88,10 +88,10 @@
 
   <xsd:complexType name="MembershipRequestType">
     <xsd:sequence>
-      <xsd:element name="communityId"/>
-      <xsd:element name="memberRole"/>
-      <xsd:element name="memberPic"/>
-      <xsd:element name="requesterPic"/>
+      <xsd:element name="communityId" type="xsd:string"/>
+      <xsd:element name="memberRole" type="xsd:string"/>
+      <xsd:element name="memberPic" type="xsd:string"/>
+      <xsd:element name="requesterPic" type="xsd:string"/>
       <xsd:element name="approvals" type="MembershipApprovalsType"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="numericId"/>
