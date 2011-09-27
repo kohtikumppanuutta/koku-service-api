@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu community service contract definition.
     
-    version: 0.95
+    version: 0.96
     Ixonos / aspluma
   </wsdl:documentation>
 
@@ -68,7 +68,7 @@
   </wsdl:message>
   
   <wsdl:message name="msgAddMembershipRequestResponse">
-    <wsdl:part name="MembershipRequests" element="commu:membershipRequests"/>
+    <wsdl:part name="MembershipRequestId" element="commu:membershipRequestId"/>
   </wsdl:message>
 
   <wsdl:message name="msgQueryMembershipRequestsRequest">

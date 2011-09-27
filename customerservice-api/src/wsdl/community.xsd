@@ -30,6 +30,8 @@
   <xsd:element name="communities" type="CommunitiesType"/>
 
   <xsd:element name="membershipRequest" type="MembershipRequestType"/>
+
+  <xsd:element name="membershipRequestId" type="numericId"/>
   
   <xsd:element name="membershipRequests" type="MembershipRequestsType"/>
   
