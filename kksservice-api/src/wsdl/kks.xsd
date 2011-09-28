@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="1.2"
+  version="1.21"
   >
   
   <xsd:annotation>
@@ -146,12 +146,14 @@
     <xsd:annotation>
     <xsd:documentation xml:lang="en">
       collectionId: collection id
+      customer: collection customer
       state: collection state
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType name="KksCollectionStateCriteriaType">
     <xsd:sequence>
         <xsd:element name="collectionId" type="xsd:string"/>
+        <xsd:element name="customer" type="xsd:string"/>
         <xsd:element name="state" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>  
