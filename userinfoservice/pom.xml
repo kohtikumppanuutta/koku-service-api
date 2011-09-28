@@ -7,4 +7,5 @@
     <relativePath>..</relativePath>
   </parent>
   <artifactId>userinfoservice</artifactId>
+  <version>0.0.3-SNAPSHOT</version>
 </project>
