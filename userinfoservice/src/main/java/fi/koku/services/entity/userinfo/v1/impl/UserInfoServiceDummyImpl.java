@@ -34,8 +34,6 @@ public class UserInfoServiceDummyImpl implements UserInfoService {
 
   public List<Role> getUsersRoles(String context, String uid) {
     List<Role> ret = new ArrayList<Role>(1);
-    ret.add(new Role("ROLE_LOG_ADMIN", "Lokin superpaakayttajarooli"));
-    ret.add(new Role("ROLE_LOG_VIEWER", "Lokin paakayttajarooli"));
 
     if("101010-1010".equals(uid)) {
       ret.add(Constants.ROLE_LOG_VIEWER);
