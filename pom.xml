@@ -100,6 +100,7 @@
     <module>ccisservice-api</module>
     <module>userinfoservice</module>
     <module>kvservice-api</module>
+    <module>tivaservice-api</module>
   </modules>
   
   <repositories>

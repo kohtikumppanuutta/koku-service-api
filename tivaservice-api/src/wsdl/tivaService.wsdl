@@ -1,0 +1,148 @@
+<definitions name='KokuTivaToKksService' targetNamespace='http://services.koku.fi/entity/tiva/v1' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://services.koku.fi/entity/tiva/v1' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <xs:schema targetNamespace='http://services.koku.fi/entity/tiva/v1' version='1.0' xmlns:tns='http://services.koku.fi/entity/tiva/v1' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:element name='createConsent' type='tns:createConsent'/>
+   <xs:element name='createConsentResponse' type='tns:createConsentResponse'/>
+   <xs:element name='queryConsentTemplates' type='tns:queryConsentTemplates'/>
+   <xs:element name='queryConsentTemplatesResponse' type='tns:queryConsentTemplatesResponse'/>
+   <xs:element name='queryConsents' type='tns:queryConsents'/>
+   <xs:element name='queryConsentsResponse' type='tns:queryConsentsResponse'/>
+   <xs:complexType name='queryConsentTemplates'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='prefix' type='xs:string'/>
+     <xs:element minOccurs='0' name='limit' type='xs:int'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='queryConsentTemplatesResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='consentTemplate' type='tns:consentTemplate'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='consentTemplate'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='consentTemplateId' type='xs:long'/>
+     <xs:element minOccurs='0' name='templateName' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='createConsent'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='consent' type='tns:consent'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='consent'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='consentId' type='xs:long'/>
+     <xs:element minOccurs='0' name='template' type='tns:consentTemplate'/>
+     <xs:element minOccurs='0' name='targetPerson' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' name='consentProviders' type='xs:string'/>
+     <xs:element minOccurs='0' name='informationTargetId' type='xs:string'/>
+     <xs:element minOccurs='0' name='givenAt' type='xs:date'/>
+     <xs:element minOccurs='0' name='validTill' type='xs:date'/>
+     <xs:element minOccurs='0' name='givenTo' type='xs:string'/>
+     <xs:element minOccurs='0' name='description' type='xs:string'/>
+     <xs:element minOccurs='0' name='status' type='tns:consentStatus'/>
+     <xs:element minOccurs='0' name='metaInfo' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='createConsentResponse'>
+    <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name='queryConsents'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='consentSearchQuery' type='tns:ConsentSearchCriteria'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='ConsentSearchCriteria'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='targetPerson' type='xs:string'/>
+     <xs:element minOccurs='0' name='templateNamePrefix' type='xs:string'/>
+     <xs:element minOccurs='0' name='informationTargetId' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='statuses' nillable='true' type='tns:consentStatus'/>
+     <xs:element minOccurs='0' name='givenTo' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='queryConsentsResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='return' type='tns:consent'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name='consentStatus'>
+    <xs:restriction base='xs:string'>
+     <xs:enumeration value='Open'/>
+     <xs:enumeration value='PartiallyGiven'/>
+     <xs:enumeration value='Valid'/>
+     <xs:enumeration value='Expired'/>
+     <xs:enumeration value='Revoked'/>
+     <xs:enumeration value='Declined'/>
+    </xs:restriction>
+   </xs:simpleType>
+  </xs:schema>
+ </types>
+ <message name='KokuTivaToKksService_queryConsents'>
+  <part element='tns:queryConsents' name='queryConsents'></part>
+ </message>
+ <message name='KokuTivaToKksService_createConsent'>
+  <part element='tns:createConsent' name='createConsent'></part>
+ </message>
+ <message name='KokuTivaToKksService_queryConsentsResponse'>
+  <part element='tns:queryConsentsResponse' name='queryConsentsResponse'></part>
+ </message>
+ <message name='KokuTivaToKksService_queryConsentTemplatesResponse'>
+  <part element='tns:queryConsentTemplatesResponse' name='queryConsentTemplatesResponse'></part>
+ </message>
+ <message name='KokuTivaToKksService_queryConsentTemplates'>
+  <part element='tns:queryConsentTemplates' name='queryConsentTemplates'></part>
+ </message>
+ <message name='KokuTivaToKksService_createConsentResponse'>
+  <part element='tns:createConsentResponse' name='createConsentResponse'></part>
+ </message>
+ <portType name='KokuTivaToKksService'>
+  <operation name='createConsent' parameterOrder='createConsent'>
+   <input message='tns:KokuTivaToKksService_createConsent'></input>
+   <output message='tns:KokuTivaToKksService_createConsentResponse'></output>
+  </operation>
+  <operation name='queryConsentTemplates' parameterOrder='queryConsentTemplates'>
+   <input message='tns:KokuTivaToKksService_queryConsentTemplates'></input>
+   <output message='tns:KokuTivaToKksService_queryConsentTemplatesResponse'></output>
+  </operation>
+  <operation name='queryConsents' parameterOrder='queryConsents'>
+   <input message='tns:KokuTivaToKksService_queryConsents'></input>
+   <output message='tns:KokuTivaToKksService_queryConsentsResponse'></output>
+  </operation>
+ </portType>
+ <binding name='KokuTivaToKksServiceBinding' type='tns:KokuTivaToKksService'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='createConsent'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='queryConsentTemplates'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='queryConsents'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='KokuTivaToKksService'>
+  <port binding='tns:KokuTivaToKksServiceBinding' name='KokuTivaToKksServicePort'>
+   <soap:address location='http://localhost:8180/arcusys-koku-0.1-SNAPSHOT-tiva-model-0.1-SNAPSHOT/KokuTivaToKksServiceImpl'/>
+  </port>
+ </service>
+</definitions>
