@@ -81,8 +81,14 @@
 
   <xsd:complexType name="CommunityQueryCriteriaType">
     <xsd:sequence>
-      <xsd:element name="memberPic" type="xsd:string"/>
+      <xsd:element name="memberPics" type="MemberPicsType" minOccurs="1" maxOccurs="1"/>
       <xsd:element name="communityType" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="MemberPicsType">
+    <xsd:sequence>
+      <xsd:element name="memberPic" type="xsd:string" minOccurs="1" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
