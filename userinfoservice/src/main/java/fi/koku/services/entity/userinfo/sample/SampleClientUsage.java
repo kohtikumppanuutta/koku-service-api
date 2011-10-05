@@ -36,7 +36,7 @@ public class SampleClientUsage {
     // Check user role
     List<Role> roles = serv.getUsersRoles(Constants.DOMAIN_LOG, "111111-1111");
     LOG.info("size=" + roles.size());
-    if (roles.contains(Constants.ROLE_LOG_VIEWER)) {
+    if (roles.contains(Constants.ROLE_LOK_ADMIN)) {
       LOG.info("SUCCESS: User with uid=111111-1111 had role.id=LOG_ADMIN_ROLE. We may proceed archiving log.");
     } else {
       LOG.info("FAILURE: User does not have LOG_ADMIN_ROLE and we may not proceed.");
