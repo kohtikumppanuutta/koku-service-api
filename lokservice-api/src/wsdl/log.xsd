@@ -77,6 +77,11 @@
 
   <xsd:element name="auditInfo" type="auditInfoType"/>
 
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      userId: user's PIC.
+    </xsd:documentation>
+  </xsd:annotation>
   <xsd:complexType name="auditInfoType">
     <xsd:sequence>
       <xsd:element name="component" type="xsd:string"/>
