@@ -45,6 +45,10 @@
     <wsdl:part name="LogEntries" element="log:logEntries"/>
   </wsdl:message>
   
+  <wsdl:message name="msgArchiveLogResponse">
+   <wsdl:part name="archiveCount" element="log:int"/>
+  </wsdl:message>
+  
   <wsdl:message name="serviceFault">
     <wsdl:part name="serviceFaultDetail" element="log:serviceFaultDetail" />
   </wsdl:message>
@@ -71,7 +75,7 @@
     
     <wsdl:operation name="opArchiveLog">
       <wsdl:input message="tns:msgArchiveLogRequest"/>
-      <wsdl:output message="tns:voidResponse"/>
+      <wsdl:output message="tns:msgArchiveLogResponse"/>
       <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
     </wsdl:operation>
 

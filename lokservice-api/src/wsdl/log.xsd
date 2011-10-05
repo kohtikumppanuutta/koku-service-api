@@ -89,9 +89,20 @@
     </xsd:restriction>
   </xsd:simpleType>
 
+ 
+   <xsd:element name="int" type="IntType"/>
+
+  <xsd:complexType name="IntType">
+   <xsd:sequence>
+      <xsd:element name="archiveCount" type="xsd:int" />
+   </xsd:sequence>
+  </xsd:complexType>
+  
+  
   <xsd:element name="void" type="VoidType"/>
 
   <xsd:complexType name="VoidType">
+   
   </xsd:complexType>
 
   <xsd:element name="serviceFaultDetail" type="ServiceFaultDetailType"/>
