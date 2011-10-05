@@ -32,8 +32,8 @@ public class Constants {
   public static Registry REGISTRY_DAYCARE_CUSTOMER_INFORMATION = new Registry("DAYCARE_CUSTOMER_INFORMATION");
 
   //ROLES
-  public static Role ROLE_LOG_VIEWER = new Role("ROLE_LOG_VIEWER");
-  public static Role ROLE_LOG_ADMIN = new Role("ROLE_LOG_ADMIN");
+  public static Role ROLE_LOK_ADMIN = new Role("ROLE_LOK_ADMIN");
+  public static Role ROLE_LOK_LOG_ADMIN = new Role("ROLE_LOK_LOG_ADMIN");
   
 
 }

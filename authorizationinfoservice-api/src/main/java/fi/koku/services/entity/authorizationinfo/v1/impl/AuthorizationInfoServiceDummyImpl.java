@@ -36,9 +36,9 @@ public class AuthorizationInfoServiceDummyImpl implements AuthorizationInfoServi
     List<Role> ret = new ArrayList<Role>(1);
 
     if("101010-1010".equals(uid)) {
-      ret.add(Constants.ROLE_LOG_VIEWER);
+      ret.add(Constants.ROLE_LOK_ADMIN);
     }else if("121212-1212".equals(uid)){
-      ret.add(Constants.ROLE_LOG_ADMIN);
+      ret.add(Constants.ROLE_LOK_LOG_ADMIN);
     }
     
     return ret;
