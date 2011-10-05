@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu log service contract definition.
 
-    version: 0.9
+    version: 0.93
     Ixonos / aspluma
     
   </wsdl:documentation>
@@ -46,11 +46,11 @@
   </wsdl:message>
   
   <wsdl:message name="msgArchiveLogResponse">
-   <wsdl:part name="archiveCount" element="log:int"/>
+   <wsdl:part name="ArchivalResults" element="log:archivalResults"/>
   </wsdl:message>
   
   <wsdl:message name="serviceFault">
-    <wsdl:part name="serviceFaultDetail" element="log:serviceFaultDetail" />
+    <wsdl:part name="ServiceFaultDetail" element="log:serviceFaultDetail" />
   </wsdl:message>
   
   <wsdl:message name="voidResponse">
