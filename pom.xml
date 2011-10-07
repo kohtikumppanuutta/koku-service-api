@@ -101,9 +101,18 @@
     <module>authorizationinfoservice-api</module>
     <module>kvservice-api</module>
     <module>tivaservice-api</module>
+    <module>authorizationinfoservice-api</module>
+    <module>personservice-api</module>
   </modules>
   
   <repositories>
+  
+     <repository>
+        <id>ElasticService.com</id>
+        <name>ElasticService.com-releases</name>
+        <url>https://m2.elasticservice.com/artifactory/koku</url>
+      </repository>
+  
   </repositories>
   
   <distributionManagement>
