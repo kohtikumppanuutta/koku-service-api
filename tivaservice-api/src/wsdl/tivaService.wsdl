@@ -38,7 +38,7 @@
      <xs:element minOccurs='0' name='informationTargetId' type='xs:string'/>
      <xs:element minOccurs='0' name='givenAt' type='xs:date'/>
      <xs:element minOccurs='0' name='validTill' type='xs:date'/>
-     <xs:element minOccurs='0' name='givenTo' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' name='givenTo' type='xs:string'/>
      <xs:element minOccurs='0' name='description' type='xs:string'/>
      <xs:element minOccurs='0' name='status' type='tns:consentStatus'/>
      <xs:element minOccurs='0' name='metaInfo' type='xs:string'/>
