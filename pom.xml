@@ -101,8 +101,7 @@
     <module>authorizationinfoservice-api</module>
     <module>kvservice-api</module>
     <module>tivaservice-api</module>
-    <module>authorizationinfoservice-api</module>
-    <module>personservice-api</module>
+    <!-- <module>personservice-api</module>-->
   </modules>
   
   <repositories>
