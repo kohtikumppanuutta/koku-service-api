@@ -42,10 +42,9 @@ public class PersonService {
     customerService = customerServiceFactory.getCustomerService();
     
     //Initialize LdapService (aka KahvaService)
-    endpoint = "http://localhost:8280/kahvaservice-mock-0.0.1-SNAPSHOT/KahvaServiceEndpointBean";
-    LdapServiceFactory f = new LdapServiceFactory(endpoint);
+    LdapServiceFactory f = new LdapServiceFactory(PersonConstants.KAHVA_SERVICE_FULL_URL);
     ldapService = f.getOrganizationService();
-    
+    endpoint = PersonConstants.KAHVA_SERVICE_FULL_URL;
         
   }
   

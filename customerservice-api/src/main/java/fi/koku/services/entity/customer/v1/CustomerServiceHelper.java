@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author mikkope
- *
+ * @deprecated  This class is not needed anymore because related functionality is now implemented in customer service
  */
+@Deprecated
 public class CustomerServiceHelper {
 
   private static final Logger LOG = LoggerFactory.getLogger(CustomerServiceHelper.class);

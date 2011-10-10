@@ -3,19 +3,23 @@
  */
 package fi.koku.services.entity.person.v1;
 
+import fi.koku.settings.KoKuPropertiesUtil;
+
 /**
  * @author mikkope
  *
  */
 public class PersonConstants {
 
-  final public static String CUSTOMER_SERVICE_ENDPOINT = "http://localhost:8180/customer-service-0.0.1-SNAPSHOT/CustomerServiceEndpointBean?wsdl";
-  
+  //Customer service related information
+  final public static String CUSTOMER_SERVICE_ENDPOINT = KoKuPropertiesUtil.get("customer.service.endpointaddress");
   final public static String CUSTOMER_SERVICE_USER_ID = "marko";
   final public static String CUSTOMER_SERVICE_PASSWORD = "marko";
   
-  final public static String COMPONENT_PERSON_SERVICE = "person_service";
+  //Kahva/LDAPservice related information #TODO# Consider harmonizing endpointaddress with others
+  final public static String KAHVA_SERVICE_FULL_URL = KoKuPropertiesUtil.get("kahva.service.endpointaddress.full.url");
   
   final public static String PERSON_SERVICE_DOMAIN_CUSTOMER = "person_service_domain_customer";
   final public static String PERSON_SERVICE_DOMAIN_OFFICER = "person_service_domain_officer";
+  
 }
