@@ -12,7 +12,7 @@
   <wsdl:documentation>
     KoKu log service contract definition.
 
-    version: 0.93
+    version: 0.94
     Ixonos / aspluma
     
   </wsdl:documentation>
@@ -30,7 +30,7 @@
 
   <!--  message definitions -->
   <wsdl:message name="msgLogRequest">
-    <wsdl:part name="LogEntry" element="log:logEntry"/>
+    <wsdl:part name="LogEntries" element="log:logEntries"/>
   </wsdl:message>
   
   <wsdl:message name="msgArchiveLogRequest">
