@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="1.22"
+  version="1.23"
   >
   
   <xsd:annotation>
@@ -231,6 +231,7 @@
       name: Group name
       description: Group description
       register: Register where group entry types are managed
+      accountable: Who is accountable to fill the group entries
       childGroups: Groups child groups
     </xsd:documentation>
   </xsd:annotation>
@@ -241,6 +242,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="register" type="xsd:string"/>
+      <xsd:element name="accountable" type="xsd:string"/>
       <xsd:element name="kksEntryClasses" type="KksEntryClassesType" />
       <xsd:element name="subGroups" type="KksGroupsType" /> 
     </xsd:sequence>
