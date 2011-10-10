@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>service-api</artifactId>
+    <groupId>kohti-kumppanuutta</groupId>
+    <version>0.0.4</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>personservice-api</artifactId>
+  <version>0.0.1</version>
+  
+   <dependencies>
+	<dependency>
+      <groupId>kohti-kumppanuutta</groupId>
+      <artifactId>kahvaservice-api</artifactId>
+      <version>0.0.3</version>
+    </dependency>
+ 
+ <dependency>  
+    <groupId>kohti-kumppanuutta</groupId>  
+    <artifactId>customerservice-api</artifactId>  
+    <version>0.0.13</version>  
+</dependency> 
+ 
+  </dependencies>
+
+ 
+  
+</project>
