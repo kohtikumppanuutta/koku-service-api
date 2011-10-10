@@ -20,7 +20,7 @@ import fi.koku.services.entity.userinfo.v1.model.Role;
 
 /**
  * @author mikkope
- *
+ * @deprecated Do not use this anymore. Use AuthorizationInfoService-api instead
  */
 public interface UserInfoService {
 
