@@ -11,6 +11,11 @@ import javax.xml.ws.BindingProvider;
  * @author Ixonos / tuomape
  */
 public class KksServiceFactory {
+
+  public static String SERVICE_AREA_DAYCARE = "kk.servicearea.daycare";
+  public static String SERVICE_AREA_BASIC_EDUCATION = "kk.servicearea.basicEducation";
+  public static String SERVICE_AREA_CHILD_HEALTH = "kk.servicearea.childHealth";
+
   private String uid;
   private String pwd;
   private String endpointBaseUrl;

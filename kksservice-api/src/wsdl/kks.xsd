@@ -3,7 +3,7 @@
   targetNamespace="http://services.koku.fi/entity/kks/v1"
   xmlns="http://services.koku.fi/entity/kks/v1"
   elementFormDefault="qualified"
-  version="1.23"
+  version="1.24"
   >
   
   <xsd:annotation>
@@ -68,9 +68,7 @@
      <!-- element for kks collection state criteria -->
   <xsd:element name="kksCollectionStateCriteriaType" type="KksCollectionStateCriteriaType"/>
   
-  
-   
-  
+    
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       kksCollections: persons kks collections
@@ -189,6 +187,9 @@
     <xsd:documentation xml:lang="en">
       id: Collection type identifier
       name: Collection type name
+      description: type description
+      typeCode: Collection type code
+      consentType: Collection consent type
       kksGroups: Collection groups
       kksEntryClasses: Collections entry classes
     </xsd:documentation>
@@ -199,11 +200,10 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="typeCode" type="xsd:string"/>
-      <xsd:element name="consessionType" type="xsd:string"/>
+      <xsd:element name="consentType" type="xsd:string"/>
       <xsd:element name="kksGroups" type="KksGroupsType"/> 
     </xsd:sequence>
-  </xsd:complexType>
-  
+  </xsd:complexType>  
   
   <xsd:complexType name="KksCollectionClassesType">
     <xsd:sequence>
@@ -221,8 +221,7 @@
     <xsd:sequence>
 		<xsd:element name="kksEntryClass" type="KksEntryClassType" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
-  </xsd:complexType>   
-  
+  </xsd:complexType>
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
@@ -367,6 +366,8 @@
       versioned: is collection versioned
       customerId: pic for the customer of this collection
       newVersion: tells is new version needed from collection
+      consentRequested: tells is consent requested for this collection type
+      userCollectionStatus: holds user consent for this collection
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType name="KksCollectionType">
@@ -387,6 +388,8 @@
       <xsd:element name="versioned" type="xsd:boolean"/>
       <xsd:element name="customerId" type="xsd:string"/>
       <xsd:element name="newVersion" type="xsd:boolean" default="false"/>
+      <xsd:element name="consentRequested" type="xsd:boolean" default="false"/>
+      <xsd:element name="userConsentStatus" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
