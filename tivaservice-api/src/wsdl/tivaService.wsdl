@@ -33,15 +33,22 @@
     <xs:sequence>
      <xs:element minOccurs='0' name='consentId' type='xs:long'/>
      <xs:element minOccurs='0' name='template' type='tns:consentTemplate'/>
+     <xs:element minOccurs='0' name='consentRequestor' type='xs:string'/>
      <xs:element minOccurs='0' name='targetPerson' type='xs:string'/>
      <xs:element maxOccurs='unbounded' name='consentProviders' type='xs:string'/>
      <xs:element minOccurs='0' name='informationTargetId' type='xs:string'/>
      <xs:element minOccurs='0' name='givenAt' type='xs:date'/>
      <xs:element minOccurs='0' name='validTill' type='xs:date'/>
-     <xs:element maxOccurs='unbounded' name='givenTo' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' name='givenTo' type='tns:givenTo'/>
      <xs:element minOccurs='0' name='description' type='xs:string'/>
      <xs:element minOccurs='0' name='status' type='tns:consentStatus'/>
      <xs:element minOccurs='0' name='metaInfo' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='givenTo'>
+    <xs:sequence>
+     <xs:element name='partyId' type='xs:string'/>
+     <xs:element name='partyName' type='xs:string'/>
     </xs:sequence>
    </xs:complexType>
    <xs:complexType name='createConsentResponse'>
@@ -49,16 +56,15 @@
    </xs:complexType>
    <xs:complexType name='queryConsents'>
     <xs:sequence>
-     <xs:element minOccurs='0' name='consentSearchQuery' type='tns:ConsentSearchCriteria'/>
+     <xs:element name='consentSearchQuery' type='tns:ConsentSearchCriteria'/>
     </xs:sequence>
    </xs:complexType>
    <xs:complexType name='ConsentSearchCriteria'>
     <xs:sequence>
-     <xs:element minOccurs='0' name='targetPerson' type='xs:string'/>
-     <xs:element minOccurs='0' name='templateNamePrefix' type='xs:string'/>
+     <xs:element name='targetPerson' type='xs:string'/>
+     <xs:element name='templateNamePrefix' type='xs:string'/>
      <xs:element minOccurs='0' name='informationTargetId' type='xs:string'/>
-     <xs:element maxOccurs='unbounded' minOccurs='0' name='statuses' nillable='true' type='tns:consentStatus'/>
-     <xs:element minOccurs='0' name='givenTo' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' name='givenTo' type='xs:string'/>
     </xs:sequence>
    </xs:complexType>
    <xs:complexType name='queryConsentsResponse'>
