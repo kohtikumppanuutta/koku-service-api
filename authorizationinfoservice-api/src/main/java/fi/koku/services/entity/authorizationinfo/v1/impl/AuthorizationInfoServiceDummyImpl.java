@@ -6,8 +6,8 @@ package fi.koku.services.entity.authorizationinfo.v1.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import fi.koku.services.entity.authorizationinfo.v1.Constants;
 import fi.koku.services.entity.authorizationinfo.v1.AuthorizationInfoService;
+import fi.koku.services.entity.authorizationinfo.v1.Constants;
 import fi.koku.services.entity.authorizationinfo.v1.model.Group;
 import fi.koku.services.entity.authorizationinfo.v1.model.OrgUnit;
 import fi.koku.services.entity.authorizationinfo.v1.model.Registry;
@@ -35,18 +35,25 @@ public class AuthorizationInfoServiceDummyImpl implements AuthorizationInfoServi
   public List<Role> getUsersRoles(String context, String uid) {
     List<Role> ret = new ArrayList<Role>(1);
 
-    if("101010-1010".equals(uid)) {
+    if ("101010-1010".equals(uid)) {
       ret.add(Constants.ROLE_LOK_ADMIN);
-    }else if("121212-1212".equals(uid)){
+    } else if ("121212-1212".equals(uid)) {
       ret.add(Constants.ROLE_LOK_LOG_ADMIN);
     }
-    
+
     return ret;
   }
 
   public List<OrgUnit> getUsersOrgUnits(String context, String uid) {
     List<OrgUnit> ret = new ArrayList<OrgUnit>(1);
-    ret.add(new OrgUnit("oid1", "Day care unit of Porolahti"));
+
+    if (uid.equals("777777-7777")) {
+      ret.add(new OrgUnit("oid1", "Day care unit of Porolahti", "kk.servicearea.daycare"));
+    } else if (uid.equals("888888-8888")) {
+      ret.add(new OrgUnit("oid2", "Health care unit of Porolahti", "kk.servicearea.childHealth"));
+    }
+
+    ret.add(new OrgUnit("oid3", "Day care unit of Porolahti", "kk.servicearea.daycare"));
 
     return ret;
   }

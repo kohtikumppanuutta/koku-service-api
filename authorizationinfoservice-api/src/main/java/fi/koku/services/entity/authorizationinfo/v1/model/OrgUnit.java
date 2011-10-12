@@ -5,33 +5,52 @@ package fi.koku.services.entity.authorizationinfo.v1.model;
 
 /**
  * @author mikkope
- *
+ * 
  */
 public class OrgUnit {
-   private String id;
-   private String name;
-   
-   public OrgUnit(String id) {
-     this.id = id;
-   }
-   
+  private String id;
+  private String name;
+  private String serviceArea;
+
+  public OrgUnit(String id) {
+    this.id = id;
+  }
+
   public OrgUnit(String id, String name) {
     this.id = id;
     this.name = name;
   }
 
+  public OrgUnit(String id, String name, String serviceArea) {
+    this.id = id;
+    this.name = name;
+    this.serviceArea = serviceArea;
+  }
+
   public String getId() {
     return id;
   }
+
   public void setId(String id) {
     this.id = id;
   }
+
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
+  public String getServiceArea() {
+    return serviceArea;
+  }
+
+  public void setServiceArea(String serviceArea) {
+    this.serviceArea = serviceArea;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -39,6 +58,7 @@ public class OrgUnit {
     result = prime * result + ((id == null) ? 0 : id.hashCode());
     return result;
   }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -55,7 +75,5 @@ public class OrgUnit {
       return false;
     return true;
   }
-   
-   
-  
+
 }
