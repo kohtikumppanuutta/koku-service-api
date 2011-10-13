@@ -106,7 +106,10 @@
     <module>authorizationinfoservice-api</module>
     <module>kvservice-api</module>
     <module>tivaservice-api</module>
-    <!-- <module>personservice-api</module>-->
+    <module>personservice-api</module>
+    <module>userinformationservice-api</module>
+    <module>kahvaservice-api</module>
+    <module>familyservice-api</module>
   </modules>
   
   <repositories>
