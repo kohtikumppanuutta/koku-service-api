@@ -11,17 +11,24 @@
                 xmlns="http://tampere.fi/schema/municipalityportal/uis"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
       <xsd:element name="getSsnByUsername" type="xsd:string"/>
-      <xsd:element name="getSsnByUsernameResponse" type="xsd:string"/>
+      <xsd:element name="getSsnByUsernameResponse" type="UserInformationType"/>
       <xsd:element name="userInformationFault" type="FaultInfoType"/>
+      <xsd:complexType name="UserInformationType">
+        <xsd:sequence>
+          <xsd:element name="firstName" type="xsd:string"/>
+          <xsd:element name="lastName" type="xsd:string"/>
+          <xsd:element name="ssn" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
       <xsd:complexType name="FaultInfoType">
         <xsd:sequence>
-          <xsd:element name="type" default="SSN_NOT_AVAILABLE" type="FaultType"/>
+          <xsd:element name="type" default="USER_INFO_NOT_AVAILABLE" type="FaultType"/>
           <xsd:element name="field" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
       </xsd:complexType>
       <xsd:simpleType name="FaultType">
         <xsd:restriction base="xsd:string">
-          <xsd:enumeration value="SSN_NOT_AVAILABLE"/>
+          <xsd:enumeration value="USER_INFO_NOT_AVAILABLE"/>
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
