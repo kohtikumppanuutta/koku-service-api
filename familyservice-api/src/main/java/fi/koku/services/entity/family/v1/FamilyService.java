@@ -4,7 +4,9 @@
 package fi.koku.services.entity.family.v1;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,21 +34,39 @@ public class FamilyService {
 
   private static final Logger LOG = LoggerFactory.getLogger(FamilyService.class);
 
+  private static FamilyService service = null;
   private CustomerServicePortType customerService;
   private CommunityServicePortType communityService;
 
-  public FamilyService() {
+  private FamilyService(String customerServiceUserId, String customerServicePassword, String communityServiceUserId, String communityServicePassword ) {
     CustomerServiceFactory customerServiceFactory = new CustomerServiceFactory(
-        FamilyConstants.CUSTOMER_SERVICE_USER_ID, FamilyConstants.CUSTOMER_SERVICE_PASSWORD,
+        customerServiceUserId, customerServicePassword,
         FamilyConstants.CUSTOMER_SERVICE_ENDPOINT);
     customerService = customerServiceFactory.getCustomerService();
 
     CommunityServiceFactory communityServiceFactory = new CommunityServiceFactory(
-        FamilyConstants.COMMUNITY_SERVICE_USER_ID, FamilyConstants.COMMUNITY_SERVICE_PASSWORD,
+        communityServiceUserId, communityServicePassword,
         FamilyConstants.COMMUNITY_SERVICE_ENDPOINT);
     communityService = communityServiceFactory.getCommunityService();
   }
 
+  
+  /**
+   * Get instance of FamilyService. This method creates only one instance of FamilyService
+   * 
+   * @param customerServiceUserId
+   * @param customerServicePassword
+   * @param communityServiceUserId
+   * @param communityServicePassword
+   * @return
+   */
+  public static FamilyService getInstance(final String customerServiceUserId, final String customerServicePassword, final String communityServiceUserId, final String communityServicePassword){
+    if(service==null){
+      service = new FamilyService(customerServiceUserId, customerServicePassword, communityServiceUserId, communityServicePassword);
+    }
+    return service;
+  }
+  
   /**
    * Returns children of the person
    * 
@@ -60,26 +80,25 @@ public class FamilyService {
 
     List<CustomerType> children = new ArrayList<CustomerType>();
     List<CommunityType> communities = null;
-
+    Set<String> memberPics = new HashSet<String>();
     try {
 
       // 1) Query communities and persons
       communities = searchPersonsCommunitiesByPic(pic, auditUserId, auditComponentId);
 
-      // ##TODO## The query may return more than one communities, how to
-      // determine which is the correct one?
-      // ##TODO## Assuming that the first list is the one. Check this!
-      //
-      if (communities.size()==1) {
-        final int THE_ONLY_COMMUNITY = 0;
-        List<MemberType> members = communities.get(THE_ONLY_COMMUNITY).getMembers().getMember();
-        List<String> memberPics = filterMemberPicsWithRole(members, FamilyConstants.ROLE_DEPENDANT);
+      //Check if found one or more communities
+      if(communities!=null && communities.size()>0){
+        
+        //Iterate communities. For example child can belong to many communities and
+        // therefore we have to get all guardians from those communities 
+        for (CommunityType community : communities) {
+          List<MemberType> members = community.getMembers().getMember();
+          memberPics.addAll( filterMemberPicsWithRole(members, FamilyConstants.ROLE_DEPENDANT) );
+        }
 
-        // 2) Query persons (CustomerType) in community
+        // 2) Query persons (CustomerType) in communities
         children = searchPersonsByPicList(memberPics, auditUserId, auditComponentId);
-
-      }else if(communities.size()>1){  
-        throw new Exception("Person has communities.size="+communities.size()+" (not required 1).");//#TODO# Evaluate proper operation for this
+      
       }else{
         LOG.debug("No communities found with pic="+pic); 
       }
@@ -104,25 +123,25 @@ public class FamilyService {
 
     List<CustomerType> parents = new ArrayList<CustomerType>();
     List<CommunityType> communities = null;
-
+    Set<String> memberPics = new HashSet<String>();
     try {
 
       // 1) Query communities and persons
       communities = searchPersonsCommunitiesByPic(pic, auditUserId, auditComponentId);
 
-      // ##TODO## The query may return more than one communities, how to
-      // determine which is the correct one?
-      // ##TODO## Assuming that the first list is the one. Check this!
-      //
-      if (communities.size()==1) {
-        final int THE_ONLY_COMMUNITY = 0;
-        List<MemberType> members = communities.get(THE_ONLY_COMMUNITY).getMembers().getMember();
-        List<String> memberPics = filterMemberPicsWithRole(members, FamilyConstants.ROLE_GUARDIAN);
-
-        parents = searchPersonsByPicList(memberPics, auditUserId, auditComponentId);
-
-      }else if(communities.size()>1){  
-        throw new Exception("Person has communities.size="+communities.size()+" (not required 1).");//#TODO# Evaluate proper operation for this
+      //Check if found one or more communities
+      if(communities!=null && communities.size()>0){
+        
+        //Iterate communities. For example child can belong to many communities and
+        // therefore we have to get all guardians from those communities 
+        for (CommunityType community : communities) {
+          
+          List<MemberType> members = community.getMembers().getMember();
+          memberPics.addAll( filterMemberPicsWithRole(members, FamilyConstants.ROLE_GUARDIAN) );
+  
+          parents = searchPersonsByPicList(memberPics, auditUserId, auditComponentId);
+        }
+        
       }else{
         LOG.debug("No communities found with pic="+pic); 
       }
@@ -135,7 +154,7 @@ public class FamilyService {
   }
   
   
-  private List<CustomerType> searchPersonsByPicList(List<String> memberPics, String auditUserId, String auditComponentId)
+  private List<CustomerType> searchPersonsByPicList(Set<String> memberPics, String auditUserId, String auditComponentId)
       throws fi.koku.services.entity.customer.v1.ServiceFault {
     CustomerQueryCriteriaType query = new CustomerQueryCriteriaType();
     
@@ -184,15 +203,16 @@ public class FamilyService {
 
   /**
    * Extracts pics that have given role (ex. has role dependant/guardian) from MemberType-list
+   * Set-type is used to remove duplicates
    * 
    * @param members, list of MemberTypes
    * @param roleId, role as string format
-   * @return pics, list of Pics as Strings
+   * @return pics, set of Pics as Strings
    */
-  private List<String> filterMemberPicsWithRole(List<MemberType> members, final String roleId) {
-    List<String> pics = null;
+  private Set<String> filterMemberPicsWithRole(List<MemberType> members, final String roleId) {
+    Set<String> pics = null;
     if (members != null && roleId!=null) {
-      pics = new ArrayList<String>(members.size());
+      pics = new HashSet<String>(members.size());
       
       for (MemberType m : members) {
         // Check if the person has given roleId
@@ -202,7 +222,7 @@ public class FamilyService {
           }
         } else {
           LOG.debug("Member with pic=" + m.getPic() + " has role=" + m.getRole()
-              + " and therefore is not added to list.");
+              + " and therefore is not added to set.");
         }
       }// ...FOR
     
