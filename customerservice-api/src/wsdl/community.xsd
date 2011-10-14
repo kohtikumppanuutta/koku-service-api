@@ -81,6 +81,11 @@
 
   <xsd:complexType name="CommunityQueryCriteriaType">
     <xsd:sequence>
+      <xsd:annotation>
+        <xsd:documentation xml:lang="fi">
+          Querying with multiple memberPics returns all communities that contain one or more of the provided pics.
+        </xsd:documentation>
+      </xsd:annotation>
       <xsd:element name="memberPics" type="MemberPicsType" minOccurs="1" maxOccurs="1"/>
       <xsd:element name="communityType" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
