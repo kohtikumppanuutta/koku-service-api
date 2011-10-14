@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="UserInformationService"
+             targetNamespace="http://tampere.fi/contract/municipalityportal/uis"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://tampere.fi/contract/municipalityportal/uis"
+             xmlns:user="http://tampere.fi/schema/municipalityportal/uis"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xsd:schema elementFormDefault="qualified"
+                targetNamespace="http://tampere.fi/schema/municipalityportal/uis"
+                xmlns="http://tampere.fi/schema/municipalityportal/uis"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="getSsnByUsername" type="xsd:string"/>
+      <xsd:element name="getSsnByUsernameResponse" type="xsd:string"/>
+      <xsd:element name="userInformationFault" type="FaultInfoType"/>
+      <xsd:complexType name="FaultInfoType">
+        <xsd:sequence>
+          <xsd:element name="type" default="SSN_NOT_AVAILABLE" type="FaultType"/>
+          <xsd:element name="field" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="FaultType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="SSN_NOT_AVAILABLE"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+  </types>
+  <message name="getSsnByUsername">
+    <part name="getSsnByUsername" element="user:getSsnByUsername"/>
+  </message>
+  <message name="getSsnByUsernameResponse">
+    <part name="getSsnByUsernameResponse" element="user:getSsnByUsernameResponse"/>
+  </message>
+  <message name="userInformationFault">
+    <part name="userInformationFault" element="user:userInformationFault"/>
+  </message>
+  <portType name="UserInformationServicePortType">
+    <operation name="getSsnByUsername">
+      <input message="tns:getSsnByUsername"/>
+      <output message="tns:getSsnByUsernameResponse"/>
+      <fault name="userInformationFault" message="tns:userInformationFault"/>
+    </operation>
+  </portType>
+  <binding name="UserInformationServiceBinding" type="tns:UserInformationServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getSsnByUsername">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="userInformationFault">
+        <soap:fault name="userInformationFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="UserInformationService">
+    <port name="UserInformationServicePort" binding="tns:UserInformationServiceBinding">
+      <soap:address location="http://127.0.0.1:8080/services/UserInformationService"/>
+    </port>
+  </service>
+</definitions>
