@@ -34,11 +34,10 @@ public class FamilyService {
 
   private static final Logger LOG = LoggerFactory.getLogger(FamilyService.class);
 
-  private static FamilyService service = null;
   private CustomerServicePortType customerService;
   private CommunityServicePortType communityService;
 
-  private FamilyService(String customerServiceUserId, String customerServicePassword, String communityServiceUserId, String communityServicePassword ) {
+  public FamilyService(String customerServiceUserId, String customerServicePassword, String communityServiceUserId, String communityServicePassword ) {
     CustomerServiceFactory customerServiceFactory = new CustomerServiceFactory(
         customerServiceUserId, customerServicePassword,
         FamilyConstants.CUSTOMER_SERVICE_ENDPOINT);
@@ -50,22 +49,6 @@ public class FamilyService {
     communityService = communityServiceFactory.getCommunityService();
   }
 
-  
-  /**
-   * Get instance of FamilyService. This method creates only one instance of FamilyService
-   * 
-   * @param customerServiceUserId
-   * @param customerServicePassword
-   * @param communityServiceUserId
-   * @param communityServicePassword
-   * @return
-   */
-  public static FamilyService getInstance(final String customerServiceUserId, final String customerServicePassword, final String communityServiceUserId, final String communityServicePassword){
-    if(service==null){
-      service = new FamilyService(customerServiceUserId, customerServicePassword, communityServiceUserId, communityServicePassword);
-    }
-    return service;
-  }
   
   /**
    * Returns children of the person
