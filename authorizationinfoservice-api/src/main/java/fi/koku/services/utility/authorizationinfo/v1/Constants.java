@@ -1,10 +1,10 @@
 /**
  * This class contains constants that should be used in AuthorizationInfoService
  */
-package fi.koku.services.entity.authorizationinfo.v1;
+package fi.koku.services.utility.authorizationinfo.v1;
 
-import fi.koku.services.entity.authorizationinfo.v1.model.Registry;
-import fi.koku.services.entity.authorizationinfo.v1.model.Role;
+import fi.koku.services.utility.authorizationinfo.v1.model.Registry;
+import fi.koku.services.utility.authorizationinfo.v1.model.Role;
 
 /**
  * @author mikkope

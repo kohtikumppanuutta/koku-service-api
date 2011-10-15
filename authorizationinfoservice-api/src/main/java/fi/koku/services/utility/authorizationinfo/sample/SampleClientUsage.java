@@ -1,18 +1,18 @@
 /**
  * Sample class to demonstrate usage of AuthorizationInfoService interface
  */
-package fi.koku.services.entity.authorizationinfo.sample;
+package fi.koku.services.utility.authorizationinfo.sample;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import fi.koku.services.entity.authorizationinfo.v1.Constants;
-import fi.koku.services.entity.authorizationinfo.v1.AuthorizationInfoService;
-import fi.koku.services.entity.authorizationinfo.v1.impl.AuthorizationInfoServiceDummyImpl;
-import fi.koku.services.entity.authorizationinfo.v1.model.Group;
-import fi.koku.services.entity.authorizationinfo.v1.model.OrgUnit;
-import fi.koku.services.entity.authorizationinfo.v1.model.Registry;
-import fi.koku.services.entity.authorizationinfo.v1.model.Role;
+import fi.koku.services.utility.authorizationinfo.v1.Constants;
+import fi.koku.services.utility.authorizationinfo.v1.AuthorizationInfoService;
+import fi.koku.services.utility.authorizationinfo.v1.impl.AuthorizationInfoServiceDummyImpl;
+import fi.koku.services.utility.authorizationinfo.v1.model.Group;
+import fi.koku.services.utility.authorizationinfo.v1.model.OrgUnit;
+import fi.koku.services.utility.authorizationinfo.v1.model.Registry;
+import fi.koku.services.utility.authorizationinfo.v1.model.Role;
 
 /**
  * @author mikkope

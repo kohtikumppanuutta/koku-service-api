@@ -1,4 +1,4 @@
-package fi.koku.services.entity.authorizationinfo.util;
+package fi.koku.services.utility.authorizationinfo.util;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import fi.koku.KoKuException;
 import fi.koku.KoKuNotAuthorizedException;
 import fi.koku.auth.KoKuRoleUtil;
-import fi.koku.services.entity.authorizationinfo.v1.model.Role;
+import fi.koku.services.utility.authorizationinfo.v1.model.Role;
 
 /**
  * Authorization related utility functions.

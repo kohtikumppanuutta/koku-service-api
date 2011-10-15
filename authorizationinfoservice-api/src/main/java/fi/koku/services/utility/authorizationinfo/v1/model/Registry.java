@@ -1,7 +1,7 @@
 /**
  * Simple class that represents Registry (rekisteri / potilastietorekisteri)
  */
-package fi.koku.services.entity.authorizationinfo.v1.model;
+package fi.koku.services.utility.authorizationinfo.v1.model;
 
 /**
  * @author mikkope
