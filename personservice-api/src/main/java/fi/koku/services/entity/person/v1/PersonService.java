@@ -20,6 +20,11 @@ import fi.koku.services.entity.customer.v1.CustomerType;
 import fi.koku.services.entity.customer.v1.CustomersType;
 import fi.koku.services.entity.customer.v1.PicsType;
 import fi.koku.services.entity.customer.v1.ServiceFault;
+import fi.koku.services.entity.userinformation.UserInformationConstants;
+import fi.koku.services.entity.userinformation.v1.UserInformationServiceFactory;
+import fi.tampere.contract.municipalityportal.uis.UserInformationFault;
+import fi.tampere.contract.municipalityportal.uis.UserInformationServicePortType;
+import fi.tampere.schema.municipalityportal.uis.UserInformationType;
 
 /**
  * @author mikkope
@@ -32,6 +37,7 @@ public class PersonService {
   
   private CustomerServicePortType customerService;
   private LdapService ldapService;
+  private UserInformationServicePortType userInformationService;
   
   public PersonService(){
 
@@ -46,6 +52,13 @@ public class PersonService {
     ldapService = f.getOrganizationService();
     endpoint = PersonConstants.KAHVA_SERVICE_FULL_URL;
         
+    //Initialize UserInformationService
+    UserInformationServiceFactory uisFactory = new UserInformationServiceFactory(
+          PersonConstants.USER_INFORMATION_SERVICE_USER_ID,
+          PersonConstants.USER_INFORMATION_SERVICE_PASSWORD, 
+          UserInformationConstants.USER_INFORMATION_SERVICE_FULL_URL);
+    userInformationService = uisFactory.getUserInformationService();
+    
   }
   
   /**
@@ -92,6 +105,8 @@ public class PersonService {
  /**
   * Returns list of persons with corresponding uids (currect case Loora portal uids)
   * 
+  * NOTICE: Using DOMAIN_CUSTOMER here creates "uids.size()" times WS calls, because UserInformationService has only "getUserByUid"-method
+  * 
  * @param uids, string array of personIds
  * @param domain, string constants that allows to add new implementations for different domains or backends
  * @param auditUserId, id of service user
@@ -104,12 +119,34 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
     
     if(uids!=null && !uids.isEmpty()){
       
+      personList = new ArrayList<Person>(uids.size());
+      
       //Check input parameters
       if(isNotNullOrEmpty(auditUserId) & isNotNullOrEmpty(auditComponentId)){
     
         if(PersonConstants.PERSON_SERVICE_DOMAIN_OFFICER.equals(domain)){
           //Search using LdapService
           personList = getPersonsFromOfficerDomainWithUidList(uids);
+          
+        }else if(PersonConstants.PERSON_SERVICE_DOMAIN_CUSTOMER.equals(domain)){
+          
+          //Search first from UserInformationService (Kunpo) to get hetu with uid
+          //#TODO# If UserInformationService (external) is updated to accept list of uids, this implementation
+          // could also be changed to use that.
+          UserInformationType u = null;
+          for (String uid : uids) {
+            try {
+              u = userInformationService.getSsnByUsername(uid);
+              if(u!=null){
+                personList.add(new Person(u.getSsn(),u.getFirstName(), u.getLastName()) );
+              }
+            } catch (UserInformationFault e) {
+              LOG.error("Failed to get person from UserInformationService with uid="+uid);
+            }
+          }
+          
+          //NOTICE: You could also ask Person information from CustomerService using hetu
+          //personList = getPersonsFromCustomerDomainWithPicList(pics, auditUserId, auditComponentId);
           
         }else{
           LOG.error("No valid domain was set. Search cannot be done");

@@ -19,7 +19,13 @@ public class PersonConstants {
   //Kahva/LDAPservice related information #TODO# Consider harmonizing endpointaddress with others
   final public static String KAHVA_SERVICE_FULL_URL = KoKuPropertiesUtil.get("kahva.service.endpointaddress.full.url");
   
+  final public static String USER_INFORMATION_SERVICE_FULL_URL = KoKuPropertiesUtil.get("userinformation.service.endpointaddress");
+  final public static String USER_INFORMATION_SERVICE_USER_ID = "TODO";
+  final public static String USER_INFORMATION_SERVICE_PASSWORD = "TODO";
+  
+  
   final public static String PERSON_SERVICE_DOMAIN_CUSTOMER = "person_service_domain_customer";
   final public static String PERSON_SERVICE_DOMAIN_OFFICER = "person_service_domain_officer";
+  
   
 }
