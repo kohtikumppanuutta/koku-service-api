@@ -105,8 +105,8 @@ public class PersonService {
  /**
   * Returns list of persons with corresponding uids (currect case Loora portal uids)
   * 
-  * NOTICE: Using DOMAIN_CUSTOMER here creates "uids.size()" times WS calls, because UserInformationService has only "getUserByUid"-method
-  * 
+  * NOTICE: Using DOMAIN_CUSTOMER&OFFICER (Both) here creates "uids.size()" times WS calls, because UserInformationService has only "getUserByUid"-method
+ *
  * @param uids, string array of personIds
  * @param domain, string constants that allows to add new implementations for different domains or backends
  * @param auditUserId, id of service user
@@ -170,9 +170,8 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
     
     try {
         
-        List<User> users = ldapService.getUsersByIds(uids);
-
-        for (User userFromWS : users) {
+        for (String uid : uids) {
+          User userFromWS = ldapService.getUserById(uid);
           personList.add( new Person( userFromWS.getSsn(),userFromWS.getFirstName() ,userFromWS.getLastName()));  
         }
       
