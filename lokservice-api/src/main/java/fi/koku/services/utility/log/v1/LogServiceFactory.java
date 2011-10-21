@@ -22,7 +22,6 @@ public class LogServiceFactory {
 private String uid;
 private String pwd;
 private String endpointBaseUrl;
-private String implVersion = "0.0.1-SNAPSHOT";
 private final URL wsdlLocation = getClass().getClassLoader().getResource("/wsdl/logService.wsdl");
 
 private static Logger log = LoggerFactory.getLogger(LogServiceFactory.class);
@@ -38,7 +37,7 @@ public LogServicePortType getLogService() {
   LogService service = new LogService(wsdlLocation, new QName(
       "http://services.koku.fi/utility/log/v1", "logService"));
   LogServicePortType port = service.getLogServiceSoap11Port();
-  String epAddr = endpointBaseUrl + "/lok-service-" + implVersion + "/LogServiceEndpointBean";
+  String epAddr = endpointBaseUrl + "/LogServiceEndpointBean";
   
   ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
   ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
