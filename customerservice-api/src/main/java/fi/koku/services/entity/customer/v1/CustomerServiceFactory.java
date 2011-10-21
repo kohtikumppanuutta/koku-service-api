@@ -14,7 +14,6 @@ public class CustomerServiceFactory {
   private String uid;
   private String pwd;
   private String endpointBaseUrl;
-  private String implVersion = "0.0.1-SNAPSHOT";
   private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/customerService.wsdl");
 
   public CustomerServiceFactory(String uid, String pwd, String endpointBaseUrl) {
@@ -27,7 +26,7 @@ public class CustomerServiceFactory {
     CustomerService service = new CustomerService(wsdlLocation, new QName(
         "http://services.koku.fi/entity/customer/v1", "customerService"));
     CustomerServicePortType port = service.getCustomerServiceSoap11Port();
-    String epAddr = endpointBaseUrl + "/customer-service-" + implVersion + "/CustomerServiceEndpointBean";
+    String epAddr = endpointBaseUrl + "/CustomerServiceEndpointBean";
 
     ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
     ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
