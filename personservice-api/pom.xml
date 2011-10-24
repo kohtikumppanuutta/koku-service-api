@@ -7,7 +7,7 @@
     <relativePath>..</relativePath>
   </parent>
   <artifactId>personservice-api</artifactId>
-  <version>0.0.7</version>
+  <version>0.0.8</version>
   
    <dependencies>
 	<dependency>
@@ -19,7 +19,7 @@
  <dependency>  
     <groupId>kohti-kumppanuutta</groupId>  
     <artifactId>customerservice-api</artifactId>  
-    <version>0.0.13</version>  
+    <version>0.0.15</version>  
 </dependency> 
  
  <dependency>
