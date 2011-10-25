@@ -5,6 +5,9 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fi.koku.services.utility.authorization.v1.AuthorizationInfoService;
 import fi.koku.services.utility.authorization.v1.AuthorizationInfoServicePortType;
 import fi.koku.services.utility.authorizationinfo.v1.impl.AuthorizationInfoServiceDummyImpl;
@@ -20,6 +23,8 @@ public class AuthorizationInfoServiceFactory {
   private String pwd;
   private String endpointPathUrl;
   private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/authorizationInfoService.wsdl");
+  
+  private static Logger log = LoggerFactory.getLogger(AuthorizationInfoServiceFactory.class);
 
   public AuthorizationInfoServiceFactory(String uid, String pwd, String endpointPathUrl) {
     this.uid = uid;
@@ -38,11 +43,14 @@ public class AuthorizationInfoServiceFactory {
   }
   
   private AuthorizationInfoServicePortType getAuthorizationInfoServicePortType() {
+    if(wsdlLocation == null)
+      log.error("wsdllocation=null");
     AuthorizationInfoService service = new AuthorizationInfoService(wsdlLocation, new QName(
         "http://services.koku.fi/utility/authorization/v1", "authorizationInfoService"));
     AuthorizationInfoServicePortType port = service.getAuthorizationInfoServiceSoap11Port();
     
     String epAddr = endpointPathUrl + "/AuthorizationInfoServiceEndpointBean";
+    log.debug("ep addr: "+epAddr);
 
     ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
     ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
