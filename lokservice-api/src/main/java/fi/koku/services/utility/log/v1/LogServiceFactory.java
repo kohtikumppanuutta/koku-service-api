@@ -22,7 +22,7 @@ public class LogServiceFactory {
 private String uid;
 private String pwd;
 private String endpointBaseUrl;
-private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/logService.wsdl");
+private final URL wsdlLocation = getClass().getClassLoader().getResource("/wsdl/logService.wsdl");
 
 private static Logger log = LoggerFactory.getLogger(LogServiceFactory.class);
 
