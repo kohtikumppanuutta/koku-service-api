@@ -13,6 +13,9 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fi.tampere.contract.municipalityportal.uis.UserInformationService;
 import fi.tampere.contract.municipalityportal.uis.UserInformationServicePortType;
 
@@ -21,6 +24,7 @@ public class UserInformationServiceFactory {
   private String pwd;
   private String endpointUrl;
   private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/customerService.wsdl");
+  private static Logger log = LoggerFactory.getLogger(UserInformationServiceFactory.class);
 
   public UserInformationServiceFactory(String uid, String pwd, String endpointUrl) {
     this.uid = uid;
@@ -29,10 +33,13 @@ public class UserInformationServiceFactory {
   }
 
   public UserInformationServicePortType getUserInformationService() {
-      UserInformationService service = new UserInformationService(wsdlLocation, new QName(
+    if(wsdlLocation == null)
+      log.error("wsdllocation=null");
+    UserInformationService service = new UserInformationService(wsdlLocation, new QName(
         "http://tampere.fi/contract/municipalityportal/uis", "UserInformationService"));
       UserInformationServicePortType port = service.getUserInformationServicePort();
     String epAddr = endpointUrl;
+    log.debug("ep addr: "+epAddr);
   
     ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, epAddr);
     ((BindingProvider) port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, uid);
