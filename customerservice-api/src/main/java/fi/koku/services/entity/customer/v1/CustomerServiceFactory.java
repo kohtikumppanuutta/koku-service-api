@@ -48,4 +48,10 @@ public class CustomerServiceFactory {
     return port;
   }
 
+  public static AuditInfoType createAuditInfoType(String component, String userPic) {
+    AuditInfoType audit = new AuditInfoType();
+    audit.setComponent(component);
+    audit.setUserId(userPic); 
+    return audit;
+  }  
 }
