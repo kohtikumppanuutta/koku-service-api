@@ -362,7 +362,7 @@ public class FamilyHelper {
    * of one or more families. NOTE! The method parameter 'pic' should be guardian's or parent's pic.
    * 
    */
-  private Family getFamily(String pic) throws TooManyFamiliesException, FamilyNotFoundException {
+  public Family getFamily(String pic) throws TooManyFamiliesException, FamilyNotFoundException {
     List<Family> families = new ArrayList<Family>();
     CommunityQueryCriteriaType communityCriteria = new CommunityQueryCriteriaType();
     communityCriteria.setCommunityType(CommunityServiceConstants.COMMUNITY_TYPE_FAMILY);
