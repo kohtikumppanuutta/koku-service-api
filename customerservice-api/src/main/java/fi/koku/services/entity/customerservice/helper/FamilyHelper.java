@@ -59,7 +59,7 @@ public class FamilyHelper {
   /**
    * Returns user's dependants.
    */
-  public DependantsAndFamily getDependantsAndFamily(String userPic) {
+  public DependantsAndFamily getDependantsAndFamily(String userPic, Family userFamily) {
     List<Dependant> dependants = new ArrayList<Dependant>();
     CommunityQueryCriteriaType communityQueryCriteria = new CommunityQueryCriteriaType();
     communityQueryCriteria.setCommunityType(CommunityServiceConstants.COMMUNITY_TYPE_GUARDIAN_COMMUNITY);
@@ -125,19 +125,6 @@ public class FamilyHelper {
     
     // next check if dependant is member of user's family
     
-    Family userFamily;
-    try {
-      userFamily = getFamily(userPic);
-    } catch (FamilyNotFoundException fnfe) {
-      userFamily = null;
-      log.error("getDependantsAndFamily(): caught FamilyNotFoundException: cannot set Dependant.memberOfUserFamily because userFamily is null!");
-      log.error(fnfe.getMessage());
-    } catch (TooManyFamiliesException tmfe) {
-      userFamily = null;
-      log.error("getDependantsAndFamily(): caught TooManyFamiliesException: cannot set Dependant.memberOfUserFamily because userFamily is null!", tmfe);
-      log.error(tmfe.getMessage());
-    }
-    
     DependantsAndFamily dependantsAndFamily = new DependantsAndFamily();
     
     if (userFamily != null) {
@@ -176,8 +163,9 @@ public class FamilyHelper {
   /**
    * Returns all other members of the user's family except dependants.
    */
-  public FamilyIdAndFamilyMembers getOtherFamilyMembers(String userPic) {
-    List<Dependant> dependants = getDependantsAndFamily(userPic).getDependants();
+  public FamilyIdAndFamilyMembers getOtherFamilyMembers(String userPic, Family family) {
+    
+    List<Dependant> dependants = getDependantsAndFamily(userPic, family).getDependants();
     Set<String> dependantPics = new HashSet<String>();
     Iterator<Dependant> di = dependants.iterator();
     while (di.hasNext()) {
@@ -277,8 +265,9 @@ public class FamilyHelper {
    * Returns user's dependants' PICs.
    */
   private Set<String> getDependantPics(String userPic) {
+    
     Set<String> dependantPics = new HashSet<String>();
-    List<Dependant> dependants = getDependantsAndFamily(userPic).getDependants();
+    List<Dependant> dependants = getDependantsAndFamily(userPic, null).getDependants();
     Iterator<Dependant> di = dependants.iterator();
     while (di.hasNext()) {
       dependantPics.add(di.next().getPic());
@@ -291,7 +280,7 @@ public class FamilyHelper {
    */
   private Set<String> getFamilyMemberPics(String userPic) {
     Set<String> familyMemberPics = new HashSet<String>();
-    List<FamilyMember> familyMembers = getOtherFamilyMembers(userPic).getFamilyMembers();
+    List<FamilyMember> familyMembers = getOtherFamilyMembers(userPic, null).getFamilyMembers();
     Iterator<FamilyMember> fmi = familyMembers.iterator();
     while (fmi.hasNext()) {
       familyMemberPics.add(fmi.next().getPic());
@@ -415,22 +404,10 @@ public class FamilyHelper {
   /**
    * Checks if the user's family has max. number of parents.
    */
-  public boolean isParentsSet(String userPic) {
-    Family family = null;
-    
-    try {
-      family = getFamily(userPic);
-    } catch (TooManyFamiliesException tme) {
-      log.error("PyhDemoService.isParentsSet(): getFamily(userPic) threw a TooManyFamiliesException!", tme);
-      log.error(tme.getMessage());
-    } catch (FamilyNotFoundException fnfe) {
-      log.error("PyhDemoService.isParentsSet(): getFamily(userPic) threw a FamilyNotFoundException!");
-      log.error(fnfe.getMessage());
-    }
+  public boolean isParentsSet(String userPic, Family family) {
     
     if (family != null) {
       log.debug("isParentsSet(): returning " + family.isParentsSet());
-      
       return family.isParentsSet();
     }
     
