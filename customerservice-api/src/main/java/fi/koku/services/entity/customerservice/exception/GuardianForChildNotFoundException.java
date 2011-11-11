@@ -7,8 +7,16 @@
  */
 package fi.koku.services.entity.customerservice.exception;
 
+/**
+ * GuardianForChildNotFoundException.
+ * 
+ * @author hurulmi
+ *
+ */
 public class GuardianForChildNotFoundException extends Exception {
   
+  private static final long serialVersionUID = -7358779846455584303L;
+
   public GuardianForChildNotFoundException(String message) {
     super(message);
   }

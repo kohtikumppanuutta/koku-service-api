@@ -26,6 +26,7 @@ import fi.koku.services.entity.community.v1.CommunityType;
 import fi.koku.services.entity.community.v1.MemberPicsType;
 import fi.koku.services.entity.community.v1.MemberType;
 import fi.koku.services.entity.community.v1.MembersType;
+import fi.koku.services.entity.community.v1.ServiceFault;
 import fi.koku.services.entity.customer.v1.CustomerQueryCriteriaType;
 import fi.koku.services.entity.customer.v1.CustomerServicePortType;
 import fi.koku.services.entity.customer.v1.CustomerType;
@@ -40,7 +41,7 @@ import fi.koku.services.entity.customer.v1.PicsType;
  */
 public class FamilyHelper {
 
-  private static Logger log = LoggerFactory.getLogger(FamilyHelper.class);
+  private static Logger logger = LoggerFactory.getLogger(FamilyHelper.class);
   
   private CustomerServicePortType customerService;
   
@@ -58,8 +59,11 @@ public class FamilyHelper {
   
   /**
    * Returns user's dependants.
+   * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    */
-  public DependantsAndFamily getDependantsAndFamily(String userPic, Family userFamily) {
+  public DependantsAndFamily getDependantsAndFamily(String userPic, Family userFamily) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     List<Dependant> dependants = new ArrayList<Dependant>();
     CommunityQueryCriteriaType communityQueryCriteria = new CommunityQueryCriteriaType();
     communityQueryCriteria.setCommunityType(CommunityServiceConstants.COMMUNITY_TYPE_GUARDIAN_COMMUNITY);
@@ -78,12 +82,8 @@ public class FamilyHelper {
     customerAuditInfoType.setComponent(componentName);
     customerAuditInfoType.setUserId(userPic);
     
-    try {
-      communitiesType = communityService.opQueryCommunities(communityQueryCriteria, communityAuditInfoType);
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getDependantsAndFamily: opQueryCommunities raised a ServiceFault", fault);
-    }
-    
+    communitiesType = communityService.opQueryCommunities(communityQueryCriteria, communityAuditInfoType);
+
     ArrayList<String> depPics = new ArrayList<String>();
     
     if (communitiesType != null) {
@@ -109,11 +109,9 @@ public class FamilyHelper {
     CustomerQueryCriteriaType customerQueryCriteriaType = new CustomerQueryCriteriaType();
     customerQueryCriteriaType.setPics(picsType);
     CustomersType customersType = null;
-    try {
-      customersType = customerService.opQueryCustomers(customerQueryCriteriaType, customerAuditInfoType);
-    } catch (fi.koku.services.entity.customer.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getDependantsAndFamily: opGetCustomer raised an ServiceFault", fault);
-    }
+    
+    customersType = customerService.opQueryCustomers(customerQueryCriteriaType, customerAuditInfoType);
+
     if (customersType != null) {
       List<CustomerType> customers = customersType.getCustomer();
       Iterator<CustomerType> ci = customers.iterator();
@@ -147,13 +145,13 @@ public class FamilyHelper {
     
     dependantsAndFamily.setDependants(dependants);
     
-    if (log.isDebugEnabled()) {
+    if (logger.isDebugEnabled()) {
       Iterator<Dependant> it = dependants.iterator();
-      log.debug("getDependantsAndFamily(), returning dependants:");
+      logger.debug("getDependantsAndFamily(), returning dependants:");
       while (it.hasNext()) {
-        log.debug("dep pic: " + it.next().getPic());
+        logger.debug("dep pic: " + it.next().getPic());
       }
-      log.debug("--");
+      logger.debug("--");
     }
     
     return dependantsAndFamily;
@@ -162,8 +160,11 @@ public class FamilyHelper {
   
   /**
    * Returns all other members of the user's family except dependants.
+   * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    */
-  public FamilyIdAndFamilyMembers getOtherFamilyMembers(String userPic, Family family) {
+  public FamilyIdAndFamilyMembers getOtherFamilyMembers(String userPic, Family family) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     List<Dependant> dependants = getDependantsAndFamily(userPic, family).getDependants();
     Set<String> dependantPics = new HashSet<String>();
@@ -190,11 +191,7 @@ public class FamilyHelper {
     customerAuditInfoType.setComponent(componentName);
     customerAuditInfoType.setUserId(userPic);
     
-    try {
-      communitiesType = communityService.opQueryCommunities(communityQueryCriteria, communityAuditInfoType);
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getOtherFamilyMembers: opQueryCommunities raised a ServiceFault", fault);
-    }
+    communitiesType = communityService.opQueryCommunities(communityQueryCriteria, communityAuditInfoType);
     
     String familyId = "";
     
@@ -223,16 +220,14 @@ public class FamilyHelper {
       
       if (otherFamilyMemberPics.size() > 0) {
         CustomersType customersType = null;
-        try {
-          CustomerQueryCriteriaType customerCriteria = new CustomerQueryCriteriaType();
-          PicsType picsType = new PicsType();
-          picsType.getPic().addAll(otherFamilyMemberPics);
-          customerCriteria.setPics(picsType);
-          customerCriteria.setSelection("basic");
-          customersType = customerService.opQueryCustomers(customerCriteria, customerAuditInfoType);
-        } catch (fi.koku.services.entity.customer.v1.ServiceFault fault) {
-          log.error("PyhDemoService.getOtherFamilyMembers: opQueryCustomers raised a ServiceFault", fault);
-        }
+        CustomerQueryCriteriaType customerCriteria = new CustomerQueryCriteriaType();
+        PicsType picsType = new PicsType();
+        picsType.getPic().addAll(otherFamilyMemberPics);
+        customerCriteria.setPics(picsType);
+        customerCriteria.setSelection("basic");
+        
+        customersType = customerService.opQueryCustomers(customerCriteria, customerAuditInfoType);
+
         
         if (customersType != null) {
           Iterator<CustomerType> customerIterator = customersType.getCustomer().iterator();
@@ -246,13 +241,13 @@ public class FamilyHelper {
       }
     }
     
-    if (log.isDebugEnabled()) {
+    if (logger.isDebugEnabled()) {
       Iterator<FamilyMember> it = otherFamilyMembers.iterator();
-      log.debug("getOtherFamilyMembers(), returning members:");
+      logger.debug("getOtherFamilyMembers(), returning members:");
       while (it.hasNext()) {
-        log.debug("member pic: " + it.next().getPic());
+        logger.debug("member pic: " + it.next().getPic());
       }
-      log.debug("--");
+      logger.debug("--");
     }
     
     FamilyIdAndFamilyMembers fidm = new FamilyIdAndFamilyMembers();
@@ -263,8 +258,11 @@ public class FamilyHelper {
   
   /**
    * Returns user's dependants' PICs.
+   * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    */
-  private Set<String> getDependantPics(String userPic) {
+  private Set<String> getDependantPics(String userPic) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     Set<String> dependantPics = new HashSet<String>();
     List<Dependant> dependants = getDependantsAndFamily(userPic, null).getDependants();
@@ -277,8 +275,11 @@ public class FamilyHelper {
   
   /**
    * Returns user's family members' PICs.
+   * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    */
-  private Set<String> getFamilyMemberPics(String userPic) {
+  private Set<String> getFamilyMemberPics(String userPic) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     Set<String> familyMemberPics = new HashSet<String>();
     List<FamilyMember> familyMembers = getOtherFamilyMembers(userPic, null).getFamilyMembers();
     Iterator<FamilyMember> fmi = familyMembers.iterator();
@@ -290,8 +291,11 @@ public class FamilyHelper {
   
   /**
    * Query persons by name, PIC and customer ID and returns results in a List<Person> list.
+   * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    */
-  public List<Person> searchUsers(String surname, String customerPic, /*String customerID,*/ String currentUserPic) {
+  public List<Person> searchUsers(String surname, String customerPic, /*String customerID,*/ String currentUserPic) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     // this search can return only one result because search criteria includes PIC
     
@@ -306,11 +310,7 @@ public class FamilyHelper {
     customerAuditInfoType.setComponent(componentName);
     customerAuditInfoType.setUserId(currentUserPic);
     
-    try {
-      customersType = customerService.opQueryCustomers(customerCriteria, customerAuditInfoType);
-    } catch (fi.koku.services.entity.customer.v1.ServiceFault fault) {
-      log.error("PyhDemoService.searchUsers: opQueryCustomers raised a ServiceFault", fault);
-    }
+    customersType = customerService.opQueryCustomers(customerCriteria, customerAuditInfoType);
     
     Set<String> depPics = getDependantPics(currentUserPic);
     Set<String> familyMemberPics = getFamilyMemberPics(currentUserPic);
@@ -331,12 +331,12 @@ public class FamilyHelper {
       }
     }
     
-    if (log.isDebugEnabled()) {
-      log.debug("searchUsers(): searchedUsers contains:");
+    if (logger.isDebugEnabled()) {
+      logger.debug("searchUsers(): searchedUsers contains:");
       Iterator<Person> pi = searchedUsers.iterator();
       while (pi.hasNext()) {
         Person p = pi.next();
-        log.debug("person pic: " + p.getPic());
+        logger.debug("person pic: " + p.getPic());
       }
     }
     
@@ -350,8 +350,10 @@ public class FamilyHelper {
    * A user should belong to one family only. Dependants are an exception because they can be members 
    * of one or more families. NOTE! The method parameter 'pic' should be guardian's or parent's pic.
    * 
+   * @throws ServiceFault 
+   * 
    */
-  public Family getFamily(String pic) throws TooManyFamiliesException, FamilyNotFoundException {
+  public Family getFamily(String pic) throws TooManyFamiliesException, FamilyNotFoundException, ServiceFault {
     List<Family> families = new ArrayList<Family>();
     CommunityQueryCriteriaType communityCriteria = new CommunityQueryCriteriaType();
     communityCriteria.setCommunityType(CommunityServiceConstants.COMMUNITY_TYPE_FAMILY);
@@ -366,11 +368,7 @@ public class FamilyHelper {
     communityAuditInfoType.setComponent(componentName);
     communityAuditInfoType.setUserId(pic);
     
-    try {
-      communitiesType = communityService.opQueryCommunities(communityCriteria, communityAuditInfoType);
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getFamily: opQueryCommunities raised a ServiceFault", fault);
-    }
+    communitiesType = communityService.opQueryCommunities(communityCriteria, communityAuditInfoType);
     
     if (communitiesType != null) {
       List<CommunityType> communities = communitiesType.getCommunity();
@@ -390,13 +388,13 @@ public class FamilyHelper {
       } else if (families.size() > 0) {
         Family family = families.get(0);
         
-        log.debug("getFamily(): returning family with community ID " + family.getCommunityId());
+        logger.debug("getFamily(): returning family with community ID " + family.getCommunityId());
         
         return family;
       }
     }
     
-    log.debug("getFamily(): returning null!");
+    logger.debug("getFamily(): returning null!");
     
     return null;
   }
@@ -407,11 +405,11 @@ public class FamilyHelper {
   public boolean isParentsSet(String userPic, Family family) {
     
     if (family != null) {
-      log.debug("isParentsSet(): returning " + family.isParentsSet());
+      logger.debug("isParentsSet(): returning " + family.isParentsSet());
       return family.isParentsSet();
     }
     
-    log.debug("isParentsSet(): family == null, returning false");
+    logger.debug("isParentsSet(): family == null, returning false");
     
     return false;
   } 

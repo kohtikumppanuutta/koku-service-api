@@ -7,8 +7,16 @@
  */
 package fi.koku.services.entity.customerservice.exception;
 
+/**
+ * FamilyNotFoundException.
+ * 
+ * @author hurulmi
+ *
+ */
 public class FamilyNotFoundException extends Exception {
   
+  private static final long serialVersionUID = 2054049990120358769L;
+
   public FamilyNotFoundException(String message) {
     super(message);
   }

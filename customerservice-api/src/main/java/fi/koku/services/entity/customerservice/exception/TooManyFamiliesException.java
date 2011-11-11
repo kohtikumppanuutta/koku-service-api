@@ -7,8 +7,16 @@
  */
 package fi.koku.services.entity.customerservice.exception;
 
+/**
+ * TooManyFamiliesException.
+ * 
+ * @author hurulmi
+ *
+ */
 public class TooManyFamiliesException extends Exception {
   
+  private static final long serialVersionUID = 397898115505489078L;
+
   public TooManyFamiliesException(String message) {
     super(message);
   }

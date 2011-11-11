@@ -17,6 +17,7 @@ import fi.koku.services.entity.community.v1.MembershipApprovalsType;
 import fi.koku.services.entity.community.v1.MembershipRequestQueryCriteriaType;
 import fi.koku.services.entity.community.v1.MembershipRequestType;
 import fi.koku.services.entity.community.v1.MembershipRequestsType;
+import fi.koku.services.entity.community.v1.ServiceFault;
 import fi.koku.services.entity.customer.v1.CustomerQueryCriteriaType;
 import fi.koku.services.entity.customer.v1.CustomerServicePortType;
 import fi.koku.services.entity.customer.v1.CustomerType;
@@ -31,7 +32,7 @@ import fi.koku.services.entity.customer.v1.PicsType;
  */
 public class MessageHelper {
 
-  private static Logger log = LoggerFactory.getLogger(MessageHelper.class);
+  private static Logger logger = LoggerFactory.getLogger(MessageHelper.class);
   
   private CustomerServicePortType customerService;
   
@@ -50,8 +51,11 @@ public class MessageHelper {
   /**
    * Get membership requests which user has received (that is all requests user needs to approve or reject).
    * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
+   * 
    */
-  public List<Message> getMessagesFor(Person user, boolean userFamilyHasTwoParents) {
+  public List<Message> getMessagesFor(Person user, boolean userFamilyHasTwoParents) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     List<Message> requestMessages = new ArrayList<Message>();
     
@@ -59,7 +63,7 @@ public class MessageHelper {
       return requestMessages;
     }
     
-    log.debug("calling getMessagesFor() with pic = " + user.getPic());
+    logger.debug("calling getMessagesFor() with pic = " + user.getPic());
     
     fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
     communityAuditInfoType.setComponent(componentName);
@@ -69,11 +73,7 @@ public class MessageHelper {
     membershipRequestQueryCriteria.setApproverPic(user.getPic());
     MembershipRequestsType membershipRequestsType = null;
     
-    try {
-      membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getMessagesFor: opQueryMembershipRequests raised a ServiceFault", fault);
-    }
+    membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
     
     if (membershipRequestsType != null) {
       List<String> memberToAddPics = new ArrayList<String>();
@@ -167,8 +167,11 @@ public class MessageHelper {
   /**
    * Get membership requests which the user has sent.
    * 
+   * @throws ServiceFault 
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault 
+   * 
    */
-  public List<Message> getSentMessages(Person user) {
+  public List<Message> getSentMessages(Person user) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     List<Message> requestMessages = new ArrayList<Message>();
     
@@ -176,7 +179,7 @@ public class MessageHelper {
       return requestMessages;
     }
     
-    log.debug("calling getSentMessages() with pic = " + user.getPic());
+    logger.debug("calling getSentMessages() with pic = " + user.getPic());
     
     fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
     communityAuditInfoType.setComponent(componentName);
@@ -186,11 +189,7 @@ public class MessageHelper {
     membershipRequestQueryCriteria.setRequesterPic(user.getPic());
     MembershipRequestsType membershipRequestsType = null;
     
-    try {
-      membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getSentMessages: opQueryMembershipRequests raised a ServiceFault", fault);
-    }
+    membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
     
     if (membershipRequestsType != null) {
       ArrayList<String> memberToAddPics = new ArrayList<String>();
@@ -230,7 +229,7 @@ public class MessageHelper {
     return requestMessages;
   }
   
-  private List<Person> getPersons(List<String> pics, String currentUserPic) {
+  private List<Person> getPersons(List<String> pics, String currentUserPic) throws fi.koku.services.entity.customer.v1.ServiceFault {
     ArrayList<Person> persons = new ArrayList<Person>();
     
     if (pics == null || pics.size() == 0) {
@@ -242,16 +241,12 @@ public class MessageHelper {
     customerAuditInfoType.setUserId(currentUserPic);
     
     CustomersType customersType = null;
-    try {
-      PicsType picsType = new PicsType();
-      picsType.getPic().addAll(pics);
-      CustomerQueryCriteriaType customerQueryCriteria = new CustomerQueryCriteriaType();
-      customerQueryCriteria.setPics(picsType);
-      customersType = customerService.opQueryCustomers(customerQueryCriteria, customerAuditInfoType);
-    } catch (fi.koku.services.entity.customer.v1.ServiceFault fault) {
-      log.error("PyhDemoService.getUser: opGetCustomer raised a ServiceFault", fault);
-      return persons;
-    }
+    
+    PicsType picsType = new PicsType();
+    picsType.getPic().addAll(pics);
+    CustomerQueryCriteriaType customerQueryCriteria = new CustomerQueryCriteriaType();
+    customerQueryCriteria.setPics(picsType);
+    customersType = customerService.opQueryCustomers(customerQueryCriteria, customerAuditInfoType);
     
     if (customersType != null) {
       List<CustomerType> customers = customersType.getCustomer();
@@ -267,13 +262,15 @@ public class MessageHelper {
   /**
    * Sends a new membership request for adding a parent into a family. 
    * 
+   * @throws ServiceFault 
+   * 
    */
-  public void sendParentAdditionMessage(String communityId, String memberToAddPic, String requesterPic, CommunityRole role) {
-    log.debug("calling sendParentAdditionMessage()");
-    log.debug("communityId: " + communityId);
-    log.debug("memberToAddPic: " + memberToAddPic);
-    log.debug("requesterPic: " + requesterPic);
-    log.debug("role: " + role.getRoleID());
+  public void sendParentAdditionMessage(String communityId, String memberToAddPic, String requesterPic, CommunityRole role) throws ServiceFault {
+    logger.debug("calling sendParentAdditionMessage()");
+    logger.debug("communityId: " + communityId);
+    logger.debug("memberToAddPic: " + memberToAddPic);
+    logger.debug("requesterPic: " + requesterPic);
+    logger.debug("role: " + role.getRoleID());
     
     fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
     communityAuditInfoType.setComponent(componentName);
@@ -286,12 +283,12 @@ public class MessageHelper {
     MembershipApprovalsType membershipApprovalsType = new MembershipApprovalsType();
     membershipApprovalsType.getApproval().add(membershipApproval);
     
-    if (log.isDebugEnabled()) {
-      log.debug("listing approvals:");
+    if (logger.isDebugEnabled()) {
+      logger.debug("listing approvals:");
       Iterator<MembershipApprovalType> mi = membershipApprovalsType.getApproval().iterator();
       while (mi.hasNext()) {
         MembershipApprovalType approval = mi.next();
-        log.debug("approval: " + approval.getApproverPic() + ", " + approval.getStatus());
+        logger.debug("approval: " + approval.getApproverPic() + ", " + approval.getStatus());
       }
     }
     
@@ -302,31 +299,28 @@ public class MessageHelper {
     membershipRequest.setRequesterPic(requesterPic);
     membershipRequest.setApprovals(membershipApprovalsType);
     
-    try {
-      communityService.opAddMembershipRequest(membershipRequest, communityAuditInfoType);
-      //Log.getInstance().send(requesterPic, "", "pyh.membership.request", "Sending membership request to add person " + memberToAddPic + " into family");
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.sendParentAdditionMessage: opAddMembershipRequest raised a ServiceFault", fault);
-      throw new RuntimeException(fault);
-    }
+    communityService.opAddMembershipRequest(membershipRequest, communityAuditInfoType);
+
   }
   
   /**
    * Sends a new membership request for adding a member (not parent) into a family.
+   * 
+   * @throws ServiceFault 
    */
-  public void sendFamilyAdditionMessage(String communityId, List<String> recipients, String requesterPic, String memberToAddPic, CommunityRole role) {
-    if (log.isDebugEnabled()) {
-      log.debug("calling sendFamilyAdditionMessage()");
-      log.debug("communityId: " + communityId);
-      log.debug("recipients:");
+  public void sendFamilyAdditionMessage(String communityId, List<String> recipients, String requesterPic, String memberToAddPic, CommunityRole role) throws ServiceFault {
+    if (logger.isDebugEnabled()) {
+      logger.debug("calling sendFamilyAdditionMessage()");
+      logger.debug("communityId: " + communityId);
+      logger.debug("recipients:");
       Iterator<String> ri = recipients.iterator();
       while (ri.hasNext()) {
         String recipientPic = ri.next();
-        log.debug("recipient pic: " + recipientPic);
+        logger.debug("recipient pic: " + recipientPic);
       }
-      log.debug("requesterPic: " + requesterPic);
-      log.debug("memberToAddPic: " + memberToAddPic);
-      log.debug("role: " + role.getRoleID());
+      logger.debug("requesterPic: " + requesterPic);
+      logger.debug("memberToAddPic: " + memberToAddPic);
+      logger.debug("role: " + role.getRoleID());
     }
     
     fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
@@ -346,12 +340,12 @@ public class MessageHelper {
       membershipApprovalsType.getApproval().add(membershipApproval);
     }
     
-    if (log.isDebugEnabled()) {
-      log.debug("listing approvals:");
+    if (logger.isDebugEnabled()) {
+      logger.debug("listing approvals:");
       Iterator<MembershipApprovalType> mi = membershipApprovalsType.getApproval().iterator();
       while (mi.hasNext()) {
         MembershipApprovalType approval = mi.next();
-        log.debug("approval: " + approval.getApproverPic() + ", " + approval.getStatus());
+        logger.debug("approval: " + approval.getApproverPic() + ", " + approval.getStatus());
       }
     }
     
@@ -362,12 +356,6 @@ public class MessageHelper {
     membershipRequest.setRequesterPic(requesterPic);
     membershipRequest.setApprovals(membershipApprovalsType);
     
-    try {
-      communityService.opAddMembershipRequest(membershipRequest, communityAuditInfoType);
-      //Log.getInstance().send(requesterPic, "", "pyh.membership.request", "Sending membership request to add person " + memberToAddPic + " into family");
-    } catch (fi.koku.services.entity.community.v1.ServiceFault fault) {
-      log.error("PyhDemoService.sendFamilyAdditionMessage: opAddMembershipRequest raised a ServiceFault", fault);
-      throw new RuntimeException(fault);
-    }
+    communityService.opAddMembershipRequest(membershipRequest, communityAuditInfoType);
   }  
 }
