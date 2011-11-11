@@ -276,6 +276,21 @@ public class MessageHelper {
     communityAuditInfoType.setComponent(componentName);
     communityAuditInfoType.setUserId(requesterPic); // requesterPic is PIC of current user
     
+    MembershipRequestQueryCriteriaType membershipRequestQueryCriteria = new MembershipRequestQueryCriteriaType();
+    membershipRequestQueryCriteria.setApproverPic(memberToAddPic);
+    membershipRequestQueryCriteria.setRequesterPic(requesterPic);
+    
+    MembershipRequestsType membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
+    List<MembershipRequestType> membershipRequests = membershipRequestsType.getMembershipRequest();
+    boolean membershipRequestAlreadyExists = membershipRequests.size() > 0 ? true : false;
+    
+    if (membershipRequestAlreadyExists) {
+      // return if membership request to be sent already exists
+      return;
+    }
+    
+    // TODO: inform user that membership request is already sent?
+    
     MembershipApprovalType membershipApproval = new MembershipApprovalType();
     membershipApproval.setApproverPic(memberToAddPic);
     membershipApproval.setStatus(CommunityServiceConstants.MEMBERSHIP_REQUEST_STATUS_NEW);
