@@ -39,7 +39,7 @@ public class MessageHelper {
   private CommunityServicePortType communityService;
   
   private String componentName;
-  
+
   public MessageHelper(CustomerServicePortType customerService, CommunityServicePortType communityService,
       String componentName) {
     super();
@@ -55,7 +55,7 @@ public class MessageHelper {
    * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    * 
    */
-  public List<Message> getMessagesFor(Person user, boolean userFamilyHasTwoParents) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
+  public List<Message> getMessagesFor(Person user, boolean userFamilyHasTwoParents, String newReqMessageText, String newReqMessageTextTwoParents) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     List<Message> requestMessages = new ArrayList<Message>();
     
@@ -147,13 +147,10 @@ public class MessageHelper {
           
           String messageText = "";
           if (twoParentsInFamily) {
-            messageText = "Uusi perheyhteyspyyntö: " + senderName + 
-            " on lisäämässä sinua perheyhteisönsä jäseneksi, mutta et voi hyväksyä pyyntöä, koska perheessänne on jo kaksi vanhempaa. " +
-            "Voit hylätä pyynnön tai poistaa toisen vanhemman perheyhteisöstäsi, minkä jälkeen voit hyväksyä pyynnön.";
+            messageText = newReqMessageTextTwoParents.replace("@SENDER_NAME@", senderName);
           }
           else {
-            messageText = "Saapunut perheyhteyspyyntö: " + senderName + " haluaa lisätä perheyhteisön jäseneksi: " + targetName + ".\n" +
-              "Pyynnön hyväksymällä tietojen lisääminen tapahtuu automaattisesti tämän verkkopalvelun tietoihin.";
+            messageText = newReqMessageText.replace("@SENDER_NAME@", senderName).replace("@TARGET_NAME@", targetName);
           }
           
           Message message = new Message(messageId, senderPic, memberToAddPic, messageText, twoParentsInFamily);
@@ -171,7 +168,7 @@ public class MessageHelper {
    * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    * 
    */
-  public List<Message> getSentMessages(Person user) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
+  public List<Message> getSentMessages(Person user, String sentReqMessageText) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
     
     List<Message> requestMessages = new ArrayList<Message>();
     
@@ -220,7 +217,7 @@ public class MessageHelper {
         messageId = messageIdIt.next();
         senderPic = senderPicIt.next();
         
-        String messageText = "Lisäys perheyhteystietoihisi: " + targetPersonName + " (odottaa vastaanottajan hyväksyntää)";
+        String messageText = sentReqMessageText.replace("@TARGET_NAME@", targetPersonName);
         Message message = new Message(messageId, senderPic, "" /*memberToAddPic*/, messageText, false);
         requestMessages.add(message);
       }
@@ -340,7 +337,7 @@ public class MessageHelper {
     
     fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
     communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(requesterPic); // requesterPic on kirjautunut käyttäjä
+    communityAuditInfoType.setUserId(requesterPic); // requesterPic is PIC of current user
     
     MembershipApprovalsType membershipApprovalsType = new MembershipApprovalsType();
     
