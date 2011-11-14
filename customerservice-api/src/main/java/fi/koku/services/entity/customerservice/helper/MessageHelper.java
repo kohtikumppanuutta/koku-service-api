@@ -11,6 +11,7 @@ import fi.koku.services.entity.customerservice.model.CommunityRole;
 import fi.koku.services.entity.customerservice.model.Message;
 import fi.koku.services.entity.customerservice.model.Person;
 import fi.koku.services.entity.community.v1.CommunityServiceConstants;
+import fi.koku.services.entity.community.v1.CommunityServiceFactory;
 import fi.koku.services.entity.community.v1.CommunityServicePortType;
 import fi.koku.services.entity.community.v1.MembershipApprovalType;
 import fi.koku.services.entity.community.v1.MembershipApprovalsType;
@@ -19,6 +20,7 @@ import fi.koku.services.entity.community.v1.MembershipRequestType;
 import fi.koku.services.entity.community.v1.MembershipRequestsType;
 import fi.koku.services.entity.community.v1.ServiceFault;
 import fi.koku.services.entity.customer.v1.CustomerQueryCriteriaType;
+import fi.koku.services.entity.customer.v1.CustomerServiceFactory;
 import fi.koku.services.entity.customer.v1.CustomerServicePortType;
 import fi.koku.services.entity.customer.v1.CustomerType;
 import fi.koku.services.entity.customer.v1.CustomersType;
@@ -65,15 +67,10 @@ public class MessageHelper {
     
     logger.debug("calling getMessagesFor() with pic = " + user.getPic());
     
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(user.getPic());
-    
     MembershipRequestQueryCriteriaType membershipRequestQueryCriteria = new MembershipRequestQueryCriteriaType();
     membershipRequestQueryCriteria.setApproverPic(user.getPic());
-    MembershipRequestsType membershipRequestsType = null;
     
-    membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
+    MembershipRequestsType membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, CommunityServiceFactory.createAuditInfoType(componentName, user.getPic()));
     
     if (membershipRequestsType != null) {
       List<String> memberToAddPics = new ArrayList<String>();
@@ -178,15 +175,11 @@ public class MessageHelper {
     
     logger.debug("calling getSentMessages() with pic = " + user.getPic());
     
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(user.getPic());
-    
     MembershipRequestQueryCriteriaType membershipRequestQueryCriteria = new MembershipRequestQueryCriteriaType();
     membershipRequestQueryCriteria.setRequesterPic(user.getPic());
     MembershipRequestsType membershipRequestsType = null;
     
-    membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
+    membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, CommunityServiceFactory.createAuditInfoType(componentName, user.getPic()));
     
     if (membershipRequestsType != null) {
       ArrayList<String> memberToAddPics = new ArrayList<String>();
@@ -233,17 +226,11 @@ public class MessageHelper {
       return persons;
     }
     
-    fi.koku.services.entity.customer.v1.AuditInfoType customerAuditInfoType = new fi.koku.services.entity.customer.v1.AuditInfoType();
-    customerAuditInfoType.setComponent(componentName);
-    customerAuditInfoType.setUserId(currentUserPic);
-    
-    CustomersType customersType = null;
-    
     PicsType picsType = new PicsType();
     picsType.getPic().addAll(pics);
     CustomerQueryCriteriaType customerQueryCriteria = new CustomerQueryCriteriaType();
     customerQueryCriteria.setPics(picsType);
-    customersType = customerService.opQueryCustomers(customerQueryCriteria, customerAuditInfoType);
+    CustomersType customersType = customerService.opQueryCustomers(customerQueryCriteria, CustomerServiceFactory.createAuditInfoType(componentName, currentUserPic));
     
     if (customersType != null) {
       List<CustomerType> customers = customersType.getCustomer();
@@ -269,9 +256,7 @@ public class MessageHelper {
     logger.debug("requesterPic: " + requesterPic);
     logger.debug("role: " + role.getRoleID());
     
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(requesterPic); // requesterPic is PIC of current user
+    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = CommunityServiceFactory.createAuditInfoType(componentName, requesterPic);
     
     MembershipRequestQueryCriteriaType membershipRequestQueryCriteria = new MembershipRequestQueryCriteriaType();
     membershipRequestQueryCriteria.setApproverPic(memberToAddPic);
@@ -335,10 +320,6 @@ public class MessageHelper {
       logger.debug("role: " + role.getRoleID());
     }
     
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(requesterPic); // requesterPic is PIC of current user
-    
     MembershipApprovalsType membershipApprovalsType = new MembershipApprovalsType();
     
     Iterator<String> recipientsIterator = recipients.iterator();
@@ -368,6 +349,6 @@ public class MessageHelper {
     membershipRequest.setRequesterPic(requesterPic);
     membershipRequest.setApprovals(membershipApprovalsType);
     
-    communityService.opAddMembershipRequest(membershipRequest, communityAuditInfoType);
+    communityService.opAddMembershipRequest(membershipRequest, CommunityServiceFactory.createAuditInfoType(componentName, requesterPic));
   }  
 }

@@ -21,6 +21,7 @@ import fi.koku.services.entity.customerservice.model.CommunityRole;
 import fi.koku.services.entity.community.v1.CommunitiesType;
 import fi.koku.services.entity.community.v1.CommunityQueryCriteriaType;
 import fi.koku.services.entity.community.v1.CommunityServiceConstants;
+import fi.koku.services.entity.community.v1.CommunityServiceFactory;
 import fi.koku.services.entity.community.v1.CommunityServicePortType;
 import fi.koku.services.entity.community.v1.CommunityType;
 import fi.koku.services.entity.community.v1.MemberPicsType;
@@ -28,6 +29,7 @@ import fi.koku.services.entity.community.v1.MemberType;
 import fi.koku.services.entity.community.v1.MembersType;
 import fi.koku.services.entity.community.v1.ServiceFault;
 import fi.koku.services.entity.customer.v1.CustomerQueryCriteriaType;
+import fi.koku.services.entity.customer.v1.CustomerServiceFactory;
 import fi.koku.services.entity.customer.v1.CustomerServicePortType;
 import fi.koku.services.entity.customer.v1.CustomerType;
 import fi.koku.services.entity.customer.v1.CustomersType;
@@ -72,17 +74,7 @@ public class FamilyHelper {
     memberPics.getMemberPic().add(userPic);
     communityQueryCriteria.setMemberPics(memberPics);
     
-    CommunitiesType communitiesType = null;
-    
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(userPic);
-    
-    fi.koku.services.entity.customer.v1.AuditInfoType customerAuditInfoType = new fi.koku.services.entity.customer.v1.AuditInfoType();
-    customerAuditInfoType.setComponent(componentName);
-    customerAuditInfoType.setUserId(userPic);
-    
-    communitiesType = communityService.opQueryCommunities(communityQueryCriteria, communityAuditInfoType);
+    CommunitiesType communitiesType = communityService.opQueryCommunities(communityQueryCriteria, CommunityServiceFactory.createAuditInfoType(componentName, userPic));
 
     ArrayList<String> depPics = new ArrayList<String>();
     
@@ -110,7 +102,7 @@ public class FamilyHelper {
     customerQueryCriteriaType.setPics(picsType);
     CustomersType customersType = null;
     
-    customersType = customerService.opQueryCustomers(customerQueryCriteriaType, customerAuditInfoType);
+    customersType = customerService.opQueryCustomers(customerQueryCriteriaType, CustomerServiceFactory.createAuditInfoType(componentName, userPic));
 
     if (customersType != null) {
       List<CustomerType> customers = customersType.getCustomer();
@@ -181,17 +173,7 @@ public class FamilyHelper {
     memberPics.getMemberPic().add(userPic);
     communityQueryCriteria.setMemberPics(memberPics);
     
-    CommunitiesType communitiesType = null;
-    
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(userPic);
-    
-    fi.koku.services.entity.customer.v1.AuditInfoType customerAuditInfoType = new fi.koku.services.entity.customer.v1.AuditInfoType();
-    customerAuditInfoType.setComponent(componentName);
-    customerAuditInfoType.setUserId(userPic);
-    
-    communitiesType = communityService.opQueryCommunities(communityQueryCriteria, communityAuditInfoType);
+    CommunitiesType communitiesType = communityService.opQueryCommunities(communityQueryCriteria, CommunityServiceFactory.createAuditInfoType(componentName, userPic));
     
     String familyId = "";
     
@@ -226,7 +208,7 @@ public class FamilyHelper {
         customerCriteria.setPics(picsType);
         customerCriteria.setSelection("basic");
         
-        customersType = customerService.opQueryCustomers(customerCriteria, customerAuditInfoType);
+        customersType = customerService.opQueryCustomers(customerCriteria, CustomerServiceFactory.createAuditInfoType(componentName, userPic));
 
         
         if (customersType != null) {
@@ -304,13 +286,8 @@ public class FamilyHelper {
     PicsType pics = new PicsType();
     pics.getPic().add(customerPic);
     customerCriteria.setPics(pics);
-    CustomersType customersType = null;
     
-    fi.koku.services.entity.customer.v1.AuditInfoType customerAuditInfoType = new fi.koku.services.entity.customer.v1.AuditInfoType();
-    customerAuditInfoType.setComponent(componentName);
-    customerAuditInfoType.setUserId(currentUserPic);
-    
-    customersType = customerService.opQueryCustomers(customerCriteria, customerAuditInfoType);
+    CustomersType customersType = customerService.opQueryCustomers(customerCriteria, CustomerServiceFactory.createAuditInfoType(componentName, currentUserPic));
     
     Set<String> depPics = getDependantPics(currentUserPic);
     Set<String> familyMemberPics = getFamilyMemberPics(currentUserPic);
@@ -362,13 +339,7 @@ public class FamilyHelper {
     memberPics.getMemberPic().add(pic);
     communityCriteria.setMemberPics(memberPics);
     
-    CommunitiesType communitiesType = null;
-    
-    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = new fi.koku.services.entity.community.v1.AuditInfoType();
-    communityAuditInfoType.setComponent(componentName);
-    communityAuditInfoType.setUserId(pic);
-    
-    communitiesType = communityService.opQueryCommunities(communityCriteria, communityAuditInfoType);
+    CommunitiesType communitiesType = communityService.opQueryCommunities(communityCriteria, CommunityServiceFactory.createAuditInfoType(componentName, pic));
     
     if (communitiesType != null) {
       List<CommunityType> communities = communitiesType.getCommunity();
