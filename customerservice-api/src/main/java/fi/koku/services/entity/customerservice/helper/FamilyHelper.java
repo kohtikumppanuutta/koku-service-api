@@ -1,3 +1,10 @@
+/*
+ * Copyright 2011 Ixonos Plc, Finland. All rights reserved.
+ * 
+ * You should have received a copy of the license text along with this program.
+ * If not, please contact the copyright holder (http://www.ixonos.com/).
+ * 
+ */
 package fi.koku.services.entity.customerservice.helper;
 
 import java.util.ArrayList;
@@ -29,6 +36,7 @@ import fi.koku.services.entity.community.v1.MemberType;
 import fi.koku.services.entity.community.v1.MembersType;
 import fi.koku.services.entity.community.v1.ServiceFault;
 import fi.koku.services.entity.customer.v1.CustomerQueryCriteriaType;
+import fi.koku.services.entity.customer.v1.CustomerServiceConstants;
 import fi.koku.services.entity.customer.v1.CustomerServiceFactory;
 import fi.koku.services.entity.customer.v1.CustomerServicePortType;
 import fi.koku.services.entity.customer.v1.CustomerType;
@@ -206,7 +214,7 @@ public class FamilyHelper {
         PicsType picsType = new PicsType();
         picsType.getPic().addAll(otherFamilyMemberPics);
         customerCriteria.setPics(picsType);
-        customerCriteria.setSelection("basic");
+        customerCriteria.setSelection(CustomerServiceConstants.QUERY_SELECTION_BASIC);
         
         customersType = customerService.opQueryCustomers(customerCriteria, CustomerServiceFactory.createAuditInfoType(componentName, userPic));
 
@@ -229,7 +237,6 @@ public class FamilyHelper {
       while (it.hasNext()) {
         logger.debug("member pic: " + it.next().getPic());
       }
-      logger.debug("--");
     }
     
     FamilyIdAndFamilyMembers fidm = new FamilyIdAndFamilyMembers();
@@ -357,10 +364,8 @@ public class FamilyHelper {
       if (families.size() > 1) {
         throw new TooManyFamiliesException("opQueryCommunities with parameter 'pic=" + pic + "' returned more than one family!");
       } else if (families.size() > 0) {
-        Family family = families.get(0);
-        
+        Family family = families.get(0);   
         logger.debug("getFamily(): returning family with community ID " + family.getCommunityId());
-        
         return family;
       }
     }
@@ -374,14 +379,11 @@ public class FamilyHelper {
    * Checks if the user's family has max. number of parents.
    */
   public boolean isParentsSet(String userPic, Family family) {
-    
     if (family != null) {
       logger.debug("isParentsSet(): returning " + family.isParentsSet());
       return family.isParentsSet();
     }
-    
     logger.debug("isParentsSet(): family == null, returning false");
-    
     return false;
   } 
   

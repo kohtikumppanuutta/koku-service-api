@@ -1,3 +1,10 @@
+/*
+ * Copyright 2011 Ixonos Plc, Finland. All rights reserved.
+ * 
+ * You should have received a copy of the license text along with this program.
+ * If not, please contact the copyright holder (http://www.ixonos.com/).
+ * 
+ */
 package fi.koku.services.entity.customerservice.helper;
 
 import java.util.ArrayList;
@@ -219,6 +226,14 @@ public class MessageHelper {
     return requestMessages;
   }
   
+  /**
+   * Uses customer service to return list of Persons with list of pics.
+   * 
+   * @param pics
+   * @param currentUserPic
+   * @return list of persons
+   * @throws fi.koku.services.entity.customer.v1.ServiceFault
+   */
   private List<Person> getPersons(List<String> pics, String currentUserPic) throws fi.koku.services.entity.customer.v1.ServiceFault {
     ArrayList<Person> persons = new ArrayList<Person>();
     

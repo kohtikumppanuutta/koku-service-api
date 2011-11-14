@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 import fi.koku.services.entity.customerservice.model.CommunityRole;
 import fi.koku.services.entity.community.v1.CommunityType;
 import fi.koku.services.entity.community.v1.MemberType;
@@ -27,8 +23,6 @@ import fi.koku.services.entity.community.v1.MembersType;
  *
  */
 public class Family {
-
-  private static Logger log = LoggerFactory.getLogger(Family.class);
 
   private CommunityType community;
   

@@ -8,6 +8,7 @@
 package fi.koku.services.entity.community.v1;
 
 public class CommunityServiceConstants {
+  
   final public static String COMMUNITY_TYPE_GUARDIAN_COMMUNITY = "guardian_community";
   final public static String COMMUNITY_TYPE_FAMILY = "family_community";
   
@@ -21,4 +22,8 @@ public class CommunityServiceConstants {
   final public static String MEMBERSHIP_REQUEST_STATUS_NEW = "new";
   final public static String MEMBERSHIP_REQUEST_STATUS_APPROVED = "approved";
   final public static String MEMBERSHIP_REQUEST_STATUS_REJECTED = "rejected";
+  
+  private CommunityServiceConstants() {
+  }
+  
 }

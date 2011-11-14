@@ -7,6 +7,12 @@
  */
 package fi.koku.services.entity.customerservice.model;
 
+/**
+ * CommunityRole.
+ * 
+ * @author hurulmi
+ *
+ */
 public enum CommunityRole {
   
   FATHER("ui.pyh.father", "father"), MOTHER("ui.pyh.mother", "mother"), FAMILY_MEMBER("ui.pyh.family", "family"), 
