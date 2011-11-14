@@ -2,7 +2,7 @@
   targetNamespace="http://services.koku.fi/utility/log/v1"
   xmlns="http://services.koku.fi/utility/log/v1"
   elementFormDefault="qualified"
-  version="0.94"
+  version="0.95"
   >
   
   <xsd:annotation>
@@ -37,7 +37,7 @@
       <xsd:element name="customerPic" type="xsd:string"/>
       <xsd:element name="operation" type="xsd:string"/>
       <xsd:element name="dataItemType" type="xsd:string"/>
-      <xsd:element name="dataItemId" type="xsd:string"/>
+      <xsd:element name="dataItemId" type="xsd:string" minOccurs="0"/>
       <xsd:element name="message" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
