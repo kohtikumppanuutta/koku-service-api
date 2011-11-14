@@ -31,7 +31,7 @@ public class KksServiceFactory {
   private String pwd;
   private String endpointBaseUrl;
 
-  private final URL KKS_WSDL_LOCATION = getClass().getClassLoader().getResource("/wsdl/kksService.wsdl");
+  private final URL KKS_WSDL_LOCATION = getClass().getClassLoader().getResource("wsdl/kksService.wsdl");
 
   public KksServiceFactory(String uid, String pwd, String endpointBaseUrl) {
     this.uid = uid;

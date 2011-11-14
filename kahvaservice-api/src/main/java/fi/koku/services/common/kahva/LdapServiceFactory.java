@@ -28,7 +28,7 @@ import fi.arcusys.tampere.hrsoa.ws.ldap.LdapService_Service;
 public class LdapServiceFactory {
 
   private String epAddr;
-  private final URL wsdlLocation = getClass().getClassLoader().getResource("/wsdl/ldapService.wsdl");
+  private final URL wsdlLocation = getClass().getClassLoader().getResource("wsdl/ldapService.wsdl");
   private static Logger log = LoggerFactory.getLogger(LdapServiceFactory.class);
 
   public LdapServiceFactory(String endpointAddr) {
