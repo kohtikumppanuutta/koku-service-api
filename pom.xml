@@ -9,7 +9,7 @@
   <properties>
     <slf4j.version>1.6.1</slf4j.version>
     <jaxws-api.version>2.1</jaxws-api.version>
-    <koku-common.version>0.0.6</koku-common.version>
+    <koku-common-lib.version>0.2.0</koku-common-lib.version>
 	<!-- 
 	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   	  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -165,8 +165,8 @@
     </dependency>
     <dependency>
       <groupId>kohti-kumppanuutta</groupId>
-      <artifactId>koku-common</artifactId>
-      <version>${koku-common.version}</version>
+      <artifactId>koku-common-lib</artifactId>
+      <version>${koku-common-lib.version}</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
