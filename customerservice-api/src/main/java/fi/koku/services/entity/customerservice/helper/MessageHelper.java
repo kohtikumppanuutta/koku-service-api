@@ -157,7 +157,7 @@ public class MessageHelper {
             messageText = newReqMessageText.replace("@SENDER_NAME@", senderName).replace("@TARGET_NAME@", targetName);
           }
           
-          Message message = new Message(messageId, senderPic, memberToAddPic, messageText, twoParentsInFamily);
+          Message message = new Message(messageId, senderPic, memberToAddPic, "" /* member role, not needed here */, messageText, twoParentsInFamily);
           requestMessages.add(message);
         }
       }
@@ -189,9 +189,10 @@ public class MessageHelper {
     membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, CommunityServiceFactory.createAuditInfoType(componentName, user.getPic()));
     
     if (membershipRequestsType != null) {
-      ArrayList<String> memberToAddPics = new ArrayList<String>();
-      ArrayList<String> messageIds = new ArrayList<String>();
-      ArrayList<String> senderPics = new ArrayList<String>();
+      List<String> memberToAddPics = new ArrayList<String>();
+      List<String> messageIds = new ArrayList<String>();
+      List<String> senderPics = new ArrayList<String>();
+      List<String> memberRoles = new ArrayList<String>();
       
       List<MembershipRequestType> membershipRequests = membershipRequestsType.getMembershipRequest();
       Iterator<MembershipRequestType> mrti = membershipRequests.iterator();
@@ -201,24 +202,28 @@ public class MessageHelper {
         memberToAddPics.add(membershipRequest.getMemberPic());
         messageIds.add(membershipRequest.getId());
         senderPics.add(membershipRequest.getRequesterPic());
+        memberRoles.add(membershipRequest.getMemberRole());
       }
       
       List<Person> membersToAdd = getPersons(memberToAddPics, user.getPic());
       Iterator<Person> pi = membersToAdd.iterator();
       Iterator<String> messageIdIt = messageIds.iterator();
       Iterator<String> senderPicIt = senderPics.iterator();
+      Iterator<String> memberRoleIt = memberRoles.iterator();
       
       String targetPersonName = "";
       String messageId = "";
       String senderPic = "";
+      String memberRole = "";
       while (pi.hasNext()) {
         Person targetPerson = pi.next();
         targetPersonName = targetPerson.getFullName();
         messageId = messageIdIt.next();
         senderPic = senderPicIt.next();
+        memberRole = memberRoleIt.next();
         
         String messageText = sentReqMessageText.replace("@TARGET_NAME@", targetPersonName);
-        Message message = new Message(messageId, senderPic, "" /*memberToAddPic*/, messageText, false);
+        Message message = new Message(messageId, senderPic, "" /*memberToAddPic*/, memberRole, messageText, false);
         requestMessages.add(message);
       }
     }
@@ -274,19 +279,22 @@ public class MessageHelper {
     fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = CommunityServiceFactory.createAuditInfoType(componentName, requesterPic);
     
     MembershipRequestQueryCriteriaType membershipRequestQueryCriteria = new MembershipRequestQueryCriteriaType();
-    membershipRequestQueryCriteria.setApproverPic(memberToAddPic);
     membershipRequestQueryCriteria.setRequesterPic(requesterPic);
     
     MembershipRequestsType membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
     List<MembershipRequestType> membershipRequests = membershipRequestsType.getMembershipRequest();
-    boolean membershipRequestAlreadyExists = membershipRequests.size() > 0 ? true : false;
     
-    if (membershipRequestAlreadyExists) {
-      // return if membership request to be sent already exists
-      return;
+    Iterator<MembershipRequestType> mri = membershipRequests.iterator();
+    while (mri.hasNext()) {
+      MembershipRequestType request = mri.next();
+      
+      CommunityRole requestRole = CommunityRole.createFromRoleID(request.getMemberRole());
+      if (CommunityRole.FATHER.equals(requestRole) || CommunityRole.MOTHER.equals(requestRole) || CommunityRole.PARENT.equals(requestRole)) {
+        // if a membership request with the role father/mother/parent exists it means that the user has already sent a request
+        // to add other parent into the family; max. number of parents per family is two so return and do nothing
+        return;
+      }
     }
-    
-    // TODO: inform user that membership request is already sent?
     
     MembershipApprovalType membershipApproval = new MembershipApprovalType();
     membershipApproval.setApproverPic(memberToAddPic);
@@ -335,6 +343,24 @@ public class MessageHelper {
       logger.debug("role: " + role.getRoleID());
     }
     
+    fi.koku.services.entity.community.v1.AuditInfoType communityAuditInfoType = CommunityServiceFactory.createAuditInfoType(componentName, requesterPic);
+    
+    MembershipRequestQueryCriteriaType membershipRequestQueryCriteria = new MembershipRequestQueryCriteriaType();
+    membershipRequestQueryCriteria.setRequesterPic(requesterPic);
+    
+    MembershipRequestsType membershipRequestsType = communityService.opQueryMembershipRequests(membershipRequestQueryCriteria, communityAuditInfoType);
+    List<MembershipRequestType> membershipRequests = membershipRequestsType.getMembershipRequest();
+    Iterator<MembershipRequestType> mri = membershipRequests.iterator();
+    
+    // check if the person is already added into the family (= request has already been sent)
+    while (mri.hasNext()) {
+      MembershipRequestType request = mri.next();
+      
+      if (request.getMemberPic().equals(memberToAddPic)) {
+        return;
+      }
+    }
+    
     MembershipApprovalsType membershipApprovalsType = new MembershipApprovalsType();
     
     Iterator<String> recipientsIterator = recipients.iterator();
@@ -364,6 +390,6 @@ public class MessageHelper {
     membershipRequest.setRequesterPic(requesterPic);
     membershipRequest.setApprovals(membershipApprovalsType);
     
-    communityService.opAddMembershipRequest(membershipRequest, CommunityServiceFactory.createAuditInfoType(componentName, requesterPic));
+    communityService.opAddMembershipRequest(membershipRequest, communityAuditInfoType);
   }  
 }

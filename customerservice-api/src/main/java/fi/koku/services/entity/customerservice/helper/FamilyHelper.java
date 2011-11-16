@@ -16,15 +16,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fi.koku.services.entity.customerservice.exception.FamilyNotFoundException;
-import fi.koku.services.entity.customerservice.exception.TooManyFamiliesException;
-import fi.koku.services.entity.customerservice.model.DependantsAndFamily;
-import fi.koku.services.entity.customerservice.model.Family;
-import fi.koku.services.entity.customerservice.model.Person;
-import fi.koku.services.entity.customerservice.model.Dependant;
-import fi.koku.services.entity.customerservice.model.FamilyIdAndFamilyMembers;
-import fi.koku.services.entity.customerservice.model.FamilyMember;
-import fi.koku.services.entity.customerservice.model.CommunityRole;
 import fi.koku.services.entity.community.v1.CommunitiesType;
 import fi.koku.services.entity.community.v1.CommunityQueryCriteriaType;
 import fi.koku.services.entity.community.v1.CommunityServiceConstants;
@@ -42,6 +33,16 @@ import fi.koku.services.entity.customer.v1.CustomerServicePortType;
 import fi.koku.services.entity.customer.v1.CustomerType;
 import fi.koku.services.entity.customer.v1.CustomersType;
 import fi.koku.services.entity.customer.v1.PicsType;
+import fi.koku.services.entity.customerservice.exception.FamilyNotFoundException;
+import fi.koku.services.entity.customerservice.exception.TooManyFamiliesException;
+import fi.koku.services.entity.customerservice.model.CommunityRole;
+import fi.koku.services.entity.customerservice.model.Dependant;
+import fi.koku.services.entity.customerservice.model.DependantsAndFamily;
+import fi.koku.services.entity.customerservice.model.Family;
+import fi.koku.services.entity.customerservice.model.FamilyIdAndFamilyMembers;
+import fi.koku.services.entity.customerservice.model.FamilyMember;
+import fi.koku.services.entity.customerservice.model.Message;
+import fi.koku.services.entity.customerservice.model.Person;
 
 /**
  * Family related helper class.
@@ -385,6 +386,6 @@ public class FamilyHelper {
     }
     logger.debug("isParentsSet(): family == null, returning false");
     return false;
-  } 
+  }
   
 }

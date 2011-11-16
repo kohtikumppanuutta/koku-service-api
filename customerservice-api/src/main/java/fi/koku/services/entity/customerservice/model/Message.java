@@ -22,18 +22,21 @@ public class Message {
   
   private String id;
   private String from;
+  private String role;
   private String text;
   private boolean twoParentsInFamily;
   private String memberToAddPic;
 
-  public Message(String id, String fromUserPic, String memberToAddPic, String text, boolean twoParentsInFamily) {
+  public Message(String id, String fromUserPic, String memberToAddPic, String role, String text, boolean twoParentsInFamily) {
     log.debug("Message.constructor: creating a Message with parameters:");
     log.debug("id: " + id);
     log.debug("fromUserPic: " + fromUserPic);
+    log.debug("role: " + role);
     log.debug("text: " + text);
     
     this.id = id;
     this.from = fromUserPic;
+    this.role = role;
     this.text = text;
     this.twoParentsInFamily = twoParentsInFamily;
     this.memberToAddPic = memberToAddPic;
@@ -54,7 +57,15 @@ public class Message {
   public void setFrom(String from) {
     this.from = from;
   }
-
+  
+  public String getRole() {
+    return role;
+  }
+  
+  public void setRole(String role) {
+    this.role = role;
+  }
+  
   public String getText() {
     return text;
   }
