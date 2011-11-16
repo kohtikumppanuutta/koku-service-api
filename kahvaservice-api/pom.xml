@@ -8,5 +8,5 @@
   </parent>
   <artifactId>kahvaservice-api</artifactId>
   <name>kahvaservice-api</name>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.4-SNAPSHOT</version>
 </project>
