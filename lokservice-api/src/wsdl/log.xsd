@@ -34,11 +34,11 @@
       <xsd:element name="timestamp" type="xsd:dateTime"/>
       <xsd:element name="clientSystemId" type="xsd:string"/>
       <xsd:element name="userPic" type="xsd:string"/>
-      <xsd:element name="customerPic" type="xsd:string"/>
+      <xsd:element name="customerPic" type="xsd:string" minOccurs="0"/>
       <xsd:element name="operation" type="xsd:string"/>
       <xsd:element name="dataItemType" type="xsd:string"/>
       <xsd:element name="dataItemId" type="xsd:string" minOccurs="0"/>
-      <xsd:element name="message" type="xsd:string"/>
+      <xsd:element name="message" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
   
