@@ -74,7 +74,8 @@ public class FamilyHelper {
    * @throws ServiceFault 
    * @throws fi.koku.services.entity.customer.v1.ServiceFault 
    */
-  public DependantsAndFamily getDependantsAndFamily(String userPic, Family userFamily) throws ServiceFault, fi.koku.services.entity.customer.v1.ServiceFault {
+  public DependantsAndFamily getDependantsAndFamily(String userPic, Family userFamily) throws fi.koku.services.entity.community.v1.ServiceFault,
+    fi.koku.services.entity.customer.v1.ServiceFault {
     List<Dependant> dependants = new ArrayList<Dependant>();
     CommunityQueryCriteriaType communityQueryCriteria = new CommunityQueryCriteriaType();
     communityQueryCriteria.setCommunityType(CommunityServiceConstants.COMMUNITY_TYPE_GUARDIAN_COMMUNITY);
@@ -105,43 +106,45 @@ public class FamilyHelper {
       }
     }
     
-    PicsType picsType = new PicsType();
-    picsType.getPic().addAll(depPics);
-    CustomerQueryCriteriaType customerQueryCriteriaType = new CustomerQueryCriteriaType();
-    customerQueryCriteriaType.setPics(picsType);
-    CustomersType customersType = null;
-    
-    customersType = customerService.opQueryCustomers(customerQueryCriteriaType, CustomerServiceFactory.createAuditInfoType(componentName, userPic));
-
-    if (customersType != null) {
-      List<CustomerType> customers = customersType.getCustomer();
-      Iterator<CustomerType> ci = customers.iterator();
-      while (ci.hasNext()) {
-        CustomerType customer = ci.next();
-        dependants.add(new Dependant(customer));
-      }
-    }
-    
-    // next check if dependant is member of user's family
-    
     DependantsAndFamily dependantsAndFamily = new DependantsAndFamily();
     
-    if (userFamily != null) {
-      Iterator<Dependant> di = dependants.iterator();
-      while (di.hasNext()) {
-        Dependant d = di.next();
-        
-        List<MemberType> members = userFamily.getAllMembers();
-        Iterator<MemberType> mi = members.iterator();
-        while (mi.hasNext()) {
-          MemberType member = mi.next();
-          // if dependant belongs to user's family then set Dependant.memberOfUserFamily
-          if (d.getPic().equals(member.getPic())) {
-            d.setMemberOfUserFamily(true);
-          }
+    if (depPics.size() > 0) {
+      PicsType picsType = new PicsType();
+      picsType.getPic().addAll(depPics);
+      CustomerQueryCriteriaType customerQueryCriteriaType = new CustomerQueryCriteriaType();
+      customerQueryCriteriaType.setPics(picsType);
+      CustomersType customersType = null;
+      
+      customersType = customerService.opQueryCustomers(customerQueryCriteriaType, CustomerServiceFactory.createAuditInfoType(componentName, userPic));
+      
+      if (customersType != null) {
+        List<CustomerType> customers = customersType.getCustomer();
+        Iterator<CustomerType> ci = customers.iterator();
+        while (ci.hasNext()) {
+          CustomerType customer = ci.next();
+          dependants.add(new Dependant(customer));
         }
       }
-      dependantsAndFamily.setFamily(userFamily);
+      
+      // next check if dependant is member of user's family
+      
+      if (userFamily != null && dependants.size() > 0) {
+        Iterator<Dependant> di = dependants.iterator();
+        while (di.hasNext()) {
+          Dependant d = di.next();
+          
+          List<MemberType> members = userFamily.getAllMembers();
+          Iterator<MemberType> mi = members.iterator();
+          while (mi.hasNext()) {
+            MemberType member = mi.next();
+            // if dependant belongs to user's family then set Dependant.memberOfUserFamily
+            if (d.getPic().equals(member.getPic())) {
+              d.setMemberOfUserFamily(true);
+            }
+          }
+        }
+        dependantsAndFamily.setFamily(userFamily);
+      }
     }
     
     dependantsAndFamily.setDependants(dependants);
