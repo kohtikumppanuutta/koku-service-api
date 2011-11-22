@@ -39,6 +39,7 @@
   
   <xsd:element name="membershipApproval" type="MembershipApprovalType"/>
 
+  <xsd:element name="membershipRequestIdRemove" type="numericId"/>
 
   <xsd:complexType name="CommunitiesType">
     <xsd:sequence>

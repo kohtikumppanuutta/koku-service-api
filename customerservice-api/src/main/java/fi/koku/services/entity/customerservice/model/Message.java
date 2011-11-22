@@ -21,6 +21,7 @@ public class Message {
   private static Logger log = LoggerFactory.getLogger(Message.class);
   
   private String id;
+  // from is the PIC of the request sender
   private String from;
   private String role;
   private String text;
