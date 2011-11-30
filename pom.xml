@@ -10,10 +10,8 @@
     <slf4j.version>1.6.1</slf4j.version>
     <jaxws-api.version>2.1</jaxws-api.version>
     <koku-common-lib.version>0.2.0</koku-common-lib.version>
-	<!-- 
-	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  	  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  	-->
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <build>
