@@ -50,12 +50,21 @@ public class GroupsHelper {
         
         // Currently service layer can only return group hierarchy with depth of 2
         for (KksGroupType group : collection.getKksGroups().getKksGroup()) {
-          InfoGroup infoGroup = new InfoGroup("group-" + group.getId(), group.getName());
+          
+          boolean groupExist = ! "".equals(group.getName());
+          InfoGroup infoGroup = groupExist ? new InfoGroup("group-" + group.getId(), group.getName()) : topLevelGroup;
           
           for (KksGroupType subGroup : group.getSubGroups().getKksGroup()) {
-            infoGroup.addSubGroup(new InfoGroup("group-" + subGroup.getId(), subGroup.getName()));
+            boolean subGroupExist = ! "".equals(subGroup.getName());
+            
+            if ( subGroupExist ) {
+              infoGroup.addSubGroup(new InfoGroup("group-" + subGroup.getId(), subGroup.getName()));
+            }
           }
-          topLevelGroup.addSubGroup(infoGroup);
+          
+          if ( groupExist ) {
+            topLevelGroup.addSubGroup(infoGroup);
+          }
         }
         
         groups.add(topLevelGroup);
