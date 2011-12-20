@@ -110,7 +110,6 @@ public class FamilyService {
    * @throws Exception
    */
   public List<CustomerType> getPersonsParents(String pic, String auditUserId, String auditComponentId) throws Exception {
-
     List<CustomerType> parents = new ArrayList<CustomerType>();
     List<CommunityType> communities = null;
     Set<String> memberPics = new HashSet<String>();
@@ -129,6 +128,9 @@ public class FamilyService {
           List<MemberType> members = community.getMembers().getMember();
           memberPics.addAll( filterMemberPicsWithRole(members, FamilyConstants.ROLE_GUARDIAN) );
   
+          //remove request pic (might be parent)          
+          memberPics.remove(pic);
+          
           parents = searchPersonsByPicList(memberPics, auditUserId, auditComponentId);
         }
         
@@ -138,7 +140,7 @@ public class FamilyService {
     
     
     } catch (fi.koku.services.entity.community.v1.ServiceFault communityFault) {
-      LOG.error("Failed to get persons parents (community members) from CommunityService", communityFault);
+      LOG.error("Failed to get community parents (community members) from CommunityService", communityFault);
     }
     return parents;
   }
@@ -146,6 +148,11 @@ public class FamilyService {
   
   private List<CustomerType> searchPersonsByPicList(Set<String> memberPics, String auditUserId, String auditComponentId)
       throws fi.koku.services.entity.customer.v1.ServiceFault {
+    
+    if ( memberPics == null || memberPics.isEmpty() ) {
+      return new ArrayList<CustomerType>();
+    }
+    
     CustomerQueryCriteriaType query = new CustomerQueryCriteriaType();
     
     fi.koku.services.entity.customer.v1.AuditInfoType customerAuditInfoType = new fi.koku.services.entity.customer.v1.AuditInfoType();
