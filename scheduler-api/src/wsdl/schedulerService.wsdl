@@ -1,0 +1,43 @@
+<definitions name='KokuScheduledTasksService' targetNamespace='http://soa.common.koku.arcusys.fi/' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://soa.common.koku.arcusys.fi/' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <xs:schema targetNamespace='http://soa.common.koku.arcusys.fi/' version='1.0' xmlns:tns='http://soa.common.koku.arcusys.fi/' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:element name='perform' type='tns:perform'/>
+   <xs:element name='performResponse' type='tns:performResponse'/>
+   <xs:complexType name='perform'>
+    <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name='performResponse'>
+    <xs:sequence/>
+   </xs:complexType>
+  </xs:schema>
+ </types>
+ <message name='KokuScheduledTasksService_perform'>
+  <part element='tns:perform' name='perform'></part>
+ </message>
+ <message name='KokuScheduledTasksService_performResponse'>
+  <part element='tns:performResponse' name='performResponse'></part>
+ </message>
+ <portType name='KokuScheduledTasksService'>
+  <operation name='perform' parameterOrder='perform'>
+   <input message='tns:KokuScheduledTasksService_perform'></input>
+   <output message='tns:KokuScheduledTasksService_performResponse'></output>
+  </operation>
+ </portType>
+ <binding name='KokuScheduledTasksServiceBinding' type='tns:KokuScheduledTasksService'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='perform'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='KokuScheduledTasksService'>
+  <port binding='tns:KokuScheduledTasksServiceBinding' name='KokuScheduledTasksServicePort'>
+   <soap:address location='http://localhost:1234/arcusys-koku-0.1-SNAPSHOT-arcusys-common-0.1-SNAPSHOT/KokuScheduledTasksServiceImpl'/>
+  </port>
+ </service>
+</definitions>
