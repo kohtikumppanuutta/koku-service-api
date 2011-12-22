@@ -84,6 +84,7 @@ public class MessageHelper {
       List<String> messageIds = new ArrayList<String>();
       List<String> senderPics = new ArrayList<String>();
       List<String> userApprovalStatusList = new ArrayList<String>();
+      List<String> addedMemberRoles = new ArrayList<String>();
       
       List<MembershipRequestType> membershipRequests = membershipRequestsType.getMembershipRequest();
       Iterator<MembershipRequestType> mrti = membershipRequests.iterator();
@@ -93,7 +94,7 @@ public class MessageHelper {
         memberToAddPics.add(membershipRequest.getMemberPic());
         messageIds.add(membershipRequest.getId());
         senderPics.add(membershipRequest.getRequesterPic());
-        
+        addedMemberRoles.add(membershipRequest.getMemberRole());
         MembershipApprovalsType membershipApprovalsType = membershipRequest.getApprovals();
         List<MembershipApprovalType> approvals = membershipApprovalsType.getApproval();
         Iterator<MembershipApprovalType> ait = approvals.iterator();
@@ -120,12 +121,14 @@ public class MessageHelper {
       Iterator<String> memberToAddIterator = memberToAddPics.iterator();
       Iterator<String> messageSenderIterator = senderPics.iterator();
       Iterator<String> approvalStatusIterator = userApprovalStatusList.iterator();
+      Iterator<String> addedMemberRoleIterator = addedMemberRoles.iterator();
       
       while (messageIdIterator.hasNext()) {
         String messageId = messageIdIterator.next();
         String memberToAddPic = memberToAddIterator.next();
         String senderPic = messageSenderIterator.next();
         String userApprovalStatus = approvalStatusIterator.next();
+        String addedMemberRole = addedMemberRoleIterator.next();
         
         if (CommunityServiceConstants.MEMBERSHIP_REQUEST_STATUS_NEW.equals(userApprovalStatus)) {
           
@@ -133,6 +136,9 @@ public class MessageHelper {
           Person targetPerson = targetPersonIterator.next();
           String senderName = "";
           String targetName = "";
+          if (addedMemberRole == null) {
+            addedMemberRole = "";
+          }
           
           if (requestSender != null) {
             senderName = requestSender.getFullName();
@@ -157,7 +163,7 @@ public class MessageHelper {
             messageText = newReqMessageText.replace("@SENDER_NAME@", senderName).replace("@TARGET_NAME@", targetName);
           }
           
-          Message message = new Message(messageId, senderPic, memberToAddPic, "" /* member role, not needed here */, messageText, twoParentsInFamily);
+          Message message = new Message(messageId, senderPic, memberToAddPic, addedMemberRole, messageText, twoParentsInFamily);
           requestMessages.add(message);
         }
       }
