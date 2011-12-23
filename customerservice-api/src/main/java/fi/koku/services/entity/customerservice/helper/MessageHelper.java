@@ -88,7 +88,6 @@ public class MessageHelper {
       
       List<MembershipRequestType> membershipRequests = membershipRequestsType.getMembershipRequest();
       Iterator<MembershipRequestType> mrti = membershipRequests.iterator();
-      // iterate through membership requests
       while (mrti.hasNext()) {
         MembershipRequestType membershipRequest = mrti.next();
         memberToAddPics.add(membershipRequest.getMemberPic());
@@ -114,7 +113,7 @@ public class MessageHelper {
       
       List<Person> requestSenders = getPersons(senderPics, user.getPic());
       List<Person> targetPersons = getPersons(memberToAddPics, user.getPic());
-      Iterator<Person> requestSenderIterator = requestSenders.iterator();
+      Person requestSender = null;
       Iterator<Person> targetPersonIterator = targetPersons.iterator();
       
       Iterator<String> messageIdIterator = messageIds.iterator();
@@ -132,7 +131,14 @@ public class MessageHelper {
         
         if (CommunityServiceConstants.MEMBERSHIP_REQUEST_STATUS_NEW.equals(userApprovalStatus)) {
           
-          Person requestSender = requestSenderIterator.next();
+          Iterator<Person> ri = requestSenders.iterator();
+          while (ri.hasNext()) {
+            Person sender = ri.next();
+            if (sender.getPic().equals(senderPic)) {
+              requestSender = sender;
+            }
+          }
+          
           Person targetPerson = targetPersonIterator.next();
           String senderName = "";
           String targetName = "";
