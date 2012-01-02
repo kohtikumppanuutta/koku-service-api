@@ -1,0 +1,94 @@
+<definitions name='CustomerCommunicationService' targetNamespace='http://tampere.fi/contract/municipalityportal/ccs' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:ccs='http://tampere.fi/schema/municipalityportal/ccs' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://tampere.fi/contract/municipalityportal/ccs'>
+ <documentation>
+    Web service for communicating with customer. Possible ways of communication:
+    1. E-Mail. Parameters:
+    - Receiver&apos;s social security number (ssn: String) - Customer is identified with social security number
+    - E-Mail subject (subject: String)
+    - E-Mail content (content: String)
+  </documentation>
+ <types>
+  <xsd:schema elementFormDefault='qualified' targetNamespace='http://tampere.fi/schema/municipalityportal/ccs' xmlns='http://tampere.fi/schema/municipalityportal/ccs' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+   <xsd:element name='sendEmailMessage' type='SendEmailMessageType'/>
+   <xsd:element name='sendEmailMessageResponse' type='SendEmailMessageResponseType'/>
+   <xsd:complexType name='SendEmailMessageType'>
+
+    <xsd:annotation>
+     <xsd:documentation>
+            Message to web service
+            - ssn: Social security number of the person to whom e-mail is tried to send
+            - subject: the subject of the e-mail
+            - content: the content of the e-mail
+          </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+     <xsd:element name='ssn' type='SsnType'/>
+     <xsd:element name='subject' type='xsd:string'/>
+     <xsd:element name='content' type='xsd:string'/>
+
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name='SendEmailMessageResponseType'>
+    <xsd:annotation>
+     <xsd:documentation>
+            Response from web service
+            - PERSON_NOT_FOUND: Person can not be found with the given social security number
+            - EMAIL_NOTIFICATION_DISALLOWED: Person does not accept email notification
+            - EMAIL_SENT: E-mail was successfully sent
+            - EMAIL_SENDING_FAILED: Sending e-mail failed
+          </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base='xsd:string'>
+
+     <xsd:enumeration value='PERSON_NOT_FOUND'/>
+     <xsd:enumeration value='EMAIL_NOTIFICATION_DISALLOWED'/>
+     <xsd:enumeration value='EMAIL_SENT'/>
+     <xsd:enumeration value='EMAIL_SENDING_FAILED'/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name='SsnType'>
+    <xsd:annotation>
+     <xsd:documentation>
+
+            Definition for social security number
+          </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base='xsd:string'>
+     <xsd:pattern value='\d{6}[+\-A]\d{3}[0-9A-FHJ-NP-Y]'/>
+    </xsd:restriction>
+   </xsd:simpleType>
+  </xsd:schema>
+ </types>
+
+ <message name='msgSendEmailMessageResponse' xmlns='http://schemas.xmlsoap.org/wsdl/'>
+  <part element='ccs:sendEmailMessageResponse' name='sendEmailMessageResponse'></part>
+ </message>
+ <message name='msgSendEmailMessage'>
+  <part element='ccs:sendEmailMessage' name='sendEmailMessage'></part>
+ </message>
+ <portType name='CustomerCommunicationServicePortType'>
+  <operation name='sendEmailMessage'>
+   <input message='tns:msgSendEmailMessage'></input>
+
+   <output message='tns:msgSendEmailMessageResponse'></output>
+  </operation>
+ </portType>
+ <binding name='CustomerCommunicationServiceBinding' type='tns:CustomerCommunicationServicePortType'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='sendEmailMessage'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='CustomerCommunicationService'>
+  <port binding='tns:CustomerCommunicationServiceBinding' name='CustomerCommunicationServicePort'>
+   <soap:address location='https://soa-alusta:8443/services/CustomerCommunicationService'/>
+
+  </port>
+ </service>
+</definitions>

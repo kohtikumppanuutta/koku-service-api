@@ -127,6 +127,7 @@
     <module>userinformationservice-api</module>
     <module>kahvaservice-api</module>
     <module>familyservice-api</module>
+    <module>customercommunicationservice-api</module>
   </modules>
   
   <repositories>
