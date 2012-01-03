@@ -32,7 +32,7 @@ public class CustomerCommunicationServiceFactory {
     this.endpointUrl = endpointUrl;
   }
 
-  public CustomerCommunicationServicePortType getUserInformationService() {
+  public CustomerCommunicationServicePortType getCustomerCommunicationService() {
     if(wsdlLocation == null)
       log.error("wsdllocation=null");
     CustomerCommunicationService service = new CustomerCommunicationService(wsdlLocation, new QName(
