@@ -10,10 +10,9 @@ package fi.koku.services.entity.customerservice.model;
 import fi.koku.services.entity.customer.v1.CustomerType;
 
 /**
- * Person.
+ * Person data class.
  * 
  * @author hurulmi
- *
  */
 public class Dependant extends Person {
   

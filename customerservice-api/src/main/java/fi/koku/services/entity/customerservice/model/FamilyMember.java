@@ -12,10 +12,9 @@ import fi.koku.services.entity.customerservice.model.CommunityRole;
 import fi.koku.services.entity.customer.v1.CustomerType;
 
 /**
- * FamilyMember.
+ * FamilyMember data class.
  * 
  * @author hurulmi
- *
  */
 public class FamilyMember extends Person {
 

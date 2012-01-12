@@ -11,7 +11,6 @@ package fi.koku.services.entity.customerservice.exception;
  * GuardianForChildNotFoundException.
  * 
  * @author hurulmi
- *
  */
 public class GuardianForChildNotFoundException extends Exception {
   

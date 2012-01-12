@@ -48,7 +48,6 @@ import fi.koku.services.entity.customerservice.model.Person;
  * Family related helper class.
  * 
  * @author hurulmi
- *
  */
 public class FamilyHelper {
 

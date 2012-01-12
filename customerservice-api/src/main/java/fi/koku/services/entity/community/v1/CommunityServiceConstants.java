@@ -7,6 +7,11 @@
  */
 package fi.koku.services.entity.community.v1;
 
+/**
+ * Constants for community service.
+ * 
+ * @author aspluma
+ */
 public class CommunityServiceConstants {
   
   final public static String COMMUNITY_TYPE_GUARDIAN_COMMUNITY = "guardian_community";
@@ -25,5 +30,4 @@ public class CommunityServiceConstants {
   
   private CommunityServiceConstants() {
   }
-  
 }

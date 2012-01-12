@@ -15,10 +15,9 @@ import fi.koku.services.entity.customer.v1.ElectronicContactInfoType;
 import fi.koku.services.entity.customer.v1.ElectronicContactInfosType;
 
 /**
- * Message.
+ * Person data class.
  * 
  * @author hurulmi
- *
  */
 public class Person {
 

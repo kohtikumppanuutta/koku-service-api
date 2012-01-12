@@ -17,10 +17,9 @@ import fi.koku.services.entity.community.v1.MemberType;
 import fi.koku.services.entity.community.v1.MembersType;
 
 /**
- * Family.
+ * Family data class.
  * 
  * @author hurulmi
- *
  */
 public class Family {
 

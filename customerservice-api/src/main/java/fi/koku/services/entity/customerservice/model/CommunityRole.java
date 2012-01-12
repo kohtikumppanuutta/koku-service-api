@@ -8,10 +8,9 @@
 package fi.koku.services.entity.customerservice.model;
 
 /**
- * CommunityRole.
+ * CommunityRole data class.
  * 
  * @author hurulmi
- *
  */
 public enum CommunityRole {
   

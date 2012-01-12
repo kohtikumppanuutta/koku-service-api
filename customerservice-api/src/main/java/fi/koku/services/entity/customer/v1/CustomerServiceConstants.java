@@ -11,7 +11,6 @@ package fi.koku.services.entity.customer.v1;
  * Customer service related constants.
  * 
  * @author laukksa
- *
  */
 public class CustomerServiceConstants {
 
@@ -20,5 +19,4 @@ public class CustomerServiceConstants {
   
   private CustomerServiceConstants() {
   }
-  
 }

@@ -14,7 +14,6 @@ import java.util.List;
  * This class is used as a helper object to minimize remote service calls.
  * 
  * @author hurulmi
- *
  */
 public class DependantsAndFamily {
   

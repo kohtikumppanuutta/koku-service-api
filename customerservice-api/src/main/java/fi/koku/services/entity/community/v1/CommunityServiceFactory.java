@@ -54,5 +54,4 @@ public class CommunityServiceFactory {
     audit.setUserId(userPic); 
     return audit;
   }
-
 }

@@ -11,7 +11,6 @@ package fi.koku.services.entity.customerservice.exception;
  * TooManyFamiliesException.
  * 
  * @author hurulmi
- *
  */
 public class TooManyFamiliesException extends Exception {
   

@@ -37,7 +37,6 @@ import fi.koku.services.entity.customer.v1.PicsType;
  * Message related helper class.
  * 
  * @author hurulmi
- *
  */
 public class MessageHelper {
 

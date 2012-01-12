@@ -11,7 +11,6 @@ package fi.koku.services.entity.customerservice.exception;
  * FamilyNotFoundException.
  * 
  * @author hurulmi
- *
  */
 public class FamilyNotFoundException extends Exception {
   
@@ -20,5 +19,4 @@ public class FamilyNotFoundException extends Exception {
   public FamilyNotFoundException(String message) {
     super(message);
   }
-  
 }

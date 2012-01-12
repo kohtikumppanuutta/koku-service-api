@@ -10,10 +10,9 @@ package fi.koku.services.entity.customerservice.model;
 import java.util.List;
 
 /**
- * FamilyIdAndFamilyMembers.
+ * FamilyIdAndFamilyMembers data class.
  * 
  * @author hurulmi
- *
  */
 public class FamilyIdAndFamilyMembers {
 
