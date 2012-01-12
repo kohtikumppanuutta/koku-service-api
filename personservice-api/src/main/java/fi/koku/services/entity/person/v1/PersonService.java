@@ -148,7 +148,7 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
                 personList.add(new Person(u.getSsn(),u.getFirstName(), u.getLastName()) );
               }
             } catch (UserInformationFault e) {
-              LOG.error("Failed to get person from UserInformationService with uid="+uid);
+              LOG.error("Failed to get person from UserInformationService with uid="+uid, e);
             }
           }
           
@@ -175,16 +175,15 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
     //Init array
     List<Person> personList = new ArrayList<Person>(uids.size());
     
-    try {
-        
-        for (String uid : uids) {
-          User userFromWS = ldapService.getUserById(uid);
-          personList.add( new Person( userFromWS.getSsn(),userFromWS.getFirstName() ,userFromWS.getLastName()));  
-        }
-      
-    } catch (Exception e) {
-       LOG.error("Failed to get Person data from external source: WS.endpoint="+endpoint);
-       personList = null;
+    for (String uid : uids) {
+
+      try {
+        User userFromWS = ldapService.getUserById(uid);
+        personList.add(new Person(userFromWS.getSsn(), userFromWS.getFirstName(), userFromWS.getLastName()));
+      } catch (Exception e) {
+        LOG.error("Failed to get Person data from external source: WS.endpoint=" + endpoint, e);               
+      }
+
     }
     return personList;
 }
@@ -211,7 +210,7 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
       
       //Traverse data from WS and put pic(hetu), firstname and lastname to personList -array
       for (CustomerType c : customersType.getCustomer()) {
-        personList.add( new Person(c.getHenkiloTunnus(), c.getEtuNimi(), c.getStatus()) );
+        personList.add( new Person(c.getHenkiloTunnus(), c.getEtuNimi(), c.getSukuNimi()) );
       }
       
     } catch (ServiceFault e) {
@@ -221,32 +220,30 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
         
     return personList;
   }
-
   
   private List<Person> getPersonsFromOfficerDomainWithPicList(List<String> pics) {
 
     //Initialize array
     List<Person> personList = new ArrayList<Person>(pics.size());
     
-    try {
-      
-      //Loop the pic array
-      //#TODO# This could be a place to improve
-      //Current external LdapService interface is limited to query one user at time, which isn't efficient.
-      //Usual usage is still only one user
-      for (String pic : pics) {
+    // Loop the pic array
+    // #TODO# This could be a place to improve
+    // Current external LdapService interface is limited to query one user at
+    // time, which isn't efficient.
+    // Usual usage is still only one user
+    for (String pic : pics) {
+
+      try {
         User userFromWS = ldapService.getUserBySSN(pic);
-        personList.add( new Person( userFromWS.getSsn(),userFromWS.getFirstName() ,userFromWS.getLastName()));
+        personList.add(new Person(userFromWS.getSsn(), userFromWS.getFirstName(), userFromWS.getLastName()));
+      } catch (Exception e) {
+        LOG.error("Failed to get User data from external source: WS.endpoint=" + endpoint, e);        
       }
       
-    } catch (Exception e) {
-       LOG.error("Failed to get User data from external source: WS.endpoint="+endpoint);
-       personList = null;
     }
     return personList;
   }
 
- 
   private boolean isNotNullOrEmpty(String s){
     if(s!=null && !s.isEmpty()){
       return true;
@@ -254,5 +251,4 @@ public List<Person> getPersonsByUids(List<String> uids, final String domain, fin
       return false;  
     }
   }
-  
 }
