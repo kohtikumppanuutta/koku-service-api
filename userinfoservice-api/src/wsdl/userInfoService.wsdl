@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="userInfoService"
+  targetNamespace="http://services.koku.fi/utility/user/v1"
+  xmlns:tns="http://services.koku.fi/utility/user/v1"
+  xmlns:usr="http://services.koku.fi/utility/user/v1"
+  xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  >
+
+  <wsdl:documentation>
+    KoKu user info service contract definition.
+
+    version: 0.1
+    Ixonos / hanhian    
+  </wsdl:documentation>
+
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://services.koku.fi/utility/user/v1" schemaLocation="userInfo.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!-- common messages -->
+
+  <wsdl:message name="msgGetUsersByIdsRequest">
+    <wsdl:part name="UserIdsQueryParam" element="usr:userIdsQueryParam"/>    
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetUsersByIdsResponse">
+    <wsdl:part name="Users" element="usr:users"/>
+  </wsdl:message>
+
+  <wsdl:message name="msgGetUsersByPicsRequest">
+    <wsdl:part name="UserPicsQueryParam" element="usr:userPicsQueryParam"/> 
+  </wsdl:message>
+  
+  <wsdl:message name="msgGetUsersByPicsResponse">
+    <wsdl:part name="Users" element="usr:users"/>
+  </wsdl:message>
+
+  <wsdl:message name="serviceFault">
+    <wsdl:part name="ServiceFaultDetail" element="usr:serviceFaultDetail" />
+  </wsdl:message>
+  
+  <wsdl:message name="voidResponse">
+    <wsdl:part name="VoidResponse" element="usr:void"/>
+  </wsdl:message>
+
+  <!-- interface / port type -->
+
+  <wsdl:portType name="userInfoServicePortType">
+
+    <wsdl:operation name="opGetUsersByIds">
+      <wsdl:input message="tns:msgGetUsersByIdsRequest"/>
+      <wsdl:output message="tns:msgGetUsersByIdsResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+
+	<wsdl:operation name="opGetUsersByPics">
+      <wsdl:input message="tns:msgGetUsersByPicsRequest"/>
+      <wsdl:output message="tns:msgGetUsersByPicsResponse"/>
+      <wsdl:fault name="serviceFault" message="tns:serviceFault"/>
+    </wsdl:operation>
+	
+  </wsdl:portType>
+
+  <!-- bindings -->
+  <wsdl:binding name="userInfoService-soap11-binding" type="tns:userInfoServicePortType">
+    <soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    
+    <wsdl:operation name="opGetUsersByIds">
+      <soap11:operation soapAction="http://koku.fi/action/user/id"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="opGetUsersByPics">
+      <soap11:operation soapAction="http://koku.fi/action/user/pic"/>
+      <wsdl:input>
+        <soap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="serviceFault">
+        <soap11:fault use="literal" name="serviceFault"/>
+      </wsdl:fault>
+    </wsdl:operation>
+		
+  </wsdl:binding>
+  
+    <!-- service definitions -->
+  <wsdl:service name="userInfoService">
+    <wsdl:port name="userInfoService-soap11-port" binding="tns:userInfoService-soap11-binding">
+      <soap11:address location="http://localhost:8088/userInfo/"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>
