@@ -34,5 +34,14 @@ public class PersonConstants {
   final public static String PERSON_SERVICE_DOMAIN_CUSTOMER = "person_service_domain_customer";
   final public static String PERSON_SERVICE_DOMAIN_OFFICER = "person_service_domain_officer";
   
+  final public static String USER_INFO_SERVICE_ENDPOINT = KoKuPropertiesUtil
+      .get("user.info.service.endpointaddress");
+  final public static String USER_INFO_SERVICE_USER_ID = KoKuPropertiesUtil
+      .get("person.service.user.info.service.user.id");
+  final public static String USER_INFO_SERVICE_PASSWORD = KoKuPropertiesUtil
+      .get("person.service.user.info.service.password");
   
+  
+  final public static String PERSON_PROVIDER_IMPL_CLASS_NAME = KoKuPropertiesUtil
+      .get("person.service.person.info.provider.class.name");
 }
