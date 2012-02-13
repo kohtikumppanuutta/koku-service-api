@@ -1,13 +1,38 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>service-api</artifactId>
-    <groupId>kohti-kumppanuutta</groupId>
-    <version>0.0.4</version>
-    <relativePath>..</relativePath>
-  </parent>
-  <artifactId>customercommunicationservice-api</artifactId>
-  <version>0.0.1</version>
-  <name>customercommunicationservice-api</name>
-  <description>client API for Gofore's CustomerCommunicationService</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>service-api</artifactId>
+		<groupId>kohti-kumppanuutta</groupId>
+		<version>0.0.4</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>customercommunicationservice-api</artifactId>
+	<version>0.0.2</version>
+	<name>customercommunicationservice-api</name>
+	<description>client API for Gofore's CustomerCommunicationService</description>
+    
+    <properties>
+        <cxf.version>2.6.0-SNAPSHOT</cxf.version>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
+            <scope>provided</scope>
+        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.apache.cxf</groupId> -->
+<!--             <artifactId>cxf-rt-transports-http-jetty</artifactId> -->
+<!--             <version>${cxf.version}</version> -->
+<!--         </dependency> -->
+    </dependencies>
 </project>
