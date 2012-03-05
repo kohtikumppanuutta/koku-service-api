@@ -68,6 +68,7 @@
       <xsd:element name="userPic" type="xsd:string" minOccurs="0"/>
       <xsd:element name="startTime" type="xsd:dateTime"/>
       <xsd:element name="endTime" type="xsd:dateTime"/>
+      <xsd:element name="picType" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 
