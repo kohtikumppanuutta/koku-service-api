@@ -7,7 +7,7 @@
     <relativePath>..</relativePath>
   </parent>
   <artifactId>lokservice-api</artifactId>
-  <version>0.0.191</version>
+  <version>0.0.20</version>
   
   <dependencies>
   </dependencies>
