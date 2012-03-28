@@ -13,19 +13,9 @@
 	<description>client API for Gofore's CustomerCommunicationService</description>
     
     <properties>
-        <!--cxf.version>2.6.0-SNAPSHOT</cxf.version-->
         <cxf.version>2.5.2</cxf.version>
       </properties>
 
-      <repositories>
-        <repository>
-          <id>MavenCentral</id>
-          <name>MavenCentral</name>
-          <url>http://mvnrepository.com/artifact/</url>
-        </repository>
-      </repositories>
-
-    
     <dependencies>
         <dependency>
             <groupId>org.apache.cxf</groupId>
