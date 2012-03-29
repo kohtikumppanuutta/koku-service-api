@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Factory for community service.
+ * Factory for community service. Git test
  * 
  * @author aspluma
  */
