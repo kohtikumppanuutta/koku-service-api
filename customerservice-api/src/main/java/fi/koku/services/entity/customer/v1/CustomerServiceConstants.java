@@ -17,6 +17,8 @@ public class CustomerServiceConstants {
   /** Returns basic data set */
   public static final String QUERY_SELECTION_BASIC = "basic";
   
+  bamboo test
+  
   private CustomerServiceConstants() {
   }
 }
